@@ -45,7 +45,17 @@ class RegisterController extends Controller
         // Auto login setelah registrasi
         Auth::login($user);
 
-        return redirect('/')->with('success', 'Registrasi berhasil! Selamat datang.');
+        // Redirect berdasarkan role user
+        switch ($user->role) {
+            case 'admin':
+                return redirect('/admin')->with('success', 'Registrasi berhasil! Selamat datang Admin.');
+            case 'pengemudi':
+                return redirect('/driver')->with('success', 'Registrasi berhasil! Selamat datang Pengemudi.');
+            case 'orang_tua':
+                return redirect('/parent')->with('success', 'Registrasi berhasil! Selamat datang Orang Tua.');
+            default:
+                return redirect('/')->with('success', 'Registrasi berhasil! Selamat datang.');
+        }
     }
 
     /**

@@ -39,7 +39,19 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            
+            // Redirect berdasarkan role user
+            $user = Auth::user();
+            switch ($user->role) {
+                case 'admin':
+                    return redirect('/admin');
+                case 'pengemudi':
+                    return redirect('/driver');
+                case 'orang_tua':
+                    return redirect('/parent');
+                default:
+                    return redirect('/');
+            }
         }
 
         return back()->withErrors([
