@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Http\Request;
 
 // Route::get('/', function () {
@@ -12,7 +12,7 @@ Route::get('/', function () {
 });
 
 Route::get('/admin', function () {
-    return redirect('frontend.admin');
+    return view('admin.admin');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
