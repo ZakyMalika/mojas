@@ -754,11 +754,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 . MOJAS BATAM. All Rights Reserved. | Layanan Antar Jemput Siswa Terpercaya di Batam</p>
-        </div>
-    </footer>
+    <x-admin.footer />
 
     <!-- Leaflet CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
