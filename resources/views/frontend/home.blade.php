@@ -300,90 +300,90 @@
         }
 
         /* Pricing Section */
-       /* Section wrapper */
-.pricing {
-  padding: 60px 20px;
-  background: #fafafa;
-  text-align: center;
-}
+        /* Section wrapper */
+        .pricing {
+            padding: 60px 20px;
+            background: #fafafa;
+            text-align: center;
+        }
 
-.section-title h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
+        .section-title h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
 
-.section-title p {
-  color: #666;
-  margin-bottom: 30px;
-}
+        .section-title p {
+            color: #666;
+            margin-bottom: 30px;
+        }
 
-/* Card */
-.pricing-wrapper {
-  display: flex;
-  justify-content: center;
-}
+        /* Card */
+        .pricing-wrapper {
+            display: flex;
+            justify-content: center;
+        }
 
-.pricing-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 2rem;
-  max-width: 700px;
-  width: 100%;
-}
+        .pricing-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+        }
 
-.pricing-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 1.2rem;
-  text-align: center;
-}
+        .pricing-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
 
-/* Table */
-.pricing-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1.5rem;
-}
+        /* Table */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
 
-.pricing-table th,
-.pricing-table td {
-  border: 1px solid #e74c3c;
-  padding: 0.8rem;
-  text-align: center;
-}
+        .pricing-table th,
+        .pricing-table td {
+            border: 1px solid #e74c3c;
+            padding: 0.8rem;
+            text-align: center;
+        }
 
-.pricing-table th {
-  background: #fff176;
-  font-weight: 600;
-  font-size: 15px;
-}
+        .pricing-table th {
+            background: #fff176;
+            font-weight: 600;
+            font-size: 15px;
+        }
 
-.pricing-table td {
-  font-size: 14px;
-}
+        .pricing-table td {
+            font-size: 14px;
+        }
 
-/* Button */
-.btn-container {
-  display: flex;
-  justify-content: center;
-}
+        /* Button */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+        }
 
-.btn-primary {
-  background: #e74c3c;
-  color: #fff;
-  padding: 0.7rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s ease;
-  font-size: 15px;
-}
+        .btn-primary {
+            background: #e74c3c;
+            color: #fff;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-size: 15px;
+        }
 
-.btn-primary:hover {
-  background: #c0392b;
-}
+        .btn-primary:hover {
+            background: #c0392b;
+        }
 
         /* Contact Section */
         .contact {
@@ -470,6 +470,80 @@
                 justify-content: center;
             }
         }
+
+        /* Tablet (max-width: 992px) */
+        @media (max-width: 992px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Mobile (max-width: 576px) */
+        @media (max-width: 576px) {
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .hero-card {
+                padding: 1.2rem;
+            }
+
+            /* Pricing table responsive */
+            .pricing-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .pricing-table table {
+                min-width: 500px;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .contact-info h2 {
+                font-size: 1.8rem;
+            }
+
+            .whatsapp-btn {
+                padding: 0.8rem 1.2rem;
+                font-size: 14px;
+            }
+        }
+
 
         /* Smooth scrolling */
         html {
@@ -633,44 +707,74 @@
         </div>
     </section>
 
-   <!-- Pricing Section -->
-<section id="tarif" class="pricing">
-  <div class="container">
-    <div class="section-title" data-aos="fade-up">
-      <h2>Simulasi Pembayaran Per Siswa</h2>
-      <p>Tarif kompetitif dengan layanan berkualitas tinggi</p>
-    </div>
+    <!-- Pricing Section -->
+    <section id="tarif" class="pricing">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Simulasi Pembayaran Per Siswa</h2>
+                <p>Tarif kompetitif dengan layanan berkualitas tinggi</p>
+            </div>
 
-    <div class="pricing-wrapper" data-aos="zoom-in" data-aos-delay="100">
-      <div class="pricing-card">
-        <h3 class="pricing-title">Daftar Tarif</h3>
+            <div class="pricing-wrapper" data-aos="zoom-in" data-aos-delay="100">
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Daftar Tarif</h3>
 
-        <table class="pricing-table">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Jarak (km)</th>
-              <th>One Way</th>
-              <th>Two Way</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>± 1-3</td><td>Rp 400.000</td><td>Rp 800.000</td></tr>
-            <tr><td>2</td><td>± 4</td><td>Rp 560.000</td><td>Rp 1.120.000</td></tr>
-            <tr><td>3</td><td>± 5</td><td>Rp 700.000</td><td>Rp 1.400.000</td></tr>
-            <tr><td>4</td><td>± 6</td><td>Rp 840.000</td><td>Rp 1.680.000</td></tr>
-            <tr><td>5</td><td>± 7</td><td>Rp 980.000</td><td>Rp 1.960.000</td></tr>
-            <tr><td>6</td><td>± 8</td><td>Rp 1.120.000</td><td>Rp 2.240.000</td></tr>
-          </tbody>
-        </table>
+                    <table class="pricing-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Jarak (km)</th>
+                                <th>One Way</th>
+                                <th>Two Way</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>± 1-3</td>
+                                <td>Rp 400.000</td>
+                                <td>Rp 800.000</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>± 4</td>
+                                <td>Rp 560.000</td>
+                                <td>Rp 1.120.000</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>± 5</td>
+                                <td>Rp 700.000</td>
+                                <td>Rp 1.400.000</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>± 6</td>
+                                <td>Rp 840.000</td>
+                                <td>Rp 1.680.000</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>± 7</td>
+                                <td>Rp 980.000</td>
+                                <td>Rp 1.960.000</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>± 8</td>
+                                <td>Rp 1.120.000</td>
+                                <td>Rp 2.240.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-        <div class="btn-container">
-          <button  class="btn-primary pesan-btn">Pesan Sekarang</button>
+                    <div class="btn-container">
+                        <button class="btn-primary pesan-btn">Pesan Sekarang</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <!-- Modal Pemesanan -->
     <div id="orderModal" class="modal">
@@ -857,8 +961,8 @@
         });
 
         // Leaflet Maps (pusat Batam)
-const mapAsal = L.map("mapAsal").setView([1.0456, 104.0305], 12);
-const mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
+        const mapAsal = L.map("mapAsal").setView([1.0456, 104.0305], 12);
+        const mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: "© OpenStreetMap"
         }).addTo(mapAsal);
@@ -919,7 +1023,7 @@ const mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
             if (markerTujuan) markerTujuan.setLatLng(e.latlng);
             else markerTujuan = L.marker(e.latlng).addTo(mapTujuan);
             document.getElementById("alamatTujuan").value =
-            `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
+                `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
             updateSimulasi();
         });
 
