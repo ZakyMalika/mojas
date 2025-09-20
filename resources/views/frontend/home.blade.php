@@ -625,7 +625,7 @@
                 <li><a href="#tarif">Tarif</a></li>
                 <li><a href="#tentang">Tentang</a></li>
                 <li><a href="#kontak">Kontak</a></li>
-                <li><a href="#" class="admin-btn"><i class="fas fa-user-shield"></i> Admin</a></li>
+                <li><a href="#" class="admin-btn"><i class="fas fa-user-shield"></i></a></li>
             </ul>
         </div>
     </nav>
