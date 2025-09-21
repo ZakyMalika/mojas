@@ -27,9 +27,9 @@ Route::get('/', function () {
     return view('frontend.home');
 });
 
-Route::get('/admin', [AdminDashboard::class, 'index'])->middleware(['auth', 'role:admin']);
-Route::get('/parent', [ParentDashboard::class, 'index'])->middleware(['auth', 'role:orang_tua']);
-Route::get('/driver', [DriverDashboard::class, 'index'])->middleware(['auth', 'role:pengemudi']);
+Route::get('/admin', [AdminDashboard::class, 'index'])->middleware(['auth', 'role:admin'])->name('admin.dashboard');
+Route::get('/parent', [ParentDashboard::class, 'index'])->middleware(['auth', 'role:orang_tua'])->name('parent.dashboard');
+Route::get('/driver', [DriverDashboard::class, 'index'])->middleware(['auth', 'role:pengemudi'])->name('driver.dashboard');
 
 // Routes untuk guest (belum login)
 Route::middleware('guest')->group(function () {

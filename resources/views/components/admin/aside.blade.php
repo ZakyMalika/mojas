@@ -1,76 +1,214 @@
 <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="" class="brand-link">
-      {{-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-      <span class="brand-text font-weight-light d-flex justify-content-center">AdminLTE 3</span>
+    <a href="#" class="brand-link"> {{-- Tautan ini bisa diarahkan ke dashboard masing-masing role --}}
+        <span class="brand-text font-weight-light d-flex justify-content-center">AntarJemput Anak</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          {{-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                {{-- <img src="{{ Auth::user()->avatar ?? 'dist/img/user2-160x160.jpg' }}" class="img-circle elevation-2" alt="User Image"> --}}
+            </div>
+            <div class="info">
+                {{-- Menampilkan nama user yang sedang login --}}
+                <a href="#" class="d-block">{{ Auth::user()->name ?? 'Guest User' }}</a>
+            </div>
         </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>
 
-      <!-- SidebarSearch Form -->
-      {{-- <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div> --}}
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-folder"></i>
-              <p>
-               Menu
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Kelola Costumer</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Kelola Pengemudi</p>
-                </a>
-              </li>
+                {{-- Cek apakah user sudah login --}}
+                @auth
+
+                {{-- ================================================= --}}
+                {{-- ============== MENU UNTUK ADMIN =============== --}}
+                {{-- ================================================= --}}
+                @if(Auth::user()->role == 'admin')
+                
+                    <li class="nav-item">
+                        {{-- Pastikan route ini ada dan bernama 'admin.dashboard' di web.php --}}
+                        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-header">MANAJEMEN DATA</li>
+
+                    @php
+                        $isUserManagementActive = request()->routeIs('admin.orang-tua.*') || 
+                                                  request()->routeIs('admin.drivers.*') || 
+                                                  request()->routeIs('admin.anak.*');
+                    @endphp
+                    <li class="nav-item {{ $isUserManagementActive ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ $isUserManagementActive ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-users-cog"></i>
+                            <p>
+                                Kelola Pengguna
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.orang-tua.index') }}" class="nav-link {{ request()->routeIs('admin.orang-tua.*') ? 'active' : '' }}">
+                                    <i class="fas fa-user-friends nav-icon"></i>
+                                    <p>Orang Tua</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.drivers.index') }}" class="nav-link {{ request()->routeIs('admin.drivers.*') ? 'active' : '' }}">
+                                    <i class="fas fa-car-side nav-icon"></i>
+                                    <p>Pengemudi</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.anak.index') }}" class="nav-link {{ request()->routeIs('admin.anak.*') ? 'active' : '' }}">
+                                    <i class="fas fa-child nav-icon"></i>
+                                    <p>Anak</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.tarif-jarak.index') }}" class="nav-link {{ request()->routeIs('admin.tarif-jarak.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-dollar-sign"></i>
+                            <p>Tarif Jarak</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">OPERASIONAL</li>
+                     <li class="nav-item">
+                        <a href="{{ route('admin.pendaftaran-anak.index') }}" class="nav-link {{ request()->routeIs('admin.pendaftaran-anak.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-signature"></i>
+                            <p>Pendaftaran Anak</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.jadwal.index') }}" class="nav-link {{ request()->routeIs('admin.jadwal.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-calendar-alt"></i>
+                            <p>Jadwal Antar Jemput</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">KEUANGAN</li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.pembayaran.index') }}" class="nav-link {{ request()->routeIs('admin.pembayaran.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-credit-card"></i>
+                            <p>Pembayaran</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.penghasilan.index') }}" class="nav-link {{ request()->routeIs('admin.penghasilan.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-hand-holding-usd"></i>
+                            <p>Penghasilan Driver</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header">LAPORAN & LOG</li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.log-jadwal.index') }}" class="nav-link {{ request()->routeIs('admin.log-jadwal.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-history"></i>
+                            <p>Log Jadwal</p>
+                        </a>
+                    </li>
+                
+                {{-- ================================================= --}}
+                {{-- =========== MENU UNTUK PENGEMUDI ============== --}}
+                {{-- ================================================= --}}
+                @elseif(Auth::user()->role == 'pengemudi')
+                    <li class="nav-item">
+                        {{-- Pastikan Anda menamai route '/driver' di web.php, contoh: ->name('driver.dashboard') --}}
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-header">MENU UTAMA</li>
+                    <li class="nav-item">
+                        <a href="{{ route('driver.jadwal.index') }}" class="nav-link {{ request()->routeIs('driver.jadwal.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-calendar-check"></i>
+                            <p>Jadwal Hari Ini</p>
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="{{ route('driver.penghasilan.index') }}" class="nav-link {{ request()->routeIs('driver.penghasilan.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-wallet"></i>
+                            <p>Penghasilan Saya</p>
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="{{ route('driver.log-jadwal.index') }}" class="nav-link {{ request()->routeIs('driver.log-jadwal.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-history"></i>
+                            <p>Riwayat Perjalanan</p>
+                        </a>
+                    </li>
+
+                {{-- ================================================= --}}
+                {{-- ============ MENU UNTUK ORANG TUA ============= --}}
+                {{-- ================================================= --}}
+                @elseif(Auth::user()->role == 'orang_tua')
+                    <li class="nav-item">
+                        {{-- Pastikan Anda menamai route '/parent' di web.php, contoh: ->name('parent.dashboard') --}}
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                     <li class="nav-header">MENU UTAMA</li>
+                    <li class="nav-item">
+                        <a href="{{ route('parent.anak.index') }}" class="nav-link {{ request()->routeIs('parent.anak.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-child"></i>
+                            <p>Data Anak Saya</p>
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="{{ route('parent.pendaftaran-anak.index') }}" class="nav-link {{ request()->routeIs('parent.pendaftaran-anak.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-signature"></i>
+                            <p>Pendaftaran Anak</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('parent.pembayaran.index') }}" class="nav-link {{ request()->routeIs('parent.pembayaran.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-money-bill-wave"></i>
+                            <p>Pembayaran</p>
+                        </a>
+                    </li>
+                    {{-- Route untuk 'Jadwal Anak' dan 'Riwayat' tidak terdefinisi di web.php untuk role orang_tua --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-alt"></i>
+                            <p>Jadwal Anak</p>
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-history"></i>
+                            <p>Riwayat Antar Jemput</p>
+                        </a>
+                    </li>
+                @endif
+                
+                {{-- Menu Logout, tampil untuk semua role yang login --}}
+                <li class="nav-header">AKUN</li>
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>Logout</p>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+                @endauth
             </ul>
-          </li>
-          {{-- <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li> --}}
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
+        </nav>
+        <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-  </aside>
+</aside>
