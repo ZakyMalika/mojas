@@ -1,70 +1,68 @@
-{{-- Halaman ini menampilkan detail lengkap dari satu data anak. --}}
-<div class="p-8">
-    <div class="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
-        <div class="flex justify-between items-start mb-6">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-800">{{ $item->nama }}</h1>
-                <p class="text-md text-gray-500">Detail Lengkap Data Anak</p>
-            </div>
-            <div class="flex space-x-2">
-                <a href="{{ route('admin.anak.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition duration-300">
-                    Kembali
-                </a>
-                 <a href="{{ route('admin.anak.edit', $item->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
-                    Edit
-                </a>
-            </div>
-        </div>
+@extends('layouts.app')
 
-        <div class="border-t border-gray-200 pt-6">
-            <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
-                <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Nama Orang Tua</dt>
-                    <dd class="mt-1 text-lg text-gray-900">{{ $item->orangTua->nama ?? 'N/A' }}</dd>
-                </div>
-                 <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Umur</dt>
-                    <dd class="mt-1 text-lg text-gray-900">{{ $item->umur ? $item->umur . ' tahun' : '-' }}</dd>
-                </div>
-                <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Sekolah</dt>
-                    <dd class="mt-1 text-lg text-gray-900">{{ $item->sekolah ?? '-' }}</dd>
-                </div>
-                <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Kelas</dt>
-                    <dd class="mt-1 text-lg text-gray-900">{{ $item->kelas ?? '-' }}</dd>
-                </div>
-                <div class="sm:col-span-2">
-                    <dt class="text-sm font-medium text-gray-500">Alamat Penjemputan</dt>
-                    <dd class="mt-1 text-lg text-gray-900 whitespace-pre-wrap">{{ $item->alamat_penjemputan ?? '-' }}</dd>
-                </div>
-                <div class="sm:col-span-2">
-                    <dt class="text-sm font-medium text-gray-500">Catatan Tambahan</dt>
-                    <dd class="mt-1 text-lg text-gray-900 whitespace-pre-wrap">{{ $item->catatan ?? 'Tidak ada catatan.' }}</dd>
-                </div>
+{{-- Judul untuk header konten --}}
+@section('content-title', 'Detail Data Anak')
 
-                {{-- Menampilkan data relasi --}}
-                <div class="sm:col-span-2 border-t pt-4 mt-4">
-                    <dt class="text-sm font-medium text-gray-500">Jadwal Antar Jemput</dt>
-                    <dd class="mt-1 text-lg text-gray-900">
+@section('content')
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Informasi Lengkap: <strong>{{ $item->nama }}</strong></h3>
+                <div class="card-tools">
+                     <a href="{{ route('admin.anak.index') }}" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Daftar
+                    </a>
+                    <a href="{{ route('admin.anak.edit', $item->id) }}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i> Edit Data
+                    </a>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Nama Orang Tua</dt>
+                    {{-- Menggunakan relasi untuk menampilkan nama orang tua --}}
+                    <dd class="col-sm-8">{{ $item->orangTua->name ?? 'N/A' }}</dd>
+
+                    <dt class="col-sm-4">Umur</dt>
+                    <dd class="col-sm-8">{{ $item->umur ? $item->umur . ' tahun' : '-' }}</dd>
+
+                    <dt class="col-sm-4">Jenis Kelamin</dt>
+                    <dd class="col-sm-8">{{ $item->jenis_kelamin ?? '-' }}</dd>
+
+                    <dt class="col-sm-4">Sekolah</dt>
+                    <dd class="col-sm-8">{{ $item->sekolah ?? '-' }}</dd>
+
+                    <dt class="col-sm-4">Kelas</dt>
+                    <dd class="col-sm-8">{{ $item->kelas ?? '-' }}</dd>
+
+                    <dt class="col-sm-4">Alamat Penjemputan</dt>
+                    <dd class="col-sm-8">{{ $item->alamat_penjemputan ?? '-' }}</dd>
+
+                    <dt class="col-sm-4">Catatan Tambahan</dt>
+                    <dd class="col-sm-8">{{ $item->catatan ?? 'Tidak ada catatan.' }}</dd>
+
+                    <dt class="col-sm-4 border-top pt-3 mt-3">Jadwal Antar Jemput</dt>
+                    <dd class="col-sm-8 border-top pt-3 mt-3">
                         @if($item->jadwal_antar_jemput && $item->jadwal_antar_jemput->count() > 0)
-                            <ul class="list-disc pl-5">
+                            <ul class="list-unstyled">
                             @foreach($item->jadwal_antar_jemput as $jadwal)
-                                <li>{{ $jadwal->hari }}: Jemput pukul {{ $jadwal->jam_penjemputan }}, Antar pukul {{ $jadwal->jam_pengantaran }}</li>
+                                <li>
+                                    <strong>{{ $jadwal->hari }}:</strong> Jemput pukul {{ $jadwal->jam_penjemputan }}, Antar pukul {{ $jadwal->jam_pengantaran }}
+                                </li>
                             @endforeach
                             </ul>
                         @else
                             Jadwal belum diatur.
                         @endif
                     </dd>
-                </div>
-                 <div class="sm:col-span-2">
-                    <dt class="text-sm font-medium text-gray-500">Status Pendaftaran</dt>
-                    <dd class="mt-1 text-lg text-gray-900">
-                        {{ $item->pendaftaran_anak->status ?? 'Belum terdaftar' }}
-                    </dd>
-                </div>
-            </dl>
+                </dl>
+            </div>
+            <!-- /.card-body -->
         </div>
+        <!-- /.card -->
     </div>
 </div>
+@endsection
+

@@ -45,6 +45,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/check-phone', [RegisterController::class, 'checkPhone'])->name('check.phone');
 });
 
+
+
 // Route untuk logout (perlu login)
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
