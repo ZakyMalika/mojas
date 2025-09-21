@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class PembayaranSeeder extends Seeder
 {
@@ -26,7 +25,7 @@ class PembayaranSeeder extends Seeder
 
             for ($i = 0; $i < $jumlahPembayaran; $i++) {
                 $tanggalBayar = Carbon::now()->subMonths($jumlahPembayaran - $i - 1)->addDays(rand(1, 28));
-                
+
                 DB::table('pembayaran')->insert([
                     'pendaftaran_anak_id' => $data->pendaftaran_id,
                     'orang_tua_id' => $data->orang_tua_id,
@@ -61,7 +60,7 @@ class PembayaranSeeder extends Seeder
         $methods = [
             'cash', 'cash', 'cash', // Cash lebih sering
             'transfer', 'transfer',
-            'e-wallet'
+            'e-wallet',
         ];
 
         return $methods[array_rand($methods)];
@@ -72,7 +71,7 @@ class PembayaranSeeder extends Seeder
         $statuses = [
             'sukses', 'sukses', 'sukses', 'sukses', // Sukses lebih sering
             'pending',
-            'gagal'
+            'gagal',
         ];
 
         return $statuses[array_rand($statuses)];

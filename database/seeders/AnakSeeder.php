@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +18,7 @@ class AnakSeeder extends Seeder
         foreach ($orangTuaIds as $orangTuaId) {
             // Setiap orang tua punya 1-3 anak
             $jumlahAnak = rand(1, 3);
-            
+
             for ($i = 0; $i < $jumlahAnak; $i++) {
                 DB::table('anak')->insert([
                     'orang_tua_id' => $orangTuaId,
@@ -53,7 +52,7 @@ class AnakSeeder extends Seeder
             'Nurul Hidayah',
             'Raihan Maulana',
             'Zahra Aulia',
-            'Kevin Handoko'
+            'Kevin Handoko',
         ];
 
         return $names[array_rand($names)];
@@ -64,7 +63,7 @@ class AnakSeeder extends Seeder
         $classes = [
             '1 SD', '2 SD', '3 SD', '4 SD', '5 SD', '6 SD',
             '7 SMP', '8 SMP', '9 SMP',
-            '10 SMA', '11 SMA', '12 SMA'
+            '10 SMA', '11 SMA', '12 SMA',
         ];
 
         return $classes[array_rand($classes)];
@@ -82,7 +81,7 @@ class AnakSeeder extends Seeder
             'SD Swasta Bina Bangsa',
             'SMP Swasta Al-Azhar',
             'SMA Swasta Kanisius',
-            'SD Islam Terpadu'
+            'SD Islam Terpadu',
         ];
 
         return $schools[array_rand($schools)];
@@ -98,7 +97,7 @@ class AnakSeeder extends Seeder
             'Gang Mawar No. 21',
             'Jl. Diponegoro No. 333',
             'Perumahan Griya Asri No. 88',
-            'Jl. Sudirman Gang 5 No. 12'
+            'Jl. Sudirman Gang 5 No. 12',
         ];
 
         return $addresses[array_rand($addresses)];
@@ -116,7 +115,7 @@ class AnakSeeder extends Seeder
             'Hobi menggambar',
             null,
             'Anak yang mandiri',
-            'Perlu diingatkan tentang PR'
+            'Perlu diingatkan tentang PR',
         ];
 
         return $notes[array_rand($notes)];

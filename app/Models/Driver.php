@@ -11,15 +11,19 @@ class Driver extends Model
     use HasFactory;
 
     protected $guarded = [];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
     public function jadwal_antar_jemput()
     {
         return $this->hasMany(Jadwal_antar_jemput::class, 'drivers_id');
     }
-    public function penghasilan_driver(){
+
+    public function penghasilan_driver()
+    {
         return $this->hasOne(Penghasilan_driver::class, 'driver_id');
     }
 }

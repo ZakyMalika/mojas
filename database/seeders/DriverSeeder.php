@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -34,11 +33,11 @@ class DriverSeeder extends Seeder
         $letters = ['B', 'D', 'F', 'G', 'H']; // Kode wilayah
         $numbers = rand(1000, 9999);
         $suffixLetters = ['AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH'];
-        
+
         $letter = $letters[array_rand($letters)];
         $suffix = $suffixLetters[array_rand($suffixLetters)];
-        
-        return $letter . ' ' . $numbers . ' ' . $suffix;
+
+        return $letter.' '.$numbers.' '.$suffix;
     }
 
     private function getRandomVehicleType()
@@ -53,7 +52,7 @@ class DriverSeeder extends Seeder
             'Mobilio',
             'Brio',
             'Jazz',
-            'Calya'
+            'Calya',
         ];
 
         return $types[array_rand($types)];
@@ -69,7 +68,7 @@ class DriverSeeder extends Seeder
             'Biru',
             'Abu-abu',
             'Hijau',
-            'Kuning'
+            'Kuning',
         ];
 
         return $colors[array_rand($colors)];

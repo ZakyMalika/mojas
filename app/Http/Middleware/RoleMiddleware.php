@@ -17,19 +17,19 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         // Jika user belum login, redirect ke login
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect()->route('login');
         }
 
         $user = Auth::user();
-        
+
         // Jika tidak ada role yang ditentukan, lanjutkan request
         if (empty($roles)) {
             return $next($request);
         }
 
         // Cek apakah user memiliki role yang diizinkan
-        if (!in_array($user->role, $roles)) {
+        if (! in_array($user->role, $roles)) {
             // Redirect berdasarkan role user
             return $this->redirectBasedOnRole($user->role);
         }

@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class LogJadwalSeeder extends Seeder
 {
@@ -24,7 +23,7 @@ class LogJadwalSeeder extends Seeder
             $statusProgression = $this->getStatusProgression($jadwal->status);
 
             $previousStatus = 'menunggu';
-            $logTime = Carbon::parse($jadwal->tanggal . ' ' . $jadwal->jam_jemput)->subMinutes(30);
+            $logTime = Carbon::parse($jadwal->tanggal.' '.$jadwal->jam_jemput)->subMinutes(30);
 
             foreach ($statusProgression as $newStatus) {
                 DB::table('log_jadwal')->insert([
@@ -87,12 +86,12 @@ class LogJadwalSeeder extends Seeder
             ],
         ];
 
-        $key = $statusLama . '->' . $statusBaru;
-        
+        $key = $statusLama.'->'.$statusBaru;
+
         if (isset($notes[$key])) {
             return $notes[$key][array_rand($notes[$key])];
         }
 
-        return 'Perubahan status dari ' . $statusLama . ' ke ' . $statusBaru;
+        return 'Perubahan status dari '.$statusLama.' ke '.$statusBaru;
     }
 }

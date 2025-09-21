@@ -9,12 +9,18 @@ class Log_Jadwal extends Model
 {
     /** @use HasFactory<\Database\Factories\LogJadwalFactory> */
     use HasFactory;
+
     protected $guarded = [];
+
     protected $table = 'log_jadwal';
-    public function jadwal(){
+
+    public function jadwal()
+    {
         return $this->belongsTo(Jadwal_antar_jemput::class, 'jadwal_id');
     }
-    public function driver(){
+
+    public function driver()
+    {
         return $this->belongsTo(Driver::class, 'driver_id');
     }
 }

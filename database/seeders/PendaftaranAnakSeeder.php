@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class PendaftaranAnakSeeder extends Seeder
 {
@@ -31,7 +30,7 @@ class PendaftaranAnakSeeder extends Seeder
                 $tipeLayanan = $this->getRandomServiceType();
                 $jarak = $this->getRandomDistance();
                 $tarif = $this->calculateTarif($tarifId, $tipeLayanan);
-                
+
                 // Periode pendaftaran
                 $periodeStart = Carbon::now()->subMonths(rand(0, 6));
                 $periodeEnd = $i == 0 ? null : $periodeStart->copy()->addMonths(rand(1, 12)); // Pendaftaran pertama masih aktif
@@ -66,13 +65,13 @@ class PendaftaranAnakSeeder extends Seeder
     {
         // Ambil tarif berdasarkan ID
         $tarif = DB::table('tarif_jarak')->where('id', $tarifId)->first();
-        
-        if (!$tarif) {
+
+        if (! $tarif) {
             return 150000; // Default tarif
         }
 
         $baseTarif = $tipeLayanan === 'one_way' ? $tarif->tarif_one_way : $tarif->tarif_two_way;
-        
+
         // Tarif bulanan = tarif harian x 22 hari kerja (dengan sedikit diskon)
         return round($baseTarif * 22 * 0.9); // 10% diskon untuk bulanan
     }

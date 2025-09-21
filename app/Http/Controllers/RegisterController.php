@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
 class RegisterController extends Controller
@@ -65,10 +64,10 @@ class RegisterController extends Controller
     {
         $username = $request->input('username');
         $exists = User::where('username', $username)->exists();
-        
+
         return response()->json([
-            'available' => !$exists,
-            'message' => $exists ? 'Username sudah digunakan' : 'Username tersedia'
+            'available' => ! $exists,
+            'message' => $exists ? 'Username sudah digunakan' : 'Username tersedia',
         ]);
     }
 
@@ -79,10 +78,10 @@ class RegisterController extends Controller
     {
         $email = $request->input('email');
         $exists = User::where('email', $email)->exists();
-        
+
         return response()->json([
-            'available' => !$exists,
-            'message' => $exists ? 'Email sudah digunakan' : 'Email tersedia'
+            'available' => ! $exists,
+            'message' => $exists ? 'Email sudah digunakan' : 'Email tersedia',
         ]);
     }
 
@@ -93,10 +92,10 @@ class RegisterController extends Controller
     {
         $no_telp = $request->input('no_telp');
         $exists = User::where('no_telp', $no_telp)->exists();
-        
+
         return response()->json([
-            'available' => !$exists,
-            'message' => $exists ? 'Nomor telepon sudah digunakan' : 'Nomor telepon tersedia'
+            'available' => ! $exists,
+            'message' => $exists ? 'Nomor telepon sudah digunakan' : 'Nomor telepon tersedia',
         ]);
     }
 }

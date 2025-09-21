@@ -11,17 +11,21 @@ class Orang_tua extends Model
     use HasFactory;
 
     protected $table = 'orang_tua';
+
     protected $guarded = [];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
     public function anak()
     {
         return $this->hasMany(Anak::class);
     }
-    public function pembayaran(){
+
+    public function pembayaran()
+    {
         return $this->hasMany(Pembayaran::class, 'orang_tua_id');
     }
 }

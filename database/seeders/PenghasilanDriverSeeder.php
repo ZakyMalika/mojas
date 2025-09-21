@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class PenghasilanDriverSeeder extends Seeder
 {
@@ -22,7 +21,7 @@ class PenghasilanDriverSeeder extends Seeder
         foreach ($jadwalSelesai as $jadwal) {
             $tarifPerTrip = $this->calculateTarifPerTrip();
             $komisiDriver = $this->calculateKomisiDriver($tarifPerTrip);
-            
+
             DB::table('penghasilan_driver')->insert([
                 'driver_id' => $jadwal->drivers_id,
                 'jadwal_id' => $jadwal->id,
@@ -40,7 +39,7 @@ class PenghasilanDriverSeeder extends Seeder
     {
         // Tarif per trip bervariasi berdasarkan jarak dan kondisi
         $baseTarif = [
-            15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000
+            15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000,
         ];
 
         return $baseTarif[array_rand($baseTarif)];
@@ -50,6 +49,7 @@ class PenghasilanDriverSeeder extends Seeder
     {
         // Driver mendapat 60-80% dari tarif per trip
         $persentaseKomisi = rand(60, 80) / 100;
+
         return round($tarifPerTrip * $persentaseKomisi);
     }
 
@@ -58,7 +58,7 @@ class PenghasilanDriverSeeder extends Seeder
         // Kebanyakan sudah dibayar untuk jadwal yang sudah selesai
         $statuses = [
             'dibayar', 'dibayar', 'dibayar', 'dibayar', // Lebih sering dibayar
-            'pending'
+            'pending',
         ];
 
         return $statuses[array_rand($statuses)];
@@ -69,12 +69,12 @@ class PenghasilanDriverSeeder extends Seeder
         // Jika status dibayar, tentukan tanggal pembayaran (biasanya 1-7 hari setelah jadwal)
         if ($this->getRandomPaymentStatus() === 'dibayar') {
             $tanggalBayar = Carbon::parse($tanggalJadwal)->addDays(rand(1, 7));
-            
+
             // Pastikan tidak melebihi hari ini
             if ($tanggalBayar->isFuture()) {
                 return null;
             }
-            
+
             return $tanggalBayar;
         }
 

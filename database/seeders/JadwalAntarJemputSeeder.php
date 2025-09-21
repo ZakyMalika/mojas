@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class JadwalAntarJemputSeeder extends Seeder
 {
@@ -32,6 +31,7 @@ class JadwalAntarJemputSeeder extends Seeder
             // Skip weekend (optional, tergantung kebutuhan)
             if ($currentDate->isWeekend()) {
                 $currentDate->addDay();
+
                 continue;
             }
 
@@ -82,7 +82,7 @@ class JadwalAntarJemputSeeder extends Seeder
     {
         $times = [
             '06:00:00', '06:15:00', '06:30:00', '06:45:00',
-            '07:00:00', '07:15:00', '07:30:00'
+            '07:00:00', '07:15:00', '07:30:00',
         ];
 
         return $times[array_rand($times)];
@@ -93,7 +93,7 @@ class JadwalAntarJemputSeeder extends Seeder
         $times = [
             '13:00:00', '13:15:00', '13:30:00',
             '14:00:00', '14:15:00', '14:30:00',
-            '15:00:00', '15:15:00', '15:30:00'
+            '15:00:00', '15:15:00', '15:30:00',
         ];
 
         return $times[array_rand($times)];
@@ -108,7 +108,7 @@ class JadwalAntarJemputSeeder extends Seeder
             'Jl. Kemang Raya No. 789',
             'Perumahan Indah Permai',
             'Jl. Thamrin No. 321',
-            'Gang Mawar No. 88'
+            'Gang Mawar No. 88',
         ];
 
         return $locations[array_rand($locations)];
@@ -122,7 +122,7 @@ class JadwalAntarJemputSeeder extends Seeder
             'SMA Negeri 8 Jakarta',
             'SD Swasta Bina Bangsa',
             'SMP Al-Azhar Jakarta',
-            'SMA Kanisius Jakarta'
+            'SMA Kanisius Jakarta',
         ];
 
         return $schools[array_rand($schools)];
@@ -151,7 +151,7 @@ class JadwalAntarJemputSeeder extends Seeder
             'Anak membawa tas olahraga',
             'Ada PR yang tertinggal',
             null,
-            'Cuaca hujan, bawa payung'
+            'Cuaca hujan, bawa payung',
         ];
 
         return $notes[array_rand($notes)];

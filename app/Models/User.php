@@ -23,7 +23,7 @@ class User extends Authenticatable
         'password',
         'username',
         'role',
-        'no_telp'
+        'no_telp',
     ];
 
     /**
@@ -53,6 +53,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Orang_tua::class);
     }
+
     public function driver()
     {
         return $this->hasOne(Driver::class);
