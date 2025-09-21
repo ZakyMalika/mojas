@@ -30,7 +30,7 @@ class OrangTuaController extends Controller
         ]);
         $item = Orang_tua::create($data);
 
-        return redirect()->route('admin.orang-tua.show', $item);
+        return redirect()->route('admin.orang_tua.show', $item);
     }
 
     public function show(Orang_tua $orang_tua)
@@ -56,13 +56,14 @@ class OrangTuaController extends Controller
         ]);
         $orang_tua->update($data);
 
-        return redirect()->route('admin.orang-tua.show', $orang_tua);
+        return redirect()->route('admin.orang_tua.show', $orang_tua);
     }
 
     public function destroy(Orang_tua $orang_tua)
     {
         $orang_tua->delete();
 
-        return redirect()->route('admin.orang-tua.index');
+        return redirect()->route('admin.orang_tua.index');
     }
+    
 }

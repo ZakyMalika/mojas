@@ -56,7 +56,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.orang-tua.index') }}" class="nav-link {{ request()->routeIs('admin.orang-tua.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.orang_tua.index') }}" class="nav-link {{ request()->routeIs('admin.orang_tua.*') ? 'active' : '' }}">
                                     <i class="fas fa-user-friends nav-icon"></i>
                                     <p>Orang Tua</p>
                                 </a>
@@ -180,7 +180,7 @@
                         </a>
                     </li>
                     {{-- Route untuk 'Jadwal Anak' dan 'Riwayat' tidak terdefinisi di web.php untuk role orang_tua --}}
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-calendar-alt"></i>
                             <p>Jadwal Anak</p>
@@ -191,7 +191,7 @@
                             <i class="nav-icon fas fa-history"></i>
                             <p>Riwayat Antar Jemput</p>
                         </a>
-                    </li>
+                    </li> --}}
                 @endif
                 
                 {{-- Menu Logout, tampil untuk semua role yang login --}}

@@ -54,7 +54,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // ADMIN
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(function () {
-    Route::resource('orang-tua', AdminOrangTuaController::class);
+    Route::resource('orang_tua', AdminOrangTuaController::class);
     Route::resource('anak', AdminAnakController::class);
     Route::resource('drivers', AdminDriverController::class);
     Route::resource('tarif-jarak', AdminTarifJarakController::class);
