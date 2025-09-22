@@ -10,7 +10,7 @@
                 <h3 class="card-title">Detail Penghasilan ID: <strong>#{{ $item->id }}</strong></h3>
                 <div class="card-tools">
                      <a href="{{ route('admin.penghasilan.index') }}" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> Kembali</a>
-                     <a href="{{ route('admin.penghasilan.edit', $item->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                     <a href="{{ $editUrl }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
                 </div>
             </div>
             <div class="card-body">
@@ -38,10 +38,14 @@
                 <dl class="row">
                      <dt class="col-sm-4">ID Jadwal</dt>
                     <dd class="col-sm-8">
-                        <a href="{{ route('admin.jadwal.show', $item->jadwal_id) }}">#{{ $item->jadwal_id }}</a>
+                        @if($item->jadwal_id)
+                            <a href="{{ url("admin/jadwal/{$item->jadwal_id}") }}">#{{ $item->jadwal_id }}</a>
+                        @else
+                            <span class="text-muted">-</span>
+                        @endif
                     </dd>
                     <dt class="col-sm-4">Anak</dt>
-                    <dd class="col-sm-8">{{ $item->jadwal->anak->nama ?? 'N/A' }}</dd>
+                    <dd class="col-sm-8">{{ $item->jadwal?->anak?->nama ?? 'N/A' }}</dd>
                      <dt class="col-sm-4">Nama Pengemudi</dt>
                     <dd class="col-sm-8">{{ $item->driver->user->name ?? 'N/A' }}</dd>
                 </dl>

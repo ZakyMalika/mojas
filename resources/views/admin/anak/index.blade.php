@@ -50,7 +50,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
-                                <td>{{ $item->orangTua->name ?? 'N/A' }}</td>
+                                <td>{{ $item->orangTua->user->name ?? 'N/A' }}</td>
                                 <td>{{ $item->sekolah ?? '-' }}</td>
                                 <td>{{ $item->kelas ?? '-' }}</td>
                                 <td>

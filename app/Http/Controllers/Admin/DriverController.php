@@ -15,7 +15,7 @@ class DriverController extends Controller
         $items = Driver::with(['user', 'jadwal_antar_jemput', 'penghasilan_driver'])
             ->paginate($perPage)->appends($request->query());
 
-        return view('admin.drivers.index', compact('items'));
+        return view('admin.drivers.show', compact('items')); // Menggunakan show.blade.php untuk list
     }
 
     public function create()
@@ -40,7 +40,7 @@ class DriverController extends Controller
     {
         $driver->load(['user', 'jadwal_antar_jemput', 'penghasilan_driver']);
 
-        return view('admin.drivers.show', ['item' => $driver]);
+        return view('admin.drivers.index', ['item' => $driver]); // Menggunakan index.blade.php untuk detail
     }
 
     public function edit(Driver $driver)

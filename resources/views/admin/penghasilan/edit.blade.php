@@ -7,7 +7,7 @@
     <div class="col-md-8 mx-auto">
         <div class="card card-warning">
             <div class="card-header"><h3 class="card-title">Formulir Edit Penghasilan ID: #{{ $item->id }}</h3></div>
-            <form action="{{ route('admin.penghasilan.update', $item->id) }}" method="POST">
+            <form action="{{ route('admin.penghasilan.update', ['penghasilan' => $item->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="card-body">

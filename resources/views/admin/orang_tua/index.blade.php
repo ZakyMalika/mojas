@@ -1,63 +1,79 @@
 @extends('layouts.app')
 
-@section('content-title', 'Detail Data Orang Tua')
+@section('content-title', 'Daftar Data Orang Tua')
 
 @section('content')
 <div class="row">
-    <div class="col-md-8 mx-auto">
+    <div class="col-12">
         <div class="card card-primary card-outline">
             <div class="card-header">
-                <h3 class="card-title">Informasi Lengkap: <strong>{{ $items->user->name ?? 'N/A' }}</strong></h3>
+                <h3 class="card-title">Daftar Orang Tua</h3>
                 <div class="card-tools">
-                     <a href="{{ route('admin.orang_tua.index') }}" class="btn btn-secondary btn-sm">
-                        <i class="fas fa-arrow-left"></i> Kembali
-                    </a>
-                    <a href="{{ route('admin.orang_tua.edit', $items) }}" class="btn btn-warning btn-sm">
-                        <i class="fas fa-edit"></i> Edit
+                    <a href="{{ route('admin.orang_tua.create') }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> Tambah Orang Tua
                     </a>
                 </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <dl class="row">
-                    <dt class="col-sm-4">Email</dt>
-                    <dd class="col-sm-8">{{ $item->user->email ?? 'N/A' }}</dd>
-
-                    <dt class="col-sm-4">No. Telepon</dt>
-                    <dd class="col-sm-8">{{ $item->user->no_telp ?? 'N/A' }}</dd>
-
-                    <dt class="col-sm-4">Alamat</dt>
-                    <dd class="col-sm-8">{{ $item->alamat ?? '-' }}</dd>
-
-                    <dt class="col-sm-4">Catatan</dt>
-                    <dd class="col-sm-8">{{ $item->catatan ?? 'Tidak ada catatan.' }}</dd>
-
-                    <dt class="col-sm-4 border-top pt-3 mt-3">Anak Terdaftar</dt>
-                    <dd class="col-sm-8 border-top pt-3 mt-3">
-                        @if($items->anak && $items->count() > 0)
-                            <ul class="list-unstyled">
-                            @foreach($items->anak as $anak)
-                                <li><i class="fas fa-child text-info mr-2"></i> {{ $anak->nama }} ({{ $anak->umur }} tahun)</li>
-                            @endforeach
-                            </ul>
-                        @else
-                            Belum ada anak yang terdaftar.
-                        @endif
-                    </dd>
-
-                    <dt class="col-sm-4 border-top pt-3 mt-3">Riwayat Pembayaran</dt>
-                    <dd class="col-sm-8 border-top pt-3 mt-3">
-                         @if($items->pembayaran && $items->pembayaran->count() > 0)
-                            <ul class="list-unstyled">
-                            @foreach($items->pembayaran as $bayar)
-                                <li><i class="fas fa-check-circle text-success mr-2"></i> {{ $bayar->deskripsi }} - Rp{{ number_format($bayar->jumlah, 0, ',', '.') }}</li>
-                            @endforeach
-                            </ul>
-                        @else
-                            Belum ada riwayat pembayaran.
-                        @endif
-                    </dd>
-                </dl>
+                @if($items->count() > 0)
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>No. Telepon</th>
+                                    <th>Alamat</th>
+                                    <th>Jumlah Anak</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($items as $key => $item)
+                                <tr>
+                                    <td>{{ $items->firstItem() + $key }}</td>
+                                    <td>{{ $item->user->name ?? 'N/A' }}</td>
+                                    <td>{{ $item->user->email ?? 'N/A' }}</td>
+                                    <td>{{ $item->user->no_telp ?? 'N/A' }}</td>
+                                    <td>{{ Str::limit($item->alamat, 50) ?? '-' }}</td>
+                                    <td>
+                                        <span class="badge badge-info">
+                                            {{ $item->anak->count() }} anak
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('admin.orang_tua.show', $item) }}" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i> Detail
+                                        </a>
+                                        <a href="{{ route('admin.orang_tua.edit', $item) }}" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div>
+                            Menampilkan {{ $items->firstItem() }} sampai {{ $items->lastItem() }} 
+                            dari {{ $items->total() }} total data
+                        </div>
+                        <div>
+                            {{ $items->links() }}
+                        </div>
+                    </div>
+                @else
+                    <div class="text-center py-4">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Belum ada data orang tua</h5>
+                        <p class="text-muted">Klik tombol "Tambah Orang Tua" untuk menambah data baru.</p>
+                    </div>
+                @endif
             </div>
             <!-- /.card-body -->
         </div>

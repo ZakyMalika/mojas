@@ -63,6 +63,31 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::resource('jadwal', AdminJadwalAntarJemputController::class);
     Route::resource('log-jadwal', AdminLogJadwalController::class);
     Route::resource('penghasilan', AdminPenghasilanDriverController::class);
+    
+    // AJAX routes
+    Route::get('penghasilan/jadwal-by-anak/{anak}', [AdminPenghasilanDriverController::class, 'getJadwalByAnak'])->name('penghasilan.getJadwalByAnak');
+    
+    // Test route for debugging
+    Route::get('test-jadwal/{anak_id}', function($anak_id) {
+        $jadwals = \App\Models\Jadwal_antar_jemput::where('anak_id', $anak_id)
+            ->get()
+            ->map(function($jadwal) {
+                return [
+                    'id' => $jadwal->id,
+                    'tanggal' => $jadwal->tanggal,
+                    'jam_jemput' => $jadwal->jam_jemput,
+                    'status' => $jadwal->status,
+                    'anak_id' => $jadwal->anak_id
+                ];
+            });
+        
+        return response()->json([
+            'success' => true,
+            'anak_id' => (int)$anak_id,
+            'count' => $jadwals->count(),
+            'jadwals' => $jadwals
+        ]);
+    })->name('test.jadwal');
 });
 
 // PARENT (orang tua)

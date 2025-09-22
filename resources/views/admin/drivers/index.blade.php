@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-{{-- Judul untuk header konten --}}
-@section('content-title', 'Tambah Data Tarif Jarak')
-@section('content')
-    
-@endsection@extends('layouts.app')
-
 @section('content-title', 'Detail Data Pengemudi')
 
 @section('content')
@@ -18,7 +12,7 @@
                      <a href="{{ route('admin.drivers.index') }}" class="btn btn-secondary btn-sm">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
-                    <a href="{{ route('admin.drivers.edit', $item->id) }}" class="btn btn-warning btn-sm">
+                    <a href="{{ route('admin.drivers.edit', $item) }}" class="btn btn-warning btn-sm">
                         <i class="fas fa-edit"></i> Edit
                     </a>
                 </div>
@@ -59,15 +53,15 @@
                         @endif
                     </dd>
 
-                     <dt class="col-sm-4">Total Penghasilan</dt>
-                    <dd class="col-sm-8">
-                         @if($item->penghasilan_driver && $item->penghasilan_driver->count() > 0)
+                     {{-- <dt class="col-sm-4">Total Penghasilan</dt> --}}
+                    {{-- <dd class="col-sm-8"> --}}
+                         {{-- @if($item->penghasilan_driver && $item->penghasilan_driver->count() > 0) --}}
                             {{-- Asumsi Anda ingin menjumlahkan semua penghasilan --}}
-                            Rp{{ number_format($item->penghasilan_driver->sum('jumlah'), 0, ',', '.') }}
-                        @else
-                           Rp0
-                        @endif
-                    </dd>
+                            {{-- Rp{{ number_format($item->penghasilan_driver->sum('jumlah'), 0, ',', '.') }} --}}
+                        {{-- @else --}}
+                           {{-- Rp0 --}}
+                        {{-- @endif --}}
+                    {{-- </dd> --}}
                 </dl>
             </div>
             <!-- /.card-body -->

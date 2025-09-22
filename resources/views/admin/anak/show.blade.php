@@ -49,7 +49,7 @@
                             <ul class="list-unstyled">
                             @foreach($item->jadwal_antar_jemput as $jadwal)
                                 <li>
-                                    <strong>{{ $jadwal->hari }}:</strong> Jemput pukul {{ $jadwal->jam_penjemputan }}, Antar pukul {{ $jadwal->jam_pengantaran }}
+                                    <strong>{{ $jadwal->hari }}:</strong> Jemput pukul <strong>{{ $jadwal->jam_jemput }}</strong>, Antar pukul <strong>{{ $jadwal->jam_antar }}</strong>
                                 </li>
                             @endforeach
                             </ul>
