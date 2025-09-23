@@ -18,7 +18,8 @@ class JadwalAntarJemputController extends Controller
 
     public function create()
     {
-        return view('admin.jadwal.create');
+        $jadwals = Jadwal_antar_jemput::with(['anak', 'driver'])->get();
+        return view('admin.jadwal.create', ['items' => $jadwals]);
     }
 
     public function store(Request $request)
@@ -51,8 +52,9 @@ class JadwalAntarJemputController extends Controller
     public function edit(Jadwal_antar_jemput $jadwal)
     {
         $jadwal->load(['anak', 'driver']);
+        $drivers = \App\Models\Driver::with('user')->get();
 
-        return view('admin.jadwal.edit', ['item' => $jadwal]);
+        return view('admin.jadwal.edit', ['item' => $jadwal, 'drivers' => $drivers]);
     }
 
     public function update(Request $request, Jadwal_antar_jemput $jadwal)

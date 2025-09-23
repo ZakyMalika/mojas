@@ -28,4 +28,9 @@ class Anak extends Model
     {
         return $this->hasMany(Pendaftaran_anak::class, 'anak_id');
     }
+
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
 }

@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label for="drivers_id">Pengemudi</label>
                                 <select class="form-control @error('drivers_id') is-invalid @enderror" id="drivers_id" name="drivers_id">
-                                    {{-- @foreach($drivers as $driver) <option value="{{ $driver->id }}" {{ old('drivers_id', $item->drivers_id) == $driver->id ? 'selected' : '' }}>{{ $driver->user->name }}</option> @endforeach --}}
+                                    @foreach($drivers as $driver) <option value="{{ $driver->id }}" {{ old('drivers_id', $item->drivers_id) == $driver->id ? 'selected' : '' }}>{{ $driver->user->name }}</option> @endforeach
                                     <option value="{{ $item->drivers_id }}" selected>{{ $item->driver->user->name ?? 'Driver tidak ditemukan' }}</option>
                                 </select>
                                  @error('drivers_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror

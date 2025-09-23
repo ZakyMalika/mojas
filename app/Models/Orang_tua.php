@@ -28,4 +28,9 @@ class Orang_tua extends Model
     {
         return $this->hasMany(Pembayaran::class, 'orang_tua_id');
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'orang_tua_id');
+    }
 }

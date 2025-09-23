@@ -13,9 +13,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            // Core user and role data
             UserSeeder::class,
             OrangTuaSeeder::class,
             DriverSeeder::class,
+            
+            // New tables for enhanced features
+            SchoolSeeder::class,
+            RentalServiceSeeder::class,
+            PricingTierSeeder::class,
+            
+            // Original system data
             TarifJarakSeeder::class,
             AnakSeeder::class,
             PendaftaranAnakSeeder::class,
@@ -23,6 +31,9 @@ class DatabaseSeeder extends Seeder
             PembayaranSeeder::class,
             PenghasilanDriverSeeder::class,
             LogJadwalSeeder::class,
+            
+            // New booking system (depends on all above)
+            BookingSeeder::class,
         ]);
     }
 }

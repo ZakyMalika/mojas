@@ -42,6 +42,7 @@
                             <th>Orang Tua</th>
                             <th>Sekolah</th>
                             <th>Kelas</th>
+                            <th>Jadwal</th>
                             <th style="width: 22%;">Aksi</th>
                         </tr>
                     </thead>
@@ -53,6 +54,14 @@
                                 <td>{{ $item->orangTua->user->name ?? 'N/A' }}</td>
                                 <td>{{ $item->sekolah ?? '-' }}</td>
                                 <td>{{ $item->kelas ?? '-' }}</td>
+                                <td>
+                                    @if($item->jadwal_antar_jemput && $item->jadwal_antar_jemput->count() > 0)
+                                        
+                                        <br><p class="text-muted">{{ $item->jadwal_antar_jemput->first()->jam_jemput ?? '' }}</p>
+                                    @else
+                                        <span class="text-muted">Belum ada jadwal</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.anak.show', $item->id) }}" class="btn btn-info btn-sm" title="Detail"><i class="fas fa-eye"></i> Show</a>

@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tarif_jarak', function (Blueprint $table) {
-            $table->id();
-            $table->decimal('tarif_one_way', 10, 2);
-            $table->decimal('tarif_two_way', 10, 2);
-            $table->decimal('tarif_per_km', 10, 2);
-            $table->timestamps();
+        Schema::table('anak', function (Blueprint $table) {
+            $table->foreignId('school_id')->nullable()->after('orang_tua_id')->constrained('schools')->onDelete('set null');
         });
     }
 
@@ -25,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tarif_jaraks');
+        Schema::table('anak', function (Blueprint $table) {
+            $table->dropForeign(['school_id']);
+            $table->dropColumn('school_id');
+        });
     }
 };
