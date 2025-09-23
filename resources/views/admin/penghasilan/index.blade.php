@@ -8,10 +8,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Daftar Semua Penghasilan Pengemudi</h3>
+                <h3 class="card-title">Daftar Semua Penghasilan</h3>
                 <div class="card-tools">
                     <a href="{{ route('admin.penghasilan.create') }}" class="btn btn-primary btn-sm">
-                        <i class="fas fa-plus"></i> Buat Catatan Penghasilan
+                        <i class="fas fa-plus"></i> Tambah Data
                     </a>
                 </div>
             </div>
@@ -29,38 +29,36 @@
                 <table id="penghasilan-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>ID Jadwal</th>
                             <th>Pengemudi</th>
-                            <th>Jadwal (Anak)</th>
-                            <th>Tarif Trip</th>
                             <th>Komisi</th>
                             <th>Status</th>
-                            <th style="width: 20%;">Aksi</th>
+                            <th>Tanggal Dibayar</th>
+                            <th style="width: 15%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
+                                <td>#{{ $item->jadwal_id }}</td>
                                 <td>{{ $item->driver->user->name ?? 'N/A' }}</td>
-                                <td>ID: {{ $item->jadwal_id }} ({{ $item->jadwal->anak->nama ?? 'N/A' }})</td>
-                                <td>Rp{{ number_format($item->tarif_per_trip, 0, ',', '.') }}</td>
-                                <td>Rp{{ number_format($item->komisi_pengemudi, 0, ',', '.') }}</td>
+                                <td>Rp {{ number_format($item->komisi_pengemudi, 0, ',', '.') }}</td>
                                 <td>
                                     @php
-                                        $statusClass = ($item->status == 'pending') ? 'warning' : 'success';
+                                        $statusClass = $item->status == 'dibayar' ? 'success' : 'warning';
                                     @endphp
                                     <span class="badge bg-{{ $statusClass }}">{{ ucfirst($item->status) }}</span>
                                 </td>
+                                <td>{{ $item->tanggal_dibayar ? \Carbon\Carbon::parse($item->tanggal_dibayar)->format('d F Y') : '-' }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.penghasilan.show', $item->id) }}" class="btn btn-info btn-sm" title="Detail"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ url('admin/penghasilan/'.$item->id.'/edit') }}" class="btn btn-warning btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('admin.penghasilan.edit', $item->id) }}" class="btn btn-warning btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
                                         <a href="#" class="btn btn-danger btn-sm delete-btn"
                                            data-toggle="modal"
                                            data-target="#deleteConfirmationModal"
                                            data-action="{{ route('admin.penghasilan.destroy', $item->id) }}"
-                                           data-name="Penghasilan untuk {{ $item->driver->user->name ?? 'data ini' }}"
+                                           data-name="Penghasilan untuk Jadwal #{{ $item->jadwal_id }}"
                                            title="Hapus">
                                             <i class="fas fa-trash"></i>
                                         </a>
@@ -68,7 +66,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="7" class="text-center">Belum ada data penghasilan.</td></tr>
+                            <tr><td colspan="6" class="text-center">Belum ada data penghasilan.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -92,7 +90,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Ya, Hapus</button>
+                <form id="deleteForm" method="POST" action="" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                </form>
             </div>
         </div>
     </div>
@@ -104,29 +106,18 @@
 $(function () {
     $("#penghasilan-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print"]
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#penghasilan-table_wrapper .col-md-6:eq(0)');
 
-    // LOGIKA HAPUS DENGAN MODAL (SOLUSI DEFINITIF)
-    let urlToDelete = null;
-    $('#penghasilan-table tbody').on('click', '.delete-btn', function (event) {
-        event.preventDefault();
-        urlToDelete = $(this).data('action');
-        let dataName = $(this).data('name');
-        $('#dataNameToDelete').text(dataName);
-    });
-    $('#confirmDeleteButton').on('click', function(e) {
-        e.preventDefault();
-        if (urlToDelete) {
-            let form = $('<form>', {
-                'method': 'POST', 'action': urlToDelete, 'style': 'display:none;'
-            });
-            form.append($('<input>', {'type': 'hidden', 'name': '_token', 'value': '{{ csrf_token() }}' }));
-            form.append($('<input>', {'type': 'hidden', 'name': '_method', 'value': 'DELETE'}));
-            $('body').append(form);
-            form.submit();
-        }
+    $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var action = button.data('action');
+        var name = button.data('name');
+        var modal = $(this);
+        modal.find('#dataNameToDelete').text(name);
+        modal.find('#deleteForm').attr('action', action);
     });
 });
 </script>
 @endpush
+

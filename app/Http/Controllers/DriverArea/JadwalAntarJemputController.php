@@ -74,13 +74,13 @@ class JadwalAntarJemputController extends Controller
         abort_if(! $driver, 403);
         abort_if($jadwal->drivers_id !== $driver->id, 403);
         $data = $request->validate([
-            'anak_id' => ['required', 'integer', 'exists:anak,id'],
-            'tanggal' => ['required', 'date'],
-            'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
-            'jam_jemput' => ['required', 'date_format:H:i:s'],
-            'jam_antar' => ['required', 'date_format:H:i:s'],
-            'lokasi_jemput' => ['nullable', 'string'],
-            'lokasi_antar' => ['nullable', 'string'],
+            // 'anak_id' => ['required', 'integer', 'exists:anak,id'],
+            // 'tanggal' => ['required', 'date'],
+            // 'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
+            // 'jam_jemput' => ['required', 'date_format:H:i:s'],
+            // 'jam_antar' => ['required', 'date_format:H:i:s'],
+            // 'lokasi_jemput' => ['nullable', 'string'],
+            // 'lokasi_antar' => ['nullable', 'string'],
             'status' => ['required', 'in:menunggu,dijemput,perjalanan,selesai,dibatalkan'],
             'catatan' => ['nullable', 'string'],
             'diambil_pengemudi' => ['nullable', 'date'],

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOJAS BATAM - Layanan Antar Jemput Siswa Terpercaya</title>
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -112,8 +112,7 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(44, 85, 48, 0.4);
         }
-        
-        /* FIX: Consolidated .btn-primary style to use the orange theme consistently */
+
         .btn-primary {
             background: linear-gradient(135deg, #ff8c42, #ff6b1a);
             color: white;
@@ -167,7 +166,7 @@
             background: #22c55e;
             transform: translateY(-2px);
         }
-        
+
         /* === HERO SECTION === */
         .hero {
             height: 100vh;
@@ -219,9 +218,9 @@
             border-radius: 20px;
             padding: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.1s linear; /* For JS animation */
+            transition: transform 0.1s linear;
         }
-        
+
         .hero-icon {
             font-size: 4rem;
             color: #ff8c42;
@@ -230,7 +229,7 @@
             text-align: center;
         }
 
-        /* === SECTIONS (FEATURES, PRICING, CONTACT) === */
+        /* === SECTIONS (GENERAL) === */
         .section-title {
             text-align: center;
             margin-bottom: 4rem;
@@ -249,9 +248,10 @@
             margin: 0 auto;
         }
 
+        /* === FEATURES SECTION === */
         .features {
             padding: 6rem 0;
-            background: #f8f9fa;
+            background: #ffffff;
         }
 
         .features-grid {
@@ -286,10 +286,71 @@
             color: #2c5530;
             margin-bottom: 1rem;
         }
-        
+
+        /* === VISI MISI SECTION === */
+        .visimisi {
+            padding: 6rem 0;
+            background: #f8f9fa;
+        }
+
+        .visimisi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .visimisi-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+
+        .visimisi-card h3 {
+            font-size: 1.8rem;
+            color: #2c5530;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .visimisi-card h3 .fa {
+            color: #ff8c42;
+        }
+
+        .visimisi-card p,
+        .visimisi-card li {
+            color: #555;
+            font-size: 1.05rem;
+        }
+
+        .visimisi-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .visimisi-card ul li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .visimisi-card ul li .fa-check-circle {
+            color: #28a745;
+            margin-top: 5px;
+        }
+
+
+
+
+        /* === PRICING SECTION === */
         .pricing {
             padding: 6rem 0;
-            background: #fafafa;
+            background: #f8f9fa;
+            /* Changed background for alternating colors */
         }
 
         .pricing-wrapper {
@@ -306,7 +367,7 @@
             width: 100%;
             transition: transform 0.3s ease-in-out;
         }
-        
+
         .pricing-title {
             font-size: 1.5rem;
             font-weight: 600;
@@ -332,7 +393,7 @@
             background: #f8f9fa;
             font-weight: 600;
         }
-        
+
         .pricing-card .pricing-subtitle {
             font-size: 1rem;
             color: #6c757d;
@@ -411,7 +472,81 @@
             color: #ff8c42;
             font-size: 1.1rem;
         }
-        
+
+        /* === FAQ SECTION (IMPROVED) === */
+        .faq {
+            padding: 6rem 0;
+            background: #f8f9fa;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            /* Hilangkan border untuk item terakhir */
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question .icon {
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            /* Mencegah ikon menyusut */
+            margin-left: 1rem;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        }
+
+        .faq-answer p {
+            color: #555;
+            padding-bottom: 1.5rem;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        /* === STYLING SAAT FAQ AKTIF/TERBUKA === */
+        .faq-item.active .faq-question {
+            background-color: #f7f7f7;
+            color: #2c5530;
+            /* Warna hijau khas Anda */
+        }
+
+        .faq-item.active .faq-question .icon {
+            transform: rotate(180deg);
+            /* Putar ikon panah ke atas */
+        }
+
+        /* === CONTACT SECTION & MAP === */
         .contact {
             padding: 6rem 0;
             background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
@@ -444,6 +579,15 @@
             text-align: center;
         }
 
+        #locationMap {
+            height: 450px;
+            width: 100%;
+            border-radius: 15px;
+            border: 3px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
         /* === FOOTER === */
         .footer {
             background: #1a1a1a;
@@ -451,175 +595,234 @@
             text-align: center;
             padding: 2rem 0;
         }
-        
-        /* === MODAL (FIXED) === */
-.modal {
-    display: none; /* Disembunyikan secara default */
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Memungkinkan scroll jika konten panjang */
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
 
-.modal-content {
-    background-color: #fff;
-    padding: 25px 30px;
-    border-radius: 15px;
-    width: 100%;
-    max-width: 900px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-    position: relative;
-    max-height: 95vh;
-    overflow-y: auto; /* Scroll di dalam modal jika perlu */
-}
+        /* === MODAL === */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
-}
+        .modal-content {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
 
-.modal-header h2 {
-    margin: 0;
-    font-size: 1.8rem;
-    color: #2c5530;
-}
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
 
-.close {
-    color: #aaa;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 1;
-}
-.close:hover,
-.close:focus {
-    color: #000;
-}
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #2c5530;
+        }
 
-/* Penataan Form */
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+        .close {
+            color: #aaa;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
 
-.form-section label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #555;
-}
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
 
-.form-section input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-}
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-/* Penataan Peta */
-.map-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Dua kolom untuk peta */
-    gap: 20px;
-}
+        .form-section label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
 
-.map-container {
-    flex: 1;
-}
-.map-container label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    text-align: center;
-}
+        .form-section input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
 
-/* Penataan Simulasi */
-.simulation-section {
-    margin-top: 10px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    text-align: center;
-}
+        .map-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
-.simulation-section h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #2c5530;
-}
+        .map-container {
+            flex: 1;
+        }
 
-#simulasi p {
-    margin: 5px 0;
-    font-size: 1.1rem;
-}
+        .map-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
 
-#kirimWA {
-    width: 100%;
-    padding: 15px;
-    margin-top: 15px;
-    font-size: 1.1rem;
-}
+        .simulation-section {
+            margin-top: 10px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+        }
 
-/* Responsif untuk layar kecil (HP) */
-@media (max-width: 768px) {
-    .map-section {
-        grid-template-columns: 1fr; /* Peta akan bertumpuk ke bawah */
-    }
-    .modal-content {
-        padding: 20px;
-    }
-    .modal-header h2 {
-        font-size: 1.5rem;
-    }
-}
+        .simulation-section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #2c5530;
+        }
 
+        #simulasi p {
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+
+        #kirimWA {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* === RESPONSIVE STYLES === */
+        @media (max-width: 992px) {
+
+            .hero-container,
+            .contact-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content {
+                order: 2;
+            }
+
+            .hero-visual {
+                order: 1;
+                margin-bottom: 2rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .visimisi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                /* Simplification for this example */
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .map-section {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .contact-content {
+                gap: 2rem;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <i class="fas fa-bus"></i> MOJAS BATAM
-            </a>
-            <ul class="nav-menu">
-                <li><a href="#home">Beranda</a></li>
-                <li><a href="#layanan">Layanan</a></li>
-                <li><a href="#tarif">Tarif</a></li>
-                <li><a href="#kontak">Kontak</a></li>
-                <li><a href="/login" class="admin-btn"><i class="fas fa-user-shield"></i> Login</a></li>
-            </ul>
-        </div>
-    </nav>
+    <x-dashboard.navbar />
 
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-content" data-aos="fade-right">
                 <h1>Layanan Antar Jemput Siswa Terpercaya</h1>
-                <p>Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda di Area Batam.</p>
+                <p>Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda di Area
+                    Batam.</p>
                 <div class="cta-buttons">
-                    <a href="#layanan" class="btn-primary"><i class="fas fa-car"></i> Lihat Layanan</a>
+                    <a href="/rental" class="btn-primary"><i class="fas fa-car"></i> Lihat Layanan</a>
                     <a href="#kontak" class="btn-secondary"><i class="fas fa-phone"></i> Hubungi Kami</a>
                 </div>
             </div>
             <div class="hero-visual" data-aos="fade-left">
                 <div class="hero-card">
                     <i class="fas fa-school hero-icon"></i>
-                    <h3 style="color: white; margin-bottom: 1rem; text-align: center;">20 Unit Armada MPV</h3>
-                    <p style="color: rgba(255,255,255,0.8); text-align: center;">Kapasitas maksimal 6 siswa per mobil dengan fasilitas AC dan tracking perjalanan.</p>
+                    <h3 style="color: white; margin-bottom: 1rem; text-align: center;">20 Unit Armada MPV
+                    </h3>
+                    <p style="color: rgba(255,255,255,0.8); text-align: center;">Kapasitas maksimal 6 siswa
+                        per mobil dengan fasilitas AC dan tracking perjalanan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="visimisi" class="visimisi">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Visi & Misi Kami</h2>
+                <p>Tujuan dan komitmen kami dalam memberikan pelayanan terbaik.</p>
+            </div>
+            <div class="visimisi-grid">
+                <div class="visimisi-card" data-aos="fade-right">
+                    <h3><i class="fa fa-bullseye"></i> Visi</h3>
+                    <p>Menjadi penyedia layanan transportasi siswa terdepan dan terpercaya di Batam, yang
+                        menjadi mitra andalan bagi orang tua dan sekolah dalam mendukung kelancaran dan kesuksesan
+                        pendidikan.</p>
+                </div>
+                <div class="visimisi-card" data-aos="fade-left">
+                    <h3><i class="fa fa-tasks"></i> Misi</h3>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i>Menyelenggarakan layanan antar jemput yang
+                            mengutamakan Kepercayaan, Keamanan, Kenyamanan, dan Ketepatan Waktu.</li>
+                        <li><i class="fas fa-check-circle"></i>Memberikan kemudahan bagi orang tua dengan
+                            sistem transportasi door to door yang aman dan dapat dipantau.</li>
+                        <li><i class="fas fa-check-circle"></i>Menyediakan armada yang terawat dan pengemudi
+                            profesional untuk menjamin keselamatan siswa.</li>
+                        <li><i class="fas fa-check-circle"></i>Membangun kemitraan strategis yang saling
+                            menguntungkan dengan pihak sekolah.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -629,300 +832,320 @@
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>Mengapa Memilih MOJAS BATAM?</h2>
-                <p>Kami berkomitmen pada prinsip "Kepercayaan, Keamanan, Kenyamanan dan Ketepatan Waktu".</p>
+                <p>Kami berkomitmen pada prinsip "Kepercayaan, Keamanan, Kenyamanan dan Ketepatan Waktu".
+                </p>
             </div>
             <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100"><i class="fas fa-shield-alt feature-icon"></i><h3>Kepercayaan</h3><p>Siswa selalu diantar-jemput antara rumah-sekolah, memberikan ketenangan bagi orang tua.</p></div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200"><i class="fas fa-lock feature-icon"></i><h3>Keamanan</h3><p>Driver berpengalaman, menaati lalu lintas, dan memantau keselamatan siswa selama perjalanan.</p></div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300"><i class="fas fa-heart feature-icon"></i><h3>Kenyamanan</h3><p>Mobil ber-AC, bersih, dan tidak berdesakan dengan kapasitas maksimal 6 siswa per mobil.</p></div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="400"><i class="fas fa-clock feature-icon"></i><h3>Ketepatan Waktu</h3><p>Disiplin driver dan rute terencana menjamin siswa tiba di tujuan tepat waktu.</p></div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="500"><i class="fas fa-map-marker-alt feature-icon"></i><h3>Door to Door</h3><p>Layanan antar jemput langsung dari rumah ke sekolah dan sebaliknya dengan sistem tracking.</p></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="tarif" class="pricing">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>Layanan & Tarif</h2>
-                <p>Tarif kompetitif dengan layanan berkualitas tinggi</p>
-            </div>
-            <div class="pricing-wrapper" data-aos="zoom-in" data-aos-delay="100">
-                <div class="pricing-card">
-                    <h3 class="pricing-title">Paket Antar Jemput Sekolah</h3>
-                    <p class="pricing-subtitle">Layanan bulanan yang aman, nyaman, dan tepat waktu.</p>
-                    <ul class="features-list">
-                        <li>✅ Armada bersih, nyaman, dan ber-AC</li>
-                        <li>✅ Driver profesional dan berpengalaman</li>
-                        <li>✅ Penjemputan dan pengantaran tepat waktu</li>
-                        <li>✅ Keamanan dan keselamatan terjamin</li>
-                        <li>✅ Tersedia pilihan One Way & Two Way</li>
-                    </ul>
-                    <h4 class="table-heading">Rincian Biaya Berdasarkan Jarak</h4>
-                    <table class="pricing-table">
-                        <thead><tr><th>No</th><th>Jarak (km)</th><th>One Way</th><th>Two Way</th></tr></thead>
-                        <tbody>
-                            <tr><td>1</td><td>± 1-3</td><td>Rp 400.000</td><td>Rp 800.000</td></tr>
-                            <tr><td>2</td><td>± 4</td><td>Rp 560.000</td><td>Rp 1.120.000</td></tr>
-                            <tr><td>3</td><td>± 5</td><td>Rp 700.000</td><td>Rp 1.400.000</td></tr>
-                            <tr><td>4</td><td>± 6</td><td>Rp 840.000</td><td>Rp 1.680.000</td></tr>
-                            <tr><td>5</td><td>± 7</td><td>Rp 980.000</td><td>Rp 1.960.000</td></tr>
-                            <tr><td>6</td><td>± 8</td><td>Rp 1.120.000</td><td>Rp 2.240.000</td></tr>
-                        </tbody>
-                    </table>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100"><i
+                        class="fas fa-shield-alt feature-icon"></i>
+                    <h3>Kepercayaan</h3>
+                    <p>Siswa selalu diantar-jemput antara rumah-sekolah, memberikan ketenangan bagi orang
+                        tua.</p>
                 </div>
-            </div>
-            <hr>
-            <div class="section-title" data-aos="fade-up" style="margin-top: 50px;">
-                <h2>Layanan Lainnya</h2>
-                <p>Fleksibel untuk setiap kebutuhan Anda</p>
-            </div>
-            <div class="services-grid" data-aos="fade-up" data-aos-delay="100">
-               
-                <div class="service-card">
-                    <div class="service-icon">⚡</div><h3>Insidental</h3><p>Butuh antar jemput mendadak? Layanan ini siap membantu Anda saat dibutuhkan.</p><div class="service-price">Tarif Sesuai Jarak & Waktu</div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200"><i
+                        class="fas fa-lock feature-icon"></i>
+                    <h3>Keamanan</h3>
+                    <p>Driver berpengalaman, menaati lalu lintas, dan memantau keselamatan siswa selama
+                        perjalanan.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">🎉</div><h3>Acara Khusus</h3><p>Transportasi untuk acara sekolah seperti field trip, perlombaan, atau acara kelompok.</p><div class="service-price">Hubungi Kami Untuk Penawaran</div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300"><i
+                        class="fas fa-heart feature-icon"></i>
+                    <h3>Kenyamanan</h3>
+                    <p>Mobil ber-AC, bersih, dan tidak berdesakan dengan kapasitas maksimal 6 siswa per
+                        mobil.</p>
                 </div>
-            </div>
-            <div style="text-align: center; margin-top: 40px;">
-                <button class="btn-primary pesan-btn">Pesan & Simulasi Tarif</button>
-            </div>
-        </div>
-    </section>
-
-    <section id="kontak" class="contact">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-info" data-aos="fade-right">
-                    <h2>Hubungi Kami</h2>
-                    <div class="contact-item"><i class="fas fa-user contact-icon"></i><div><h4>Penanggung Jawab</h4><p>Eri Febrian</p></div></div>
-                    <div class="contact-item"><i class="fas fa-map-marker-alt contact-icon"></i><div><h4>Alamat</h4><p>Perumahan Anggrek Sari Blok F8 no.11, Batam</p></div></div>
-                    <div class="contact-item"><i class="fas fa-phone contact-icon"></i><div><h4>WhatsApp</h4><p>0812-6871-2321</p></div></div>
-                    <a href="https://wa.me/6282371562766" class="whatsapp-btn" target="_blank"><i class="fab fa-whatsapp"></i> Chat WhatsApp</a>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400"><i
+                        class="fas fa-clock feature-icon"></i>
+                    <h3>Ketepatan Waktu</h3>
+                    <p>Disiplin driver dan rute terencana menjamin siswa tiba di tujuan tepat waktu.</p>
                 </div>
-                <div class="hero-visual" data-aos="fade-left">
-                    <div class="hero-card"><i class="fas fa-users hero-icon"></i><h3 style="color: white; text-align: center; margin-bottom: 1rem;">Siap Melayani</h3><p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem; text-align: center;">Tim kami siap memberikan konsultasi dan pelayanan terbaik untuk Anda.</p></div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500"><i
+                        class="fas fa-map-marker-alt feature-icon"></i>
+                    <h3>Door to Door</h3>
+                    <p>Layanan antar jemput langsung dari rumah ke sekolah dan sebaliknya dengan sistem
+                        tracking.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="footer">
-        <p>&copy; 2025 CV. MOJAS BATAM. All Rights Reserved.</p>
-    </footer>
 
-   <div id="orderModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Formulir Pemesanan & Simulasi</h2>
-            <span class="close">×</span>
+    <x-dashboard.tarif />
+
+    <x-dashboard.kerjasama />
+    <hr style="margin: 0; border: none; height: 3px; background: #eee; margin-left: 100px; margin-right: 100px;">
+
+
+    <x-dashboard.faq />
+
+    <x-dashboard.kontak />
+
+    <x-dashboard.footer />
+
+    <d-dashboard"orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Formulir Pemesanan & Simulasi</h2>
+                <span class="close">×</span>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-section">
+                    <label for="nama">Nama Siswa:</label>
+                    <input type="text" id="nama" placeholder="Masukkan nama lengkap siswa">
+
+                    <label for="alamat" style="margin-top: 15px;">Alamat Rumah:</label>
+                    <input type="text" id="alamat" placeholder="Masukkan alamat lengkap">
+
+                    <label for="sekolah" style="margin-top: 15px;">Nama Sekolah:</label>
+                    <input type="text" id="sekolah" placeholder="Masukkan nama sekolah">
+                </div>
+
+                <div class="map-section">
+                    <div class="map-container">
+                        <label>Pilih Lokasi Jemput (Asal)</label>
+                        <div id="mapAsal"
+                            style="height: 250px; width: 100%; border-radius: 8px; border: 1px solid #ddd;"></div>
+                        <input type="text" id="alamatAsal" readonly placeholder="Koordinat asal"
+                            style="margin-top: 10px; text-align: center;">
+                    </div>
+                    <div class="map-container">
+                        <label>Pilih Lokasi Antar (Tujuan)</label>
+                        <div id="mapTujuan"
+                            style="height: 250px; width: 100%; border-radius: 8px; border: 1px solid #ddd;"></div>
+                        <input type="text" id="alamatTujuan" readonly placeholder="Koordinat tujuan"
+                            style="margin-top: 10px; text-align: center;">
+                    </div>
+                </div>
+
+                <div class="simulation-section">
+                    <h3>Hasil Simulasi</h3>
+                    <div id="simulasi">
+                        <p>Pilih lokasi di peta untuk melihat hasil.</p>
+                    </div>
+                    <button id="kirimWA" class="btn-primary">Kirim Pesanan via WhatsApp</button>
+                </div>
+            </div>
         </div>
+        </d-dashboard>
 
-        <div class="modal-body">
-            <div class="form-section">
-                <label for="nama">Nama Siswa:</label>
-                <input type="text" id="nama" placeholder="Masukkan nama lengkap siswa">
-                
-                <label for="alamat" style="margin-top: 15px;">Alamat Rumah:</label>
-                <input type="text" id="alamat" placeholder="Masukkan alamat lengkap">
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
 
-                <label for="sekolah" style="margin-top: 15px;">Nama Sekolah:</label>
-                <input type="text" id="sekolah" placeholder="Masukkan nama sekolah">
-            </div>
-
-            <div class="map-section">
-                <div class="map-container">
-                    <label>Pilih Lokasi Jemput (Asal)</label>
-                    <div id="mapAsal" style="height: 250px; width: 100%; border-radius: 8px; border: 1px solid #ddd;"></div>
-                    <input type="text" id="alamatAsal" readonly placeholder="Koordinat asal" style="margin-top: 10px; text-align: center;">
-                </div>
-                <div class="map-container">
-                    <label>Pilih Lokasi Antar (Tujuan)</label>
-                    <div id="mapTujuan" style="height: 250px; width: 100%; border-radius: 8px; border: 1px solid #ddd;"></div>
-                    <input type="text" id="alamatTujuan" readonly placeholder="Koordinat tujuan" style="margin-top: 10px; text-align: center;">
-                </div>
-            </div>
-
-            <div class="simulation-section">
-                <h3>Hasil Simulasi</h3>
-                <div id="simulasi">
-                    <p>Pilih lokasi di peta untuk melihat hasil.</p>
-                </div>
-                <button id="kirimWA" class="btn-primary">Kirim Pesanan via WhatsApp</button>
-            </div>
-        </div>
-    </div>
-</div>
-    
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-        // FIX: Consolidated all JavaScript into one DOMContentLoaded listener
-        document.addEventListener("DOMContentLoaded", function() {
-
-            AOS.init({
-                duration: 800,
-                easing: 'ease-in-out',
-                once: true
-            });
-
-            // Navbar scroll effect
-            const navbar = document.querySelector('.navbar');
-            if(navbar) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 50) {
-                        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                        navbar.style.boxShadow = '0 2px 30px rgba(0,0,0,0.1)';
-                    } else {
-                        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                        navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-                    }
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-in-out',
+                    once: true
                 });
-            }
 
-            // Smooth scroll for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Floating animation for hero visual
-            const heroCard = document.querySelector('.hero-card');
-            if (heroCard) {
-                let y = 0;
-                let direction = 1;
-                setInterval(() => {
-                    y += direction * 0.1;
-                    if (y > 10 || y < -10) {
-                        direction *= -1;
-                    }
-                    heroCard.style.transform = `translateY(${y}px)`;
-                }, 10);
-            }
-
-            // ===================================
-            // MODAL AND MAP LOGIC
-            // ===================================
-            const modal = document.getElementById("orderModal");
-            const closeBtn = modal.querySelector(".close");
-            const pesanBtns = document.querySelectorAll(".pesan-btn");
-
-            const mapAsal = L.map("mapAsal").setView([1.0456, 104.0305], 12);
-            const mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                attribution: "© OpenStreetMap"
-            }).addTo(mapAsal);
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                attribution: "© OpenStreetMap"
-            }).addTo(mapTujuan);
-
-            let markerAsal = null, markerTujuan = null;
-
-            pesanBtns.forEach(btn => {
-                btn.addEventListener("click", function() {
-                    modal.style.display = "flex";
-                    setTimeout(() => {
-                        mapAsal.invalidateSize();
-                        mapTujuan.invalidateSize();
-                    }, 10);
-                });
-            });
-            
-            closeBtn.addEventListener("click", () => modal.style.display = "none");
-            window.addEventListener("click", e => {
-                if (e.target == modal) modal.style.display = "none";
-            });
-
-            function hitungJarak(lat1, lon1, lat2, lon2) {
-                const R = 6371;
-                const dLat = (lat2 - lat1) * Math.PI / 180;
-                const dLon = (lon2 - lon1) * Math.PI / 180;
-                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
-            }
-
-            // FIX: Corrected 'hariEfektif' and logic based on user confirmation
-            function hitungTarif(jarak) {
-                const hariEfektif = 20;
-                let oneWay = 0;
-                if (jarak <= 3) {
-                    oneWay = 400000;
-                } else if (jarak >= 10) {
-                    oneWay = Math.round(jarak * hariEfektif * 6000);
-                } else {
-                    oneWay = Math.round(jarak * hariEfektif * 7000);
+                const navbar = document.querySelector('.navbar');
+                if (navbar) {
+                    window.addEventListener('scroll', function() {
+                        if (window.scrollY > 50) {
+                            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                            navbar.style.boxShadow = '0 2px 30px rgba(0,0,0,0.1)';
+                        } else {
+                            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                            navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                        }
+                    });
                 }
-                return { oneWay, twoWay: oneWay * 2 };
-            }
 
-            function updateSimulasi() {
-                if (!markerAsal || !markerTujuan) return;
-                const a = markerAsal.getLatLng();
-                const t = markerTujuan.getLatLng();
-                const jarak = hitungJarak(a.lat, a.lng, t.lat, t.lng);
-                const tarif = hitungTarif(jarak);
-                document.getElementById("simulasi").innerHTML = `
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+
+
+                const heroCard = document.querySelector('.hero-card');
+                if (heroCard) {
+                    let y = 0;
+                    let direction = 1;
+                    setInterval(() => {
+                        y += direction * 0.1;
+                        if (y > 10 || y < -10) {
+                            direction *= -1;
+                        }
+                        heroCard.style.transform = `translateY(${y}px)`;
+                    }, 10);
+                }
+
+                // === KODE FAQ DENGAN USABILITY LEBIH BAIK ===
+                const faqItems = document.querySelectorAll('.faq-item');
+
+                faqItems.forEach(item => {
+                    const questionButton = item.querySelector('.faq-question');
+                    const answerDiv = item.querySelector('.faq-answer');
+
+                    questionButton.addEventListener('click', () => {
+                        // Cek status item saat ini (apakah sedang aktif/terbuka)
+                        const isActive = item.classList.contains('active');
+
+                        // Toggle class 'active' pada .faq-item
+                        item.classList.toggle('active');
+
+                        // Update atribut ARIA untuk aksesibilitas
+                        questionButton.setAttribute('aria-expanded', !isActive);
+
+                        // Atur max-height untuk animasi buka-tutup
+                        if (!isActive) {
+                            // Jika tidak aktif (akan dibuka), set max-height sesuai tinggi konten
+                            answerDiv.style.maxHeight = answerDiv.scrollHeight + 'px';
+                        } else {
+                            // Jika sudah aktif (akan ditutup), kembalikan max-height ke 0
+                            answerDiv.style.maxHeight = 0;
+                        }
+                    });
+
+
+                    const officeCoords = [1.1160, 104.0385];
+                    const locationMap = L.map('locationMap').setView(officeCoords, 15);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(locationMap);
+                    L.marker(officeCoords).addTo(locationMap).bindPopup(
+                            '<b>CV. MOJAS BATAM</b><br>Perumahan Anggrek Sari Blok F8 no.11, Batam ')
+                        .openPopup();
+
+                    const modal = document.getElementById("orderModal");
+                    const closeBtn = modal.querySelector(".close");
+                    const pesanBtns = document.querySelectorAll(".pesan-btn");
+
+                    let modalMapsInitialized = false;
+                    let mapAsal, mapTujuan;
+
+                    function initializeModalMaps() {
+                        if (modalMapsInitialized) return;
+
+                        mapAsal = L.map("mapAsal").setView([1.0456, 104.0305], 12);
+                        mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
+
+                        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                            attribution: "© OpenStreetMap"
+                        }).addTo(mapAsal);
+                        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                            attribution: "© OpenStreetMap"
+                        }).addTo(mapTujuan);
+
+                        mapAsal.on("click", e => {
+                            if (markerAsal) markerAsal.setLatLng(e.latlng);
+                            else markerAsal = L.marker(e.latlng).addTo(mapAsal);
+                            document.getElementById("alamatAsal").value =
+                                `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
+                            updateSimulasi();
+                        });
+
+                        mapTujuan.on("click", e => {
+                            if (markerTujuan) markerTujuan.setLatLng(e.latlng);
+                            else markerTujuan = L.marker(e.latlng).addTo(mapTujuan);
+                            document.getElementById("alamatTujuan").value =
+                                `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
+                            updateSimulasi();
+                        });
+
+                        modalMapsInitialized = true;
+                    }
+
+                    let markerAsal = null,
+                        markerTujuan = null;
+
+                    pesanBtns.forEach(btn => {
+                        btn.addEventListener("click", function() {
+                            modal.style.display = "flex";
+                            initializeModalMaps();
+                            setTimeout(() => {
+                                mapAsal.invalidateSize();
+                                mapTujuan.invalidateSize();
+                            }, 10);
+                        });
+                    });
+
+                    closeBtn.addEventListener("click", () => modal.style.display = "none");
+                    window.addEventListener("click", e => {
+                        if (e.target == modal) modal.style.display = "none";
+                    });
+
+                    function hitungJarak(lat1, lon1, lat2, lon2) {
+                        const R = 6371;
+                        const dLat = (lat2 - lat1) * Math.PI / 180;
+                        const dLon = (lon2 - lon1) * Math.PI / 180;
+                        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) *
+                            Math.cos(lat2 *
+                                Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+                    }
+
+                    function hitungTarif(jarak) {
+                        const hariEfektif = 20;
+                        let oneWay = 0;
+                        if (jarak <= 3) {
+                            oneWay = 400000;
+                        } else {
+                            oneWay = Math.round(jarak * hariEfektif * 7000);
+                        }
+                        return {
+                            oneWay,
+                            twoWay: oneWay * 2
+                        };
+                    }
+
+                    function updateSimulasi() {
+                        if (!markerAsal || !markerTujuan) return;
+                        const a = markerAsal.getLatLng();
+                        const t = markerTujuan.getLatLng();
+                        const jarak = hitungJarak(a.lat, a.lng, t.lat, t.lng);
+                        const tarif = hitungTarif(jarak);
+                        document.getElementById("simulasi").innerHTML = `
                     <p><b>Jarak:</b> ${jarak.toFixed(2)} km</p>
                     <p><b>One Way:</b> Rp ${tarif.oneWay.toLocaleString("id-ID")}</p>
                     <p><b>Two Way:</b> Rp ${tarif.twoWay.toLocaleString("id-ID")}</p>`;
-            }
+                    }
 
-            mapAsal.on("click", e => {
-                if (markerAsal) markerAsal.setLatLng(e.latlng);
-                else markerAsal = L.marker(e.latlng).addTo(mapAsal);
-                document.getElementById("alamatAsal").value = `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-                updateSimulasi();
+                    document.getElementById("kirimWA").addEventListener("click", () => {
+                        const nama = document.getElementById("nama").value;
+                        const alamat = document.getElementById("alamat").value;
+                        const sekolah = document.getElementById("sekolah").value;
+                        const simulasi = document.getElementById("simulasi").innerText;
+
+                        if (!nama || !alamat || !sekolah) {
+                            alert("Harap isi Nama, Alamat, dan Sekolah!");
+                            return;
+                        }
+                        if (!markerAsal || !markerTujuan) {
+                            alert("Harap pilih Lokasi Asal dan Tujuan di peta!");
+                            return;
+                        }
+
+                        const coordsAsal = markerAsal.getLatLng();
+                        const coordsTujuan = markerTujuan.getLatLng();
+                        const urlAsal =
+                            `https://www.google.com/maps?q=${coordsAsal.lat},${coordsAsal.lng}`;
+                        const urlTujuan =
+                            `https://www.google.com/maps?q=${coordsTujuan.lat},${coordsTujuan.lng}`;
+
+                        const pesan = `Halo, saya ingin memesan layanan antar jemput.\n\n` +
+                            `*Nama Siswa:* ${nama}\n` +
+                            `*Alamat Rumah:* ${alamat}\n` +
+                            `*Nama Sekolah:* ${sekolah}\n\n` +
+                            `*Lokasi Jemput (Asal):*\n${urlAsal}\n\n` +
+                            `*Lokasi Antar (Tujuan):*\n${urlTujuan}\n\n` +
+                            `*Hasil Simulasi:*\n${simulasi}`;
+
+                        const url = `https://wa.me/6281268712321?text=${encodeURIComponent(pesan)}`;
+                        window.open(url, "_blank");
+                    });
+                });
             });
-
-            mapTujuan.on("click", e => {
-                if (markerTujuan) markerTujuan.setLatLng(e.latlng);
-                else markerTujuan = L.marker(e.latlng).addTo(mapTujuan);
-                document.getElementById("alamatTujuan").value = `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-                updateSimulasi();
-            });
-            
-            // FIX: Using the correct WhatsApp function that sends Google Maps URLs
-            document.getElementById("kirimWA").addEventListener("click", () => {
-                const nama = document.getElementById("nama").value;
-                const alamat = document.getElementById("alamat").value;
-                const sekolah = document.getElementById("sekolah").value;
-                const simulasi = document.getElementById("simulasi").innerText;
-
-                if (!nama || !alamat || !sekolah) {
-                    alert("Harap isi Nama, Alamat, dan Sekolah!");
-                    return;
-                }
-                if (!markerAsal || !markerTujuan) {
-                    alert("Harap pilih Lokasi Asal dan Tujuan di peta!");
-                    return;
-                }
-
-                const coordsAsal = markerAsal.getLatLng();
-                const coordsTujuan = markerTujuan.getLatLng();
-                const urlAsal = `https://www.google.com/maps?q=${coordsAsal.lat},${coordsAsal.lng}`;
-                const urlTujuan = `https://www.google.com/maps?q=${coordsTujuan.lat},${coordsTujuan.lng}`;
-
-                const pesan = `Halo, saya ingin memesan layanan antar jemput.\n\n` +
-                    `*Nama Siswa:* ${nama}\n` +
-                    `*Alamat Rumah:* ${alamat}\n` +
-                    `*Nama Sekolah:* ${sekolah}\n\n` +
-                    `*Lokasi Jemput (Asal):*\n${urlAsal}\n\n` +
-                    `*Lokasi Antar (Tujuan):*\n${urlTujuan}\n\n` +
-                    `*Hasil Simulasi:*\n${simulasi}`;
-                
-                const url = `https://wa.me/6282371562766?text=${encodeURIComponent(pesan)}`;
-                window.open(url, "_blank");
-            });
-        });
-    </script>
+        </script>
 </body>
+
 </html>

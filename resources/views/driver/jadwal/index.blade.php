@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 {{-- Judul untuk header konten --}}
-@section('content-title', 'Jadwal Antar Jemput Hari Ini')
+@section('content-title', 'Riwayat Penghasilan Saya')
 
 @section('content')
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Tugas Antar Jemput Anda</h3>
+                <h3 class="card-title">Daftar Semua Penghasilan yang Tercatat</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -21,59 +21,41 @@
                     </div>
                 @endif
 
-                <table id="jadwal-driver-table" class="table table-bordered table-striped">
+                <table id="penghasilan-driver-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>Waktu Jemput</th>
+                            <th>ID</th>
+                            <th>Tanggal Jadwal</th>
                             <th>Anak</th>
-                            <th>Lokasi Jemput</th>
-                            <th>Lokasi Antar</th>
-                            <th>Status Saat Ini</th>
-                            <th style="width: 25%;">Update Status</th>
+                            <th>Komisi Diterima</th>
+                            <th>Status</th>
+                            <th>Tanggal Dibayar</th>
+                            <th style="width: 10%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
-                                <td><strong>{{ \Carbon\Carbon::parse($item->jam_jemput)->format('H:i') }}</strong></td>
-                                <td>{{ $item->anak->nama ?? 'N/A' }}</td>
-                                <td>{{ $item->lokasi_jemput ?? $item->anak->sekolah ?? 'N/A' }}</td>
-                                <td>{{ $item->lokasi_antar ?? $item->anak->alamat_penjemputan ?? 'N/A' }}</td>
+                                <td>#{{ $item->id }}</td>
+                                {{-- PERBAIKAN: Menambahkan pengecekan apakah $item->jadwal ada sebelum mengakses propertinya --}}
+                                <td>{{ $item->jadwal ? \Carbon\Carbon::parse($item->jadwal->tanggal)->format('d M Y') : 'Jadwal Telah Dihapus' }}</td>
+                                <td>{{ $item->jadwal->anak->nama ?? 'Data Tidak Tersedia' }}</td>
+                                <td><strong>Rp{{ number_format($item->komisi_pengemudi, 0, ',', '.') }}</strong></td>
                                 <td>
                                     @php
-                                        $statusMap = [
-                                            'menunggu' => 'secondary',
-                                            'dijemput' => 'info',
-                                            'perjalanan' => 'primary',
-                                            'selesai' => 'success',
-                                            'dibatalkan' => 'danger',
-                                        ];
-                                        $statusClass = $statusMap[$item->status] ?? 'secondary';
+                                        $statusClass = ($item->status == 'pending') ? 'warning' : 'success';
                                     @endphp
                                     <span class="badge bg-{{ $statusClass }}">{{ ucfirst($item->status) }}</span>
                                 </td>
+                                <td>{{ $item->tanggal_dibayar ? \Carbon\Carbon::parse($item->tanggal_dibayar)->format('d M Y') : 'Belum dibayar' }}</td>
                                 <td>
-                                    {{-- Form untuk update status --}}
-                                    {{-- Anda perlu membuat route POST/PUT: driver.jadwal.updateStatus --}}
-                                    <form action="#" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="input-group">
-                                            <select name="status" class="form-control" {{ $item->status == 'selesai' || $item->status == 'dibatalkan' ? 'disabled' : '' }}>
-                                                <option value="dijemput" {{ $item->status == 'dijemput' ? 'selected' : '' }}>Sudah Dijemput</option>
-                                                <option value="perjalanan" {{ $item->status == 'perjalanan' ? 'selected' : '' }}>Dalam Perjalanan</option>
-                                                <option value="selesai" {{ $item->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                                <option value="dibatalkan" {{ $item->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
-                                            </select>
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-success" {{ $item->status == 'selesai' || $item->status == 'dibatalkan' ? 'disabled' : '' }}>Update</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <a href="{{ route('driver.penghasilan.show', $item->id) }}" class="btn btn-info btn-sm btn-block" title="Lihat Detail">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </a>
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="text-center">Tidak ada jadwal untuk hari ini.</td></tr>
+                            <tr><td colspan="7" class="text-center">Belum ada riwayat penghasilan.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -86,10 +68,11 @@
 @push('scripts')
 <script>
 $(function () {
-    $("#jadwal-driver-table").DataTable({
+    $("#penghasilan-driver-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
-        "order": [[ 0, "asc" ]] // Urutkan berdasarkan jam jemput
+        "order": [[ 0, "desc" ]] // Urutkan berdasarkan ID terbaru
     });
 });
 </script>
 @endpush
+
