@@ -52,9 +52,14 @@
                                 <td>{{ $item->tanggal_dibayar ? \Carbon\Carbon::parse($item->tanggal_dibayar)->format('d F Y') : '-' }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.penghasilan.show', $item->id) }}" class="btn btn-info btn-sm" title="Detail"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('admin.penghasilan.edit', $item->id) }}" class="btn btn-warning btn-sm" title="Edit"><i class="fas fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm delete-btn"
+                                        <a href="{{ route('admin.penghasilan.show', $item->id) }}" class="btn btn-info btn-sm" title="Detail">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        {{-- PERBAIKAN: Menambahkan parameter $item->id ke dalam route --}}
+                                        <a href="{{ route('admin.penghasilan.edit', $item->id) }}" class="btn btn-warning btn-sm" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-danger btn-sm"
                                            data-toggle="modal"
                                            data-target="#deleteConfirmationModal"
                                            data-action="{{ route('admin.penghasilan.destroy', $item->id) }}"
