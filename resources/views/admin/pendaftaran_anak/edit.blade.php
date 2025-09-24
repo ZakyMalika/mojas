@@ -28,7 +28,7 @@
                      <div class="form-group">
                         <label for="tarif_id">Tarif Jarak</label>
                         <select class="form-control @error('tarif_id') is-invalid @enderror" name="tarif_id">
-                           <option value="{{ $item->tarif_id }}" selected>{{ $item->tarif_jarak->jarak_mulai ?? 'N/A' }} - {{ $item->tarif_jarak->jarak_selesai ?? 'N/A' }} KM</option>
+                           <option value="{{ $item->tarif_id }}" selected>{{ $item->tarif_jarak->min_distance_km ?? 'N/A' }} - {{ $item->tarif_jarak->max_distance_km ?? 'N/A' }} KM</option>
                         </select>
                         @error('tarif_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                     </div>

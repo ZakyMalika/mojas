@@ -29,7 +29,7 @@
                             <th>Lokasi Jemput</th>
                             <th>Lokasi Antar</th>
                             <th>Status Saat Ini</th>
-                            <th style="width: 25%;">Update Status</th>
+                            <th style="width: 15%;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,23 +53,10 @@
                                     <span class="badge bg-{{ $statusClass }}">{{ ucfirst($item->status) }}</span>
                                 </td>
                                 <td>
-                                    {{-- Form untuk update status --}}
-                                    {{-- Anda perlu membuat route POST/PUT: driver.jadwal.updateStatus --}}
-                                    <form action="#" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="input-group">
-                                            <select name="status" class="form-control" {{ $item->status == 'selesai' || $item->status == 'dibatalkan' ? 'disabled' : '' }}>
-                                                <option value="dijemput" {{ $item->status == 'dijemput' ? 'selected' : '' }}>Sudah Dijemput</option>
-                                                <option value="perjalanan" {{ $item->status == 'perjalanan' ? 'selected' : '' }}>Dalam Perjalanan</option>
-                                                <option value="selesai" {{ $item->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                                <option value="dibatalkan" {{ $item->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
-                                            </select>
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-success" {{ $item->status == 'selesai' || $item->status == 'dibatalkan' ? 'disabled' : '' }}>Update</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    {{-- Tombol ini akan mengarahkan ke halaman edit --}}
+                                    <a href="{{ route('driver.jadwal.edit', $item->id) }}" class="btn btn-warning btn-sm btn-block" {{ $item->status == 'selesai' || $item->status == 'dibatalkan' ? 'disabled' : '' }}>
+                                        <i class="fas fa-edit"></i> Update Status
+                                    </a>
                                 </td>
                             </tr>
                         @empty
@@ -93,3 +80,4 @@ $(function () {
 });
 </script>
 @endpush
+

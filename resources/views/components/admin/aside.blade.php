@@ -176,22 +176,22 @@
                     <li class="nav-item">
                         <a href="{{ route('parent.pembayaran.index') }}" class="nav-link {{ request()->routeIs('parent.pembayaran.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-money-bill-wave"></i>
-                            <p>Pembayaran</p>
+                            <p>Riwayat Pembayaran</p>
                         </a>
                     </li>
                     {{-- Route untuk 'Jadwal Anak' dan 'Riwayat' tidak terdefinisi di web.php untuk role orang_tua --}}
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-calendar-alt"></i>
                             <p>Jadwal Anak</p>
                         </a>
                     </li>
-                     <li class="nav-item">
+                     {{-- <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-history"></i>
                             <p>Riwayat Antar Jemput</p>
                         </a>
-                    </li> --}}
+                    </li>  --}}
                 @endif
                 
                 {{-- Menu Logout, tampil untuk semua role yang login --}}

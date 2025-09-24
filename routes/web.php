@@ -35,6 +35,15 @@ use App\Models\School;
 Route::get('/', function () {
     return view('frontend.home');
 });
+Route::get('/kegiatan', function () {
+    return view('frontend.kegiatan');
+});
+Route::get('/rental', function () {
+    return view('frontend.rental');
+});
+Route::get('/armada', function () {
+    return view('frontend.armada');
+});
 
 Route::get('/admin', [AdminDashboard::class, 'index'])->middleware(['auth', 'role:admin'])->name('admin.dashboard');
 Route::get('/parent', [ParentDashboard::class, 'index'])->middleware(['auth', 'role:orang_tua'])->name('parent.dashboard');
@@ -53,7 +62,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/check-email', [RegisterController::class, 'checkEmail'])->name('check.email');
     Route::post('/check-phone', [RegisterController::class, 'checkPhone'])->name('check.phone');
 });
-
 
 
 // Route untuk logout (perlu login)

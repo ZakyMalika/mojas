@@ -17,7 +17,7 @@
                 <h4>Detail Tarif</h4>
                 <dl class="row">
                     <dt class="col-sm-4">Rentang Jarak</dt>
-                    <dd class="col-sm-8"><strong>{{ $item->jarak_dari_km }} - {{ $item->jarak_sampai_km }} KM</strong></dd>
+                    <dd class="col-sm-8"><strong>{{ $item->min_distance_km }} - {{ $item->max_distance_km }} KM</strong></dd>
 
                     <dt class="col-sm-4">Tarif One Way</dt>
                     <dd class="col-sm-8">Rp{{ number_format($item->tarif_one_way, 0, ',', '.') }}</dd>

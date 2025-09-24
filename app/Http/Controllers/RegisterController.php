@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Orang_tua; // <-- Tambahkan ini
+use App\Models\Driver;    // <-- Tambahkan ini
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +31,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'no_telp' => ['required', 'string', 'max:15', 'unique:users,no_telp'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'in:admin,orang_tua,pengemudi'],
+            'role' => ['required', 'in:orang_tua,pengemudi'], // Hapus 'admin' dari validasi publik
         ]);
 
         $user = User::create([
@@ -41,12 +43,30 @@ class RegisterController extends Controller
             'role' => $request->role,
         ]);
 
+        // ==========================================================
+        // === LOGIKA KRUSIAL YANG DITAMBAHKAN SETELAH USER DIBUAT ===
+        // ==========================================================
+        if ($user->role == 'orang_tua') {
+            Orang_tua::create([
+                'user_id' => $user->id,
+                // Anda bisa menambahkan field default seperti alamat jika perlu
+                'alamat' => 'Mohon lengkapi alamat Anda',
+            ]);
+        } elseif ($user->role == 'pengemudi') {
+            Driver::create([
+                'user_id' => $user->id,
+                // Anda bisa menambahkan field default seperti nomor plat jika perlu
+                'nomor_plat' => 'Belum Diisi',
+            ]);
+        }
+        // ==========================================================
+
         // Auto login setelah registrasi
         Auth::login($user);
 
         // Redirect berdasarkan role user
         switch ($user->role) {
-            case 'admin':
+            case 'admin': // Meskipun tidak bisa daftar sbg admin, ini sebagai fallback
                 return redirect('/admin')->with('success', 'Registrasi berhasil! Selamat datang Admin.');
             case 'pengemudi':
                 return redirect('/driver')->with('success', 'Registrasi berhasil! Selamat datang Pengemudi.');
