@@ -822,7 +822,7 @@
                         Kategori <i class="fas fa-chevron-down"></i> </a>
 
                     <ul class="dropdown-menu">
-                        <li><a href="/layanan">Layanan</a></li>
+                        <li><a href="/kegiatan">Kegiatan</a></li>
                         <li><a href="/rental">Rental</a></li>
                         <li><a href="/armada">Armada</a></li>
                     </ul>

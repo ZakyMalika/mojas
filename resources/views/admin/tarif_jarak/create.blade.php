@@ -20,16 +20,16 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="jarak_dari_km">Jarak Dari (KM)</label>
-                                <input type="number" step="0.1" class="form-control @error('jarak_dari_km') is-invalid @enderror" name="jarak_dari_km" value="{{ old('jarak_dari_km') }}" placeholder="Contoh: 0">
-                                @error('jarak_dari_km')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
+                                <label for="min_distance_km">Jarak Dari (KM)</label>
+                                <input type="number" step="0.1" class="form-control @error('min_distance_km') is-invalid @enderror" name="min_distance_km" value="{{ old('min_distance_km') }}" placeholder="Contoh: 0">
+                                @error('min_distance_km')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
                          <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="jarak_sampai_km">Jarak Sampai (KM)</label>
-                                <input type="number" step="0.1" class="form-control @error('jarak_sampai_km') is-invalid @enderror" name="jarak_sampai_km" value="{{ old('jarak_sampai_km') }}" placeholder="Contoh: 5">
-                                @error('jarak_sampai_km')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
+                                <label for="max_distance_km">Jarak Sampai (KM)</label>
+                                <input type="number" step="0.1" class="form-control @error('max_distance_km') is-invalid @enderror" name="max_distance_km" value="{{ old('max_distance_km') }}" placeholder="Contoh: 5">
+                                @error('max_distance_km')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
                     </div>

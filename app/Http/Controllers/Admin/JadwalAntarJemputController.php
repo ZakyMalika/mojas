@@ -18,8 +18,10 @@ class JadwalAntarJemputController extends Controller
 
     public function create()
     {
+        $anakList = \App\Models\Anak::all();
+        $driverList = \App\Models\Driver::with('user')->get();
         $jadwals = Jadwal_antar_jemput::with(['anak', 'driver'])->get();
-        return view('admin.jadwal.create', ['items' => $jadwals]);
+        return view('admin.jadwal.create', ['items' => $jadwals, 'anakList' => $anakList, 'driverList' => $driverList]);
     }
 
     public function store(Request $request)

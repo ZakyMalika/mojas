@@ -152,10 +152,10 @@
 <script>
 $(function () {
     // Inisialisasi DataTable
-    $("#anak-table").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#anak-table_wrapper .col-md-6:eq(0)');
+    // $("#anak-table").DataTable({
+    //     "responsive": true, "lengthChange": false, "autoWidth": false,
+    //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    // }).buttons().container().appendTo('#anak-table_wrapper .col-md-6:eq(0)');
 
     // ======================================================================
     // SOLUSI DEFINITIF UNTUK FUNGSI HAPUS

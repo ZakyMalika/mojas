@@ -47,7 +47,7 @@
                     <dd class="col-sm-8">{{ $item->jarak_km }} KM</dd>
                     <dt class="col-sm-4">Referensi Tarif</dt>
                     <dd class="col-sm-8">
-                        Tarif untuk {{ $item->tarif_jarak->jarak_mulai ?? 'N/A' }} - {{ $item->tarif_jarak->jarak_selesai ?? 'N/A' }} KM
+                        Tarif untuk {{ $item->tarif_jarak->min_distance_km ?? 'N/A' }} - {{ $item->tarif_jarak->max_distance_km ?? 'N/A' }} KM
                     </dd>
                 </dl>
             </div>

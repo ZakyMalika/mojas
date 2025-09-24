@@ -24,8 +24,8 @@ class TarifJarakController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'jarak_dari_km' => ['required', 'numeric'],
-            'jarak_sampai_km' => ['required', 'numeric'],
+            'min_distance_km' => [ 'required', 'numeric'],
+            'max_distance_km' => [ 'required', 'numeric'],
             'tarif_one_way' => ['required', 'numeric'],
             'tarif_two_way' => ['required', 'numeric'],
             'tarif_per_km' => ['required', 'numeric'],
@@ -50,8 +50,8 @@ class TarifJarakController extends Controller
     public function update(Request $request, Tarif_jarak $tarif_jarak)
     {
         $data = $request->validate([
-            'jarak_dari_km' => ['required', 'numeric'],
-            'jarak_sampai_km' => ['required', 'numeric'],
+            'min_distance_km' => ['numeric'],
+            'max_distance_km' => ['numeric'],
             'tarif_one_way' => ['required', 'numeric'],
             'tarif_two_way' => ['required', 'numeric'],
             'tarif_per_km' => ['required', 'numeric'],

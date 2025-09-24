@@ -35,8 +35,8 @@ use App\Models\School;
 Route::get('/', function () {
     return view('frontend.home');
 });
-Route::get('/layanan', function () {
-    return view('frontend.layanan');
+Route::get('/kegiatan', function () {
+    return view('frontend.kegiatan');
 });
 Route::get('/rental', function () {
     return view('frontend.rental');

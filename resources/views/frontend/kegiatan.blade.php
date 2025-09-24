@@ -253,7 +253,7 @@
                         <p class="card-description">Layanan utama kami memastikan siswa tiba di sekolah dengan aman dan tepat waktu setiap hari, memberikan ketenangan bagi orang tua.</p>
                         <div class="card-footer">
                             <span><i class="fas fa-clock"></i> Setiap Hari Sekolah</span>
-                            <a href="#" class="read-more-link">Lihat Detail &rarr;</a>
+                           
                         </div>
                     </div>
                 </div>
@@ -268,7 +268,7 @@
                         <p class="card-description">Kami siap menjadi mitra transportasi untuk berbagai kegiatan di luar sekolah seperti kunjungan edukasi, study tour, dan acara lainnya.</p>
                         <div class="card-footer">
                             <span><i class="fas fa-bus"></i> Sesuai Permintaan</span>
-                            <a href="#" class="read-more-link">Hubungi Kami &rarr;</a>
+                           
                         </div>
                     </div>
                 </div>
@@ -283,7 +283,7 @@
                         <p class="card-description">Jadwal yang fleksibel memungkinkan kami untuk menyediakan layanan antar jemput bagi siswa yang mengikuti kegiatan ekstrakurikuler sore hari.</p>
                         <div class="card-footer">
                             <span><i class="fas fa-calendar-alt"></i> Jadwal Fleksibel</span>
-                            <a href="#" class="read-more-link">Info Lanjut &rarr;</a>
+                            
                         </div>
                     </div>
                 </div>

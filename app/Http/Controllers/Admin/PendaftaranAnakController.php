@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Pendaftaran_anak;
+use App\Models\Anak;
 use Illuminate\Http\Request;
+use App\Models\Pendaftaran_anak;
+
+use App\Http\Controllers\Controller;
+use App\Models\Tarif_jarak;
 
 class PendaftaranAnakController extends Controller
 {
@@ -18,7 +21,11 @@ class PendaftaranAnakController extends Controller
 
     public function create()
     {
-        return view('admin.pendaftaran_anak.create');
+        $anaksList = Anak::all();
+        $tarifs = Tarif_jarak::all();
+
+
+        return view('admin.pendaftaran_anak.create', compact('anaksList', 'tarifs'));
     }
 
     public function store(Request $request)

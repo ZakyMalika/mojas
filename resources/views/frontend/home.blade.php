@@ -775,28 +775,30 @@
 <body>
     <x-dashboard.navbar />
 
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content" data-aos="fade-right">
-                <h1>Layanan Antar Jemput Siswa Terpercaya</h1>
-                <p>Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda di Area
-                    Batam.</p>
-                <div class="cta-buttons">
-                    <a href="/rental" class="btn-primary"><i class="fas fa-car"></i> Lihat Layanan</a>
-                    <a href="#kontak" class="btn-secondary"><i class="fas fa-phone"></i> Hubungi Kami</a>
-                </div>
-            </div>
-            <div class="hero-visual" data-aos="fade-left">
-                <div class="hero-card">
-                    <i class="fas fa-school hero-icon"></i>
-                    <h3 style="color: white; margin-bottom: 1rem; text-align: center;">20 Unit Armada MPV
-                    </h3>
-                    <p style="color: rgba(255,255,255,0.8); text-align: center;">Kapasitas maksimal 6 siswa
-                        per mobil dengan fasilitas AC dan tracking perjalanan.</p>
-                </div>
+   <section id="home" class="hero">
+    <div class="hero-container">
+        <div class="hero-content" data-aos="fade-right">
+            <h1>Layanan Antar Jemput Siswa Terpercaya</h1>
+            <p>Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda di Area Batam.</p>
+            <div class="cta-buttons">
+                <a href="/rental" class="btn-primary"><i class="fas fa-car"></i> Lihat Layanan</a>
+                <a href="#kontak" class="btn-secondary"><i class="fas fa-phone"></i> Hubungi Kami</a>
             </div>
         </div>
-    </section>
+
+        <!-- Bagian hero-visual yang telah diubah -->
+        <div class="hero-visual" data-aos="fade-left" style="display: flex; justify-content: center; align-items: center;">
+            <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
+                 style="
+                    max-width: 400px; /* Lebar maksimum gambar agar tidak terlalu besar di layar lebar */
+                    width: 100%;      /* Membuat gambar responsif */
+                    height: auto;     /* Tinggi menyesuaikan secara otomatis */
+                    border-radius: 20px; /* Sudut sedikit membulat agar lebih modern */
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Efek bayangan halus untuk membuatnya menonjol */
+                 ">
+        </div>
+    </div>
+</section>
 
     <section id="visimisi" class="visimisi">
         <div class="container">

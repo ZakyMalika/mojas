@@ -24,15 +24,19 @@
                         </div>
                     @endif
 
-                    {{-- PENTING: Anda perlu mengirimkan daftar anak ($anakList) dan tarif ($tarifList) dari controller --}}
+                    {{-- PERBAIKAN: Menggunakan variabel $anakList yang dikirim dari controller --}}
                     <div class="form-group">
                         <label for="anak_id">Pilih Anak</label>
                         <select class="form-control @error('anak_id') is-invalid @enderror" id="anak_id" name="anak_id" required>
                             <option value="">-- Pilih Anak --</option>
-                            {{-- @foreach($anakList as $anak)
-                                <option value="{{ $anak->id }}" {{ old('anak_id') == $anak->id ? 'selected' : '' }}>{{ $anak->nama }}</option>
-                            @endforeach --}}
-                             <option value="1">Contoh: Rizki Pratama</option>
+                            {{-- Loop menggunakan variabel yang benar --}}
+                            @if(isset($anakList) && $anakList->count() > 0)
+                                @foreach($anakList as $anak)
+                                    <option value="{{ $anak->id }}" {{ old('anak_id') == $anak->id ? 'selected' : '' }}>{{ $anak->nama }}</option>
+                                @endforeach
+                            @else
+                                <option value="" disabled>Anda belum memiliki data anak. Silakan tambah data anak terlebih dahulu.</option>
+                            @endif
                         </select>
                          @error('anak_id') <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span> @enderror
                     </div>
@@ -75,3 +79,4 @@
     </div>
 </div>
 @endsection
+
