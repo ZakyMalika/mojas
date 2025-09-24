@@ -40,7 +40,7 @@
                 <h4>Detail Tarif & Layanan</h4>
                  <dl class="row">
                     <dt class="col-sm-4">Jarak Tempuh</dt>
-                    <dd class="col-sm-8">{{ $item->jarak_km }} KM</dd>
+                    <dd class="col-sm-8">{{ $item->tarif_jarak->min_distance_km }} - {{ $item->tarif->max_distance_km }} KM</dd>
                     
                     <dt class="col-sm-4">Tipe Layanan</dt>
                     <dd class="col-sm-8">{{ $item->tipe_layanan == 'one_way' ? 'One Way (Sekali Jalan)' : 'Two Way (Pulang Pergi)' }}</dd>

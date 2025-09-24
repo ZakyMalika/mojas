@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ParentArea;
 use App\Http\Controllers\Controller;
 use App\Models\Pendaftaran_anak;
 use App\Models\Anak; // Penting: Tambahkan ini untuk mengambil data anak
+use App\Models\Tarif_jarak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,9 +39,10 @@ class PendaftaranAnakController extends Controller
         $anakList = Anak::where('orang_tua_id', $parent->id)
                          ->whereNotIn('id', $registeredAnakIds)
                          ->get();
+        $tarifList = Tarif_jarak::all();
 
         // 3. Kirim daftar anak yang tersedia tersebut ke view
-        return view('parent.pendaftaran_anak.create', compact('anakList'));
+        return view('parent.pendaftaran_anak.create', compact('anakList', 'tarifList'));
     }
 
     public function store(Request $request)
@@ -49,7 +51,7 @@ class PendaftaranAnakController extends Controller
         abort_if(! $parent, 403);
         $data = $request->validate([
             'anak_id' => ['required', 'integer', 'exists:anak,id'],
-            'jarak_km' => ['required', 'numeric'],
+            // 'jarak_km' => ['required', 'numeric'],
             'tipe_layanan' => ['required', 'in:one_way,two_way'],
             'tarif_bulanan' => ['required', 'numeric'],
             'tarif_id' => ['required', 'integer', 'exists:tarif_jarak,id'],
@@ -112,7 +114,7 @@ class PendaftaranAnakController extends Controller
         abort_unless($pendaftaran_anak->anak && $pendaftaran_anak->anak->orang_tua_id === $parent->id, 403);
         $data = $request->validate([
             'anak_id' => ['required', 'integer', 'exists:anak,id'],
-            'jarak_km' => ['required', 'numeric'],
+            // 'jarak_km' => ['required', 'numeric'],
             'tipe_layanan' => ['required', 'in:one_way,two_way'],
             'tarif_bulanan' => ['required', 'numeric'],
             'tarif_id' => ['required', 'integer', 'exists:tarif_jarak,id'],

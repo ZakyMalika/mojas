@@ -4,6 +4,10 @@
 @section('content-title', 'Manajemen Penghasilan Pengemudi')
 
 @section('content')
+{{-- Kartu Ringkasan Data --}}
+
+
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -29,19 +33,23 @@
                 <table id="penghasilan-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>ID Jadwal</th>
-                            <th>Pengemudi</th>
-                            <th>Komisi</th>
-                            <th>Status</th>
-                            <th>Tanggal Dibayar</th>
-                            <th style="width: 15%;">Aksi</th>
+                            <th><i class="fas fa-car-side mr-1"></i> Pengemudi</th>
+                            <th><i class="fas fa-child mr-1"></i> Anak</th>
+                            <th><i class="fas fa-calendar-alt mr-1"></i> Jadwal</th>
+                            <th><i class="fas fa-road mr-1"></i> Jarak (KM)</th>
+                            <th><i class="fas fa-coins mr-1"></i> Komisi</th>
+                            <th><i class="fas fa-info-circle mr-1"></i> Status</th>
+                            <th><i class="fas fa-cogs mr-1"></i> Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
-                                <td>#{{ $item->jadwal_id }}</td>
                                 <td>{{ $item->driver->user->name ?? 'N/A' }}</td>
+                                <td>{{ $item->jadwal->anak->nama ?? 'N/A' }}</td>
+                                <td>{{ $item->jadwal ? \Carbon\Carbon::parse($item->jadwal->tanggal)->format('d M Y') : 'N/A' }}</td>
+                                {{-- Mengambil jarak dari data pendaftaran anak yang terkait dengan jadwal --}}
+                                <td>{{ $item->jadwal->anak->pendaftaran_anak->first()->jarak_km ?? 'N/A' }} KM</td>
                                 <td>Rp {{ number_format($item->komisi_pengemudi, 0, ',', '.') }}</td>
                                 <td>
                                     @php
@@ -49,17 +57,15 @@
                                     @endphp
                                     <span class="badge bg-{{ $statusClass }}">{{ ucfirst($item->status) }}</span>
                                 </td>
-                                <td>{{ $item->tanggal_dibayar ? \Carbon\Carbon::parse($item->tanggal_dibayar)->format('d F Y') : '-' }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.penghasilan.show', $item->id) }}" class="btn btn-info btn-sm" title="Detail">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        {{-- PERBAIKAN: Menambahkan parameter $item->id ke dalam route --}}
                                         <a href="{{ route('admin.penghasilan.edit', $item->id) }}" class="btn btn-warning btn-sm" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn btn-danger btn-sm"
+                                        <a href="#" class="btn btn-danger btn-sm delete-btn"
                                            data-toggle="modal"
                                            data-target="#deleteConfirmationModal"
                                            data-action="{{ route('admin.penghasilan.destroy', $item->id) }}"
@@ -71,7 +77,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="text-center">Belum ada data penghasilan.</td></tr>
+                            <tr><td colspan="7" class="text-center">Belum ada data penghasilan.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -109,10 +115,7 @@
 @push('scripts')
 <script>
 $(function () {
-    $("#penghasilan-table").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#penghasilan-table_wrapper .col-md-6:eq(0)');
+    
 
     $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);

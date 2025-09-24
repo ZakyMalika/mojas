@@ -67,7 +67,6 @@
           <input type="text" name="name" class="form-control" placeholder="Nama Lengkap" value="{{ old('name') }}" required>
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>
@@ -75,7 +74,7 @@
           <input type="text" name="username" class="form-control" placeholder="Username" value="{{ old('username') }}" required>
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-at"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>

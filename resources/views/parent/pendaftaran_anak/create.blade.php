@@ -42,10 +42,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="jarak_km">Jarak Rumah ke Sekolah (KM)</label>
-                        <input type="number" step="0.1" class="form-control @error('jarak_km') is-invalid @enderror" id="jarak_km" name="jarak_km" placeholder="Contoh: 4.5" value="{{ old('jarak_km') }}" required>
+                        <label for="tarif_id">Jarak Rumah ke Sekolah (KM)</label>
+                        <select class="form-control @error('tarif_id') is-invalid @enderror" id="tarif_id" name="tarif_idq" required>
+                            <option value="">Pilih Jarak</option>
+                            @foreach($tarifList as $tarif)
+                                <option value="{{ $tarif->id }}" {{ old('tarif_id') == $tarif->id ? 'selected' : '' }}>{{ $tarif->min_distance_km }} - {{ $tarif->max_distance_km }} KM</option>
+                            @endforeach
+                        </select>
                         <small class="form-text text-muted">Jarak ini akan menentukan tarif layanan.</small>
-                        @error('jarak_km') <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span> @enderror
+                        @error('tarif_id') <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span> @enderror
                     </div>
                     
                     <div class="form-group">

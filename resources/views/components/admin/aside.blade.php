@@ -173,12 +173,12 @@
                             <p>Pendaftaran Anak</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ route('parent.pembayaran.index') }}" class="nav-link {{ request()->routeIs('parent.pembayaran.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-money-bill-wave"></i>
                             <p>Riwayat Pembayaran</p>
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- Route untuk 'Jadwal Anak' dan 'Riwayat' tidak terdefinisi di web.php untuk role orang_tua --}}
                     <li class="nav-item">
                         <a href="#" class="nav-link">
