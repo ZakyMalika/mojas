@@ -2,8 +2,10 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link"> {{-- Tautan ini bisa diarahkan ke dashboard masing-masing role --}}
-        <span class="brand-text font-weight-light d-flex justify-content-center">AntarJemput Anak</span>
-    </a>
+         <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
+                        style="height: 50px; width: auto;">
+        <span class="brand-text font-weight-light ">MOJAS</span>
+    </a>F
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -33,7 +35,7 @@
                 
                     <li class="nav-item">
                         {{-- Pastikan route ini ada dan bernama 'admin.dashboard' di web.php --}}
-                        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                        <a href="/admin" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
@@ -124,7 +126,7 @@
                 @elseif(Auth::user()->role == 'pengemudi')
                     <li class="nav-item">
                         {{-- Pastikan Anda menamai route '/driver' di web.php, contoh: ->name('driver.dashboard') --}}
-                        <a href="#" class="nav-link">
+                        <a href="/driver" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
@@ -155,7 +157,7 @@
                 @elseif(Auth::user()->role == 'orang_tua')
                     <li class="nav-item">
                         {{-- Pastikan Anda menamai route '/parent' di web.php, contoh: ->name('parent.dashboard') --}}
-                        <a href="#" class="nav-link">
+                        <a href="/parent" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
