@@ -50,7 +50,7 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        <p class="text-muted">Pantau status perjalanan anak Anda secara real-time di sini.</p>
+                        <p class="text-muted">Pantau status perjalanan anak di sini.</p>
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>

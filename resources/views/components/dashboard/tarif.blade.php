@@ -55,6 +55,9 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="btn-primary" style="text-align: center; margin-top: 40px; color: white;" >
+                        <a href="#contact" class="btn-primary " target="_blank">Daftar Sekarang</a>
+                    </div>
                 </div>
             </div>
             <hr>

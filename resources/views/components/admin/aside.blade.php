@@ -5,7 +5,7 @@
          <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
                         style="height: 50px; width: auto;">
         <span class="brand-text font-weight-light ">MOJAS</span>
-    </a>F
+    </a>
 
     <!-- Sidebar -->
     <div class="sidebar">

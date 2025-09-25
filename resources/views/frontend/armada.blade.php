@@ -1,12 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-        <style>
+    <style>
+        /* armada */
+        /* === Fleet Section (Armada Kami) === */
+        .fleet-section {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+            /* Sedikit berbeda dari putih untuk kontras */
+        }
+
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .car-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .car-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-image-container {
+            position: relative;
+            height: 220px;
+        }
+
+        .car-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .car-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ff8c42, #ff6b1a);
+            color: white;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(255, 107, 26, 0.5);
+        }
+
+        .car-details {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            /* Membuat konten ini mengisi sisa ruang */
+        }
+
+        .car-details h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .car-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+            flex-grow: 1;
+            /* Mendorong tombol ke bawah */
+        }
+
+        .car-features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            color: #555;
+        }
+
+        .car-features li {
+            display: flex;
+            align-items: center;
+        }
+
+        .car-features li i {
+            color: #2c5530;
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .car-details .btn-primary {
+            width: 100%;
+            text-align: center;
+            padding: 12px 0;
+            margin-top: auto;
+            /* Selalu menempel di bagian bawah card */
+        }
+
+        /* === Responsive for Fleet Section === */
+        @media (max-width: 768px) {
+            .fleet-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* === GENERAL & SETUP === */
         * {
             margin: 0;
@@ -769,14 +886,107 @@
     <title>Document</title>
 
 </head>
+
 <body>
     <x-dashboard.navbar />
- <x-dashboard.tarif />
+
+      {{-- main --}}
+    <section class="fleet-section" id="armada">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 >Armada Pilihan Kami 🚗</h2>
+                <p>Kami menyediakan berbagai pilihan mobil MPV yang terawat, bersih, dan siap mengantar Anda dengan
+                    nyaman.</p>
+            </div>
+
+            <div class="fleet-grid">
+                <div class="car-card" data-aos="fade-up">
+                    <div class="car-image-container">
+                        <img src="https://img.cintamobil.com/2022/04/11/F03gT50g/avanza-2019-putih-1-9a74.jpg"
+                            alt="Toyota Avanza Putih">
+                        <div class="car-badge">Paling Laris</div>
+                    </div>
+                    <div class="car-details">
+                        <h3>Toyota Avanza</h3>
+                        <p class="car-description">Pilihan ideal untuk keluarga atau perjalanan grup kecil dengan
+                            efisiensi bahan bakar yang baik.</p>
+                        <ul class="car-features">
+                            <li><i class="fas fa-users"></i> 6 Penumpang</li>
+                            <li><i class="fas fa-suitcase-rolling"></i> 2 Koper Besar</li>
+                            <li><i class="fas fa-cogs"></i> Manual</li>
+                            <li><i class="fas fa-snowflake"></i> Full AC</li>
+                        </ul>
+                        <a href="#rental" class="btn-primary">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+                <div class="car-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="car-image-container">
+                        <img src="{{ asset('images/mojas1.jpg') }}" alt="Logo MOJAS Batam"
+                       >
+                    </div>
+                    <div class="car-details">
+                        <h3>Mitsubishi Xpander</h3>
+                        <p class="car-description">Menawarkan kenyamanan premium dengan interior yang luas dan desain
+                            modern.</p>
+                        <ul class="car-features">
+                            <li><i class="fas fa-users"></i> 6 Penumpang</li>
+                            <li><i class="fas fa-suitcase-rolling"></i> 3 Koper Besar</li>
+                            <li><i class="fas fa-cogs"></i> Otomatis</li>
+                            <li><i class="fas fa-snowflake"></i> Full AC</li>
+                        </ul>
+                        <a href="#rental" class="btn-primary">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+                <div class="car-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="car-image-container">
+                        <img src="{{ asset('images/mojas2.jpg') }}" alt="Logo MOJAS Batam"
+                            alt="Mitsubishi Xpander Putih">
+                    </div>
+                    <div class="car-details">
+                        <h3>Mitsubishi Xpander</h3>
+                        <p class="car-description">Menawarkan kenyamanan premium dengan interior yang luas dan desain
+                            modern.</p>
+                        <ul class="car-features">
+                            <li><i class="fas fa-users"></i> 6 Penumpang</li>
+                            <li><i class="fas fa-suitcase-rolling"></i> 3 Koper Besar</li>
+                            <li><i class="fas fa-cogs"></i> Otomatis</li>
+                            <li><i class="fas fa-snowflake"></i> Full AC</li>
+                        </ul>
+                        <a href="#rental" class="btn-primary">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+                <div class="car-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="car-image-container">
+                        <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
+                       >
+                    </div>
+                    <div class="car-details">
+                        <h3>Suzuki Ertiga</h3>
+                        <p class="car-description">Kombinasi sempurna antara gaya, kenyamanan, dan performa yang handal
+                            di segala medan.</p>
+                        <ul class="car-features">
+                            <li><i class="fas fa-users"></i> 6 Penumpang</li>
+                            <li><i class="fas fa-suitcase-rolling"></i> 2 Koper Besar</li>
+                            <li><i class="fas fa-cogs"></i> Manual</li>
+                            <li><i class="fas fa-snowflake"></i> Full AC</li>
+                        </ul>
+                        <a href="#rental" class="btn-primary">Pesan Sekarang</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <x-dashboard.tarif />
 
     <x-dashboard.kerjasama />
     <hr style="margin: 0; border: none; height: 3px; background: #eee; margin-left: 100px; margin-right: 100px;">
 
-
+  
     <x-dashboard.faq />
 
     <x-dashboard.kontak />
@@ -786,4 +996,5 @@
     {{-- footer --}}
     <x-dashboard.footer />
 </body>
+
 </html>
