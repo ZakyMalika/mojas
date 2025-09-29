@@ -23,12 +23,14 @@ use App\Http\Controllers\DriverArea\LogJadwalController as DriverLogJadwalContro
 
 // New Controllers
 use App\Http\Controllers\ParentArea\PembayaranController as ParentPembayaranController;
+use App\Http\Controllers\ParentArea\PembayaranController as ParentJadwalController;
 use App\Http\Controllers\DriverArea\PenghasilanController as DriverPenghasilanController;
 use App\Http\Controllers\Admin\PendaftaranAnakController as AdminPendaftaranAnakController;
 use App\Http\Controllers\Admin\JadwalAntarJemputController as AdminJadwalAntarJemputController;
 use App\Http\Controllers\Admin\PenghasilanDriverController as AdminPenghasilanDriverController;
 use App\Http\Controllers\ParentArea\PendaftaranAnakController as ParentPendaftaranAnakController;
 use App\Http\Controllers\DriverArea\JadwalAntarJemputController as DriverJadwalAntarJemputController;
+use App\Http\Controllers\ParentArea\JadwalController;
 use App\Models\School;
 
 // Halaman utama
@@ -43,6 +45,9 @@ Route::get('/rental', function () {
 });
 Route::get('/armada', function () {
     return view('frontend.armada');
+});
+Route::get('/sekolah', function () {
+    return view('frontend.sekolah');
 });
 
 Route::get('/admin', [AdminDashboard::class, 'index'])->middleware(['auth', 'role:admin'])->name('admin.dashboard');
@@ -123,7 +128,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
 Route::middleware(['auth', 'role:orang_tua'])->prefix('parent')->as('parent.')->group(function () {
     Route::resource('anak', ParentAnakController::class);
     Route::resource('pendaftaran-anak', ParentPendaftaranAnakController::class);
-    Route::resource('pembayaran', ParentPembayaranController::class);
+    Route::resource('jadwal', JadwalController::class);
 });
 
 // DRIVER (pengemudi)

@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                         {{-- Asumsi: Controller mengirimkan variabel $items yang berisi daftar jadwal --}}
-                        @forelse ($items as $item)
+                        @forelse ($jadwal as $item)
                             <tr>
                                 <td>{{ $item->hari }}, {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                                 <td>{{ $item->anak->nama ?? 'N/A' }}</td>
@@ -51,7 +51,7 @@
                                 <td>
                                     {{-- Halaman ini read-only, jadi hanya ada tombol detail --}}
                                     {{-- Pastikan Anda memiliki route 'parent.jadwal.show' --}}
-                                    <a href="#" class="btn btn-info btn-sm btn-block" title="Lihat Detail">
+                                    <a href="{{ route('parent.jadwal.show', $item) }}" class="btn btn-info btn-sm btn-block" title="Lihat Detail">
                                         <i class="fas fa-eye"></i> Detail
                                     </a>
                                 </td>

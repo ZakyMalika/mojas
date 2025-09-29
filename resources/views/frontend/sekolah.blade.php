@@ -5,12 +5,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <title>Document</title>
-
     <style>
+        /* armada */
+        /* === Fleet Section (Armada Kami) === */
+        .fleet-section {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+            /* Sedikit berbeda dari putih untuk kontras */
+        }
+
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .car-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .car-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-image-container {
+            position: relative;
+            height: 220px;
+        }
+
+        .car-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .car-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ff8c42, #ff6b1a);
+            color: white;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(255, 107, 26, 0.5);
+        }
+
+        .car-details {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            /* Membuat konten ini mengisi sisa ruang */
+        }
+
+        .car-details h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .car-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+            flex-grow: 1;
+            /* Mendorong tombol ke bawah */
+        }
+
+        .car-features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            color: #555;
+        }
+
+        .car-features li {
+            display: flex;
+            align-items: center;
+        }
+
+        .car-features li i {
+            color: #2c5530;
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .car-details .btn-primary {
+            width: 100%;
+            text-align: center;
+            padding: 12px 0;
+            margin-top: auto;
+            /* Selalu menempel di bagian bawah card */
+        }
+
+        /* === Responsive for Fleet Section === */
+        @media (max-width: 768px) {
+            .fleet-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* === GENERAL & SETUP === */
         * {
             margin: 0;
@@ -35,75 +148,66 @@
             padding: 0 2rem;
         }
 
-        /* Styling dasar untuk navigasi agar terlihat rapi */
-        .nav-menu {
-            list-style: none;
+        /* === NAVBAR === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            gap: 2rem;
-            /* Memberi jarak antar menu */
+            justify-content: space-between;
             align-items: center;
+            padding: 0 2rem;
         }
 
-        /* Wajib: Mengatur posisi parent dropdown */
-        .dropdown {
-            position: relative;
-            padding-bottom: 1px;
-
-        }
-
-        /* Styling untuk submenu yang tersembunyi */
-        .dropdown-menu {
-            display: none;
-            /* 1. Sembunyikan menu secara default */
-            position: absolute;
-            /* 2. Atur posisi agar "melayang" di bawah parent */
-            top: 100%;
-            /* Posisikan persis di bawah menu "Kategori" */
-            left: 0;
-            background-color: white;
-            list-style: none;
-            padding: 10px 0;
-            /* margin-top: 10px;  */
-            min-width: 180px;
-            /* Lebar minimum dropdown */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            z-index: 100;
-            /* Pastikan menu muncul di atas konten lain */
-        }
-
-        /* Tampilkan submenu ketika parent di-hover */
-        /* 3. Tampilkan menu saat di-hover */
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown.show .dropdown-toggle {
-            background-color: #f1f1f1;
-            border-radius: 5px;
-        }
-
-        /* Styling untuk link di dalam dropdown */
-        .dropdown-menu li a {
-            color: #333;
-            padding: 12px 20px;
-            display: block;
-            /* Membuat link memenuhi lebar li */
-            text-decoration: none;
-            transition: background-color 0.2s ease;
-        }
-
-        /* Efek hover untuk link di dalam dropdown */
-        .dropdown-menu li a:hover {
-            background-color: #f5f5f5;
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
             color: #2c5530;
-            /* Warna hijau khas Anda */
+            text-decoration: none;
         }
 
-        /* Styling untuk ikon panah */
-        .dropdown-toggle .fa-chevron-down {
-            font-size: 0.8em;
-            margin-left: 5px;
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #2c5530;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #2c5530;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
         }
 
         /* === BUTTONS === */
@@ -352,45 +456,7 @@
             margin-top: 5px;
         }
 
-        /* === KERJASAMA SECTION (NEW) === */
-        .kerjasama {
-            padding: 6rem 0;
-            background: #ffffff;
-        }
 
-        .kerjasama-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .kerjasama-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border-top: 4px solid #ff8c42;
-            /* Different color for emphasis */
-        }
-
-        .kerjasama-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .kerjasama-icon {
-            font-size: 3rem;
-            color: #2c5530;
-            margin-bottom: 1rem;
-        }
-
-        .kerjasama-card h3 {
-            font-size: 1.3rem;
-            color: #2c5530;
-            margin-bottom: 1rem;
-        }
 
 
         /* === PRICING SECTION === */
@@ -520,24 +586,28 @@
             font-size: 1.1rem;
         }
 
-        /* === FAQ SECTION === */
+        /* === FAQ SECTION (IMPROVED) === */
         .faq {
             padding: 6rem 0;
-            background: #ffffff;
-            /* Changed background for alternating colors */
+            background: #f8f9fa;
         }
 
         .faq-container {
             max-width: 800px;
             margin: 0 auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .faq-item {
-            background: white;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            /* Hilangkan border untuk item terakhir */
         }
 
         .faq-question {
@@ -553,26 +623,40 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: #333;
+            transition: background-color 0.3s ease;
         }
 
         .faq-question .icon {
             transition: transform 0.3s ease;
+            flex-shrink: 0;
+            /* Mencegah ikon menyusut */
+            margin-left: 1rem;
         }
 
         .faq-answer {
-            padding: 0 1.5rem 1.5rem 1.5rem;
+            padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
         }
 
         .faq-answer p {
             color: #555;
+            padding-bottom: 1.5rem;
             margin: 0;
+            line-height: 1.7;
+        }
+
+        /* === STYLING SAAT FAQ AKTIF/TERBUKA === */
+        .faq-item.active .faq-question {
+            background-color: #f7f7f7;
+            color: #2c5530;
+            /* Warna hijau khas Anda */
         }
 
         .faq-item.active .faq-question .icon {
-            transform: rotate(45deg);
+            transform: rotate(180deg);
+            /* Putar ikon panah ke atas */
         }
 
         /* === CONTACT SECTION & MAP === */
@@ -798,242 +882,150 @@
                 gap: 2rem;
             }
         }
+
+        .partners-section {
+            padding: 60px 20px;
+            background: #f9fafb;
+        }
+
+        .partners-section .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .partner-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 80px;
+            margin-bottom: 15px;
+            object-fit: contain;
+        }
+
+        .partner-card h3 {
+            font-size: 16px;
+            color: #333;
+        }
     </style>
+    <title>Document</title>
+
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
-                        style="height: 50px; width: auto;">
-                    <span>MOJAS BATAM</span>
+    <x-dashboard.navbar />
+
+
+    <!-- Mitra Kami -->
+    <section class="partners-section" id="partners">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Mitra Pendidikan</h2>
+                <p>Beberapa sekolah & lembaga yang telah bekerjasama dengan kami</p>
+            </div>
+
+            <div class="partners-grid">
+                <!-- Item 1 -->
+                <div class="partner-card" data-aos="fade-up">
+                    <div class="partner-logo">
+                        <img src="https://via.placeholder.com/150x80?text=SDIT+Tunas+Cendikia"
+                            alt="SDIT Tunas Cendikia">
+                    </div>
+                    <h3>SDIT TUNAS CENDIKIA</h3>
                 </div>
-            </a>
-            <ul class="nav-menu">
-                <li><a href="/">Beranda</a></li>
-                <li><a href="#tarif">Tarif</a></li>
-                <li><a href="#kerjasama">Kerjasama</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#kontak">Kontak</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">
-                        Kategori <i class="fas fa-chevron-down"></i> </a>
 
-                    <ul class="dropdown-menu">
-                        <li><a href="/kegiatan">Kegiatan</a></li>
-                        <li><a href="/rental">Rental</a></li>
-                        <li><a href="/armada">Armada</a></li>
-                        <li><a href="/sekolah">Sekolah</a></li>
-                    </ul>
-                </li>
-                <li><a href="/login" class="admin-btn"><i class="fas fa-user-shield"></i> Login</a></li>
-            </ul>
+                <!-- Item 2 -->
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="partner-logo">
+                        <img src="https://via.placeholder.com/150x80?text=AIS" alt="AIS">
+                    </div>
+                    <h3>AIS (Australian Intercultural School)</h3>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="partner-logo">
+                        <img src="https://via.placeholder.com/150x80?text=Baitul+Hikmah" alt="Baitul Hikmah">
+                    </div>
+                    <h3>BAITUL HIKMAH</h3>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="partner-logo">
+                        <img src="https://via.placeholder.com/150x80?text=Mutiara+Insani" alt="Mutiara Insani">
+                    </div>
+                    <h3>MUTIARA INSANI</h3>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="partner-logo">
+                        <img src="https://via.placeholder.com/150x80?text=YAMET" alt="Yamet">
+                    </div>
+                    <h3>YAMET</h3>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="partner-logo">
+                        <img src="https://via.placeholder.com/150x80?text=TK+KDA" alt="TK KDA">
+                    </div>
+                    <h3>TK KDA</h3>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="partner-logo">
+                        <img src="https://via.placeholder.com/150x80?text=SMK+Kartini" alt="SMK Kartini">
+                    </div>
+                    <h3>SMK KARTINI</h3>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="partner-card" data-aos="fade-up" data-aos-delay="700">
+                    <div class="partner-logo">
+                        <img src="https://via.placeholder.com/150x80?text=Global+Islamic+School"
+                            alt="Global Islamic School">
+                    </div>
+                    <h3>GLOBAL ISLAMIC SCHOOL</h3>
+                </div>
+            </div>
         </div>
-    </nav>
+    </section>
+
+
+
+    <x-dashboard.tarif />
+
+    <x-dashboard.kerjasama />
+    <hr style="margin: 0; border: none; height: 3px; background: #eee; margin-left: 100px; margin-right: 100px;">
+
+
+    <x-dashboard.faq />
+
+    <x-dashboard.kontak />
+
+    <x-dashboard.footer />
+
+    {{-- footer --}}
+    <x-dashboard.footer />
 </body>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
-
-        const navbar = document.querySelector('.navbar');
-        if (navbar) {
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                    navbar.style.boxShadow = '0 2px 30px rgba(0,0,0,0.1)';
-                } else {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                    navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-                }
-            });
-        }
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        const heroCard = document.querySelector('.hero-card');
-        if (heroCard) {
-            let y = 0;
-            let direction = 1;
-            setInterval(() => {
-                y += direction * 0.1;
-                if (y > 10 || y < -10) {
-                    direction *= -1;
-                }
-                heroCard.style.transform = `translateY(${y}px)`;
-            }, 10);
-        }
-
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            const answer = item.querySelector('.faq-answer');
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                faqItems.forEach(i => {
-                    i.classList.remove('active');
-                    i.querySelector('.faq-answer').style.maxHeight = 0;
-                });
-                if (!isActive) {
-                    item.classList.add('active');
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                }
-            });
-        });
-
-        const officeCoords = [1.1160, 104.0385];
-        const locationMap = L.map('locationMap').setView(officeCoords, 15);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(locationMap);
-        L.marker(officeCoords).addTo(locationMap).bindPopup(
-                '<b>CV. MOJAS BATAM</b><br>Perumahan Anggrek Sari Blok F8 no.11, Batam ')
-            .openPopup();
-
-        const modal = document.getElementById("orderModal");
-        const closeBtn = modal.querySelector(".close");
-        const pesanBtns = document.querySelectorAll(".pesan-btn");
-
-        let modalMapsInitialized = false;
-        let mapAsal, mapTujuan;
-
-        function initializeModalMaps() {
-            if (modalMapsInitialized) return;
-
-            mapAsal = L.map("mapAsal").setView([1.0456, 104.0305], 12);
-            mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
-
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                attribution: "© OpenStreetMap"
-            }).addTo(mapAsal);
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                attribution: "© OpenStreetMap"
-            }).addTo(mapTujuan);
-
-            mapAsal.on("click", e => {
-                if (markerAsal) markerAsal.setLatLng(e.latlng);
-                else markerAsal = L.marker(e.latlng).addTo(mapAsal);
-                document.getElementById("alamatAsal").value =
-                    `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-                updateSimulasi();
-            });
-
-            mapTujuan.on("click", e => {
-                if (markerTujuan) markerTujuan.setLatLng(e.latlng);
-                else markerTujuan = L.marker(e.latlng).addTo(mapTujuan);
-                document.getElementById("alamatTujuan").value =
-                    `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-                updateSimulasi();
-            });
-
-            modalMapsInitialized = true;
-        }
-
-        let markerAsal = null,
-            markerTujuan = null;
-
-        pesanBtns.forEach(btn => {
-            btn.addEventListener("click", function() {
-                modal.style.display = "flex";
-                initializeModalMaps();
-                setTimeout(() => {
-                    mapAsal.invalidateSize();
-                    mapTujuan.invalidateSize();
-                }, 10);
-            });
-        });
-
-        closeBtn.addEventListener("click", () => modal.style.display = "none");
-        window.addEventListener("click", e => {
-            if (e.target == modal) modal.style.display = "none";
-        });
-
-        function hitungJarak(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 *
-                Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
-        }
-
-        function hitungTarif(jarak) {
-            const hariEfektif = 20;
-            let oneWay = 0;
-            if (jarak <= 3) {
-                oneWay = 400000;
-            } else {
-                oneWay = Math.round(jarak * hariEfektif * 7000);
-            }
-            return {
-                oneWay,
-                twoWay: oneWay * 2
-            };
-        }
-
-        function updateSimulasi() {
-            if (!markerAsal || !markerTujuan) return;
-            const a = markerAsal.getLatLng();
-            const t = markerTujuan.getLatLng();
-            const jarak = hitungJarak(a.lat, a.lng, t.lat, t.lng);
-            const tarif = hitungTarif(jarak);
-            document.getElementById("simulasi").innerHTML = `
-                    <p><b>Jarak:</b> ${jarak.toFixed(2)} km</p>
-                    <p><b>One Way:</b> Rp ${tarif.oneWay.toLocaleString("id-ID")}</p>
-                    <p><b>Two Way:</b> Rp ${tarif.twoWay.toLocaleString("id-ID")}</p>`;
-        }
-
-        document.getElementById("kirimWA").addEventListener("click", () => {
-            const nama = document.getElementById("nama").value;
-            const alamat = document.getElementById("alamat").value;
-            const sekolah = document.getElementById("sekolah").value;
-            const simulasi = document.getElementById("simulasi").innerText;
-
-            if (!nama || !alamat || !sekolah) {
-                alert("Harap isi Nama, Alamat, dan Sekolah!");
-                return;
-            }
-            if (!markerAsal || !markerTujuan) {
-                alert("Harap pilih Lokasi Asal dan Tujuan di peta!");
-                return;
-            }
-
-            const coordsAsal = markerAsal.getLatLng();
-            const coordsTujuan = markerTujuan.getLatLng();
-            const urlAsal = `https://www.google.com/maps?q=${coordsAsal.lat},${coordsAsal.lng}`;
-            const urlTujuan = `https://www.google.com/maps?q=${coordsTujuan.lat},${coordsTujuan.lng}`;
-
-            const pesan = `Halo, saya ingin memesan layanan antar jemput.\n\n` +
-                `*Nama Siswa:* ${nama}\n` +
-                `*Alamat Rumah:* ${alamat}\n` +
-                `*Nama Sekolah:* ${sekolah}\n\n` +
-                `*Lokasi Jemput (Asal):*\n${urlAsal}\n\n` +
-                `*Lokasi Antar (Tujuan):*\n${urlTujuan}\n\n` +
-                `*Hasil Simulasi:*\n${simulasi}`;
-
-            const url = `https://wa.me/6281268712321?text=${encodeURIComponent(pesan)}`;
-            window.open(url, "_blank");
-        });
-    });
-</script>
 
 </html>

@@ -1,25 +1,100 @@
-{{-- ... existing code ... --}}
-                {{-- Field Umur --}}
-                <div>
-                    <label for="umur" class="block text-sm font-medium text-gray-700 mb-1">Umur (Tahun)</label>
-                    <input type="number" id="umur" name="umur" value="{{ old('umur') }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Contoh: 5">
-                    @error('umur') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+@extends('layouts.app')
+
+@section('content-title', 'Tambah Data Anak')
+
+@section('content')
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Formulir Tambah Data Anak</h3>
+            </div>
+            <!-- /.card-header -->
+
+            <!-- form start -->
+            <form action="{{ route('admin.anak.store') }}" method="POST">
+                @csrf
+                <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Oops!</strong> Ada kesalahan validasi.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>- {{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div class="form-group">
+                        <label for="orang_tua_id">Orang Tua</label>
+                        <select class="form-control" id="orang_tua_id" name="orang_tua_id">
+                            <option value="">-- Pilih Orang Tua --</option>
+                            @foreach ($orang_tua as $ortu)
+                                <option value="{{ $ortu->id }}" {{ old('orang_tua_id') == $ortu->id ? 'selected' : '' }}>
+                                    {{ $ortu->user->name ?? '-' }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nama">Nama Anak</label>
+                        <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" placeholder="Masukkan nama lengkap anak">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="umur">Umur</label>
+                                <input type="number" class="form-control" id="umur" name="umur" value="{{ old('umur') }}" placeholder="Contoh: 5">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="jenis_kelamin">Jenis Kelamin</label>
+                                <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                    <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="sekolah">Sekolah</label>
+                                <input type="text" class="form-control" id="sekolah" name="sekolah" value="{{ old('sekolah') }}" placeholder="Contoh: TK Pelita Harapan">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="kelas">Kelas</label>
+                                <input type="text" class="form-control" id="kelas" name="kelas" value="{{ old('kelas') }}" placeholder="Contoh: A1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alamat_penjemputan">Alamat Penjemputan</label>
+                        <textarea class="form-control" rows="3" id="alamat_penjemputan" name="alamat_penjemputan" placeholder="Alamat lengkap penjemputan">{{ old('alamat_penjemputan') }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="catatan">Catatan</label>
+                        <textarea class="form-control" rows="3" id="catatan" name="catatan" placeholder="Catatan tambahan (opsional)">{{ old('catatan') }}</textarea>
+                    </div>
                 </div>
+                <!-- /.card-body -->
 
-                {{-- Field Jenis Kelamin --}}
-                <div>
-                    <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
-                    <select id="jenis_kelamin" name="jenis_kelamin" class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">Pilih Jenis Kelamin</option>
-                        <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-                    </select>
-                    {{-- Anda perlu menambahkan validasi untuk 'jenis_kelamin' di controller --}}
-                    @error('jenis_kelamin') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                <div class="card-footer">
+                    <a href="{{ route('admin.anak.index') }}" class="btn btn-secondary">Batal</a>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
-
-                {{-- Field Sekolah dan Kelas --}}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-{{-- ... existing code ... --}}
-
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

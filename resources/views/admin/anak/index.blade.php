@@ -10,9 +10,9 @@
             <div class="card-header">
                 <h3 class="card-title">Daftar Semua Anak</h3>
                 <div class="card-tools">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#anakFormModal">
+                    {{-- <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#anakFormModal">
                         <i class="fas fa-plus"></i> Tambah Data Anak
-                    </button>
+                    </button> --}}
                 </div>
             </div>
             <!-- /.card-header -->

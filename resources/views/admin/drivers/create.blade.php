@@ -18,7 +18,7 @@
                 <div class="card-body">
 
                     {{-- Menampilkan error validasi --}}
-                    @if ($errors->any())
+                    @if ($errors->any())    
                         <div class="alert alert-danger">
                             <h6><i class="icon fas fa-ban"></i><strong> Oops! Ada kesalahan.</strong></h6>
                             <ul>
@@ -29,15 +29,24 @@
                         </div>
                     @endif
 
-                    {{-- Bagian yang diubah dari dropdown menjadi input biasa --}}
-                    <div class="form-group">
-                        <label for="user_id">ID Akun Pengguna (User)</label>
-                        <input type="number" class="form-control @error('user_id') is-invalid @enderror" id="user_id" name="user_id" placeholder="Masukkan ID dari pengguna yang akan dijadikan pengemudi" value="{{ old('user_id') }}">
-                        <small class="form-text text-muted">Pastikan ID pengguna yang dimasukkan sudah terdaftar dan memiliki peran 'pengemudi'.</small>
-                        @error('user_id')
-                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                        @enderror
-                    </div>
+                  <div class="form-group">
+    <label for="user_id">ID Akun Orang Tua</label>
+    <input 
+        type="number" 
+        class="form-control @error('user_id') is-invalid @enderror" 
+        id="user_id" 
+        name="user_id" 
+        value="{{ old('user_id') }}" 
+        placeholder="Masukkan ID akun orang tua">
+    <small class="form-text text-muted">
+        Masukkan ID akun orang tua yang sudah terdaftar di sistem.
+    </small>
+    @error('user_id')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+    @enderror
+</div>
 
                     <div class="form-group">
                         <label for="nomor_plat">Nomor Plat Kendaraan</label>

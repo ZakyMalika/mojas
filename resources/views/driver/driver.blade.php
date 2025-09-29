@@ -7,10 +7,10 @@
     <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-4 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{ $jadwalCount ?? 0 }}</h3>
+                        <h3>{{ $jadwalHariIni->count() ?? 0 }}</h3>
                         <p>Jadwal Hari Ini</p>
                     </div>
                     <div class="icon">
@@ -20,7 +20,7 @@
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-4 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
                         <h3>Rp{{ number_format($penghasilanBulanIni ?? 0, 0, ',', '.') }}</h3>
@@ -33,20 +33,8 @@
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-primary">
-                    <div class="inner">
-                        <h3>{{ $totalTripSelesai ?? 0 }}</h3>
-                        <p>Total Perjalanan Selesai</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-route"></i>
-                    </div>
-                    <a href="{{ route('driver.log-jadwal.index') }}" class="small-box-footer">Lihat Log <i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
+                 
+            <div class="col-lg-4 col-6">
                 <div class="small-box bg-secondary">
                     <div class="inner">
                         <h3>{{ $driver->nomor_plat ?? 'N/A' }}</h3>
@@ -84,7 +72,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @forelse($jadwalHariIni as $jadwal)
+                                @forelse($jadwalHariIni as $jadwal)
                                <tr>
                                    <td><strong>{{ \Carbon\Carbon::parse($jadwal->jam_jemput)->format('H:i') }}</strong></td>
                                    <td>{{ $jadwal->anak->nama ?? 'N/A' }}</td>
@@ -104,7 +92,7 @@
                                <tr>
                                    <td colspan="4" class="text-center">Tidak ada jadwal untuk hari ini.</td>
                                </tr>
-                           @endforelse --}}
+                           @endforelse
                             </tbody>
                         </table>
                     </div>

@@ -32,7 +32,7 @@
         <div class="col-lg-4 col-6">
             <div class="small-box bg-secondary">
                 <div class="inner">
-                    <h3>{{ $totalAnak ?? 0 }}</h3>
+                    <h3>{{ $totalAnaks ?? 0 }}</h3>
                     <p>Total Anak</p>
                 </div>
                 <div class="icon">
@@ -99,9 +99,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                                {{-- @forelse($pendaftaranTerbaru as $pendaftaran)
+                                @forelse($pendaftaranTerbaru as $pendaftaran)
                                 <tr>
-                                    <td><a href="{{ route('admin.anak.show', $pendaftaran->anak_id) }}">#{{ $pendaftaran->anak_id }}</a></td>
+                                    <td><a href="{{ route('admin.anak.show', $pendaftaran->id) }}">#{{ $pendaftaran->id }}</a></td>
                                     <td>{{ $pendaftaran->anak->nama ?? 'N/A' }}</td>
                                     <td>
                                         @php $statusMap = ['pending' => 'warning', 'lunas' => 'success', 'expired' => 'danger']; @endphp
@@ -111,7 +111,7 @@
                                 </tr>
                                 @empty
                                 <tr><td colspan="4" class="text-center">Tidak ada pendaftaran baru.</td></tr>
-                                @endforelse --}}
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -138,7 +138,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                               {{-- @forelse($pembayaranTerbaru as $pembayaran)
+                               @forelse($pembayaranTerbaru as $pembayaran)
                                 <tr>
                                     <td><a href="{{ route('admin.pembayaran.show', $pembayaran->id) }}">#{{ $pembayaran->id }}</a></td>
                                     <td>{{ $pembayaran->pendaftaran_anak->anak->nama ?? 'N/A' }}</td>
@@ -150,7 +150,7 @@
                                 </tr>
                                @empty
                                 <tr><td colspan="4" class="text-center">Tidak ada pembayaran baru.</td></tr>
-                               @endforelse --}}
+                               @endforelse
                             </tbody>
                         </table>
                     </div>

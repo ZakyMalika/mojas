@@ -112,13 +112,13 @@
                         </a>
                     </li>
 
-                    <li class="nav-header">LAPORAN & LOG</li>
+                    {{-- <li class="nav-header">LAPORAN & LOG</li>
                     <li class="nav-item">
                         <a href="{{ route('admin.log-jadwal.index') }}" class="nav-link {{ request()->routeIs('admin.log-jadwal.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-history"></i>
                             <p>Log Jadwal</p>
                         </a>
-                    </li>
+                    </li> --}}
                 
                 {{-- ================================================= --}}
                 {{-- =========== MENU UNTUK PENGEMUDI ============== --}}
@@ -144,12 +144,12 @@
                             <p>Penghasilan Saya</p>
                         </a>
                     </li>
-                     <li class="nav-item">
+                     {{-- <li class="nav-item">
                         <a href="{{ route('driver.log-jadwal.index') }}" class="nav-link {{ request()->routeIs('driver.log-jadwal.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-history"></i>
                             <p>Riwayat Perjalanan</p>
                         </a>
-                    </li>
+                    </li> --}}
 
                 {{-- ================================================= --}}
                 {{-- ============ MENU UNTUK ORANG TUA ============= --}}
@@ -183,7 +183,7 @@
                     </li> --}}
                     {{-- Route untuk 'Jadwal Anak' dan 'Riwayat' tidak terdefinisi di web.php untuk role orang_tua --}}
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('parent.jadwal.index') }}" class="nav-link {{ request()->routeIs('parent.jadwal.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-calendar-alt"></i>
                             <p>Jadwal Anak</p>
                         </a>

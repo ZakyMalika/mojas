@@ -36,7 +36,7 @@
                             <th><i class="fas fa-car-side mr-1"></i> Pengemudi</th>
                             <th><i class="fas fa-child mr-1"></i> Anak</th>
                             <th><i class="fas fa-calendar-alt mr-1"></i> Jadwal</th>
-                            <th><i class="fas fa-road mr-1"></i> Jarak (KM)</th>
+                            <th><i class="fas fa-road mr-1"></i> Tipe Layanan</th>
                             <th><i class="fas fa-coins mr-1"></i> Komisi</th>
                             <th><i class="fas fa-info-circle mr-1"></i> Status</th>
                             <th><i class="fas fa-cogs mr-1"></i> Aksi</th>
@@ -49,7 +49,21 @@
                                 <td>{{ $item->jadwal->anak->nama ?? 'N/A' }}</td>
                                 <td>{{ $item->jadwal ? \Carbon\Carbon::parse($item->jadwal->tanggal)->format('d M Y') : 'N/A' }}</td>
                                 {{-- Mengambil jarak dari data pendaftaran anak yang terkait dengan jadwal --}}
-                                <td>{{ $item->jadwal->anak->pendaftaran_anak->first()->jarak_km ?? 'N/A' }} KM</td>
+                                <td>
+                                    @php
+                                        // Mengambil tipe layanan dari pendaftaran anak yang terkait
+                                        $pendaftaran = $item->jadwal->anak->pendaftaran_anak->first();
+                                        $tipe_layanan = $pendaftaran ? $pendaftaran->tipe_layanan : null;
+                                        
+                                        $formatted_layanan = 'N/A';
+                                        if ($tipe_layanan === 'one_way') {
+                                            $formatted_layanan = 'One Way';
+                                        } elseif ($tipe_layanan === 'two_way') {
+                                            $formatted_layanan = 'Two Way';
+                                        }
+                                    @endphp
+                                    <strong>{{ $formatted_layanan }}</strong>
+                                </td>
                                 <td>Rp {{ number_format($item->komisi_pengemudi, 0, ',', '.') }}</td>
                                 <td>
                                     @php

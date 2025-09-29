@@ -41,7 +41,7 @@
                         @forelse ($items as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->jarak_dari_km }} - {{ $item->jarak_sampai_km }} KM</td>
+                                <td>{{ $item->min_distance_km }} - {{ $item->max_distance_km }} KM</td>
                                 <td>Rp{{ number_format($item->tarif_one_way, 0, ',', '.') }}</td>
                                 <td>Rp{{ number_format($item->tarif_two_way, 0, ',', '.') }}</td>
                                 <td>Rp{{ number_format($item->tarif_per_km, 0, ',', '.') }}</td>
@@ -97,7 +97,7 @@
 $(function () {
     $("#tarif-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print"]
+        "buttons": [ "excel", "pdf", "print"]
     }).buttons().container().appendTo('#tarif-table_wrapper .col-md-6:eq(0)');
 
     // LOGIKA HAPUS DENGAN MODAL (SOLUSI DEFINITIF)

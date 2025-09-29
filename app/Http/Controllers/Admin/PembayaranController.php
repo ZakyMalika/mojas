@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Orang_tua;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
+use App\Models\Pendaftaran_anak;
+use App\Http\Controllers\Controller;
 
 class PembayaranController extends Controller
 {
@@ -18,7 +20,10 @@ class PembayaranController extends Controller
 
     public function create()
     {
-        return view('admin.pembayaran.create');
+        $pendaftaranList = Pendaftaran_anak::with('anak')->get();
+        $orangTuaList = Orang_tua::with('user')->get();
+
+        return view('admin.pembayaran.create', compact('pendaftaranList', 'orangTuaList'));
     }
 
     public function store(Request $request)

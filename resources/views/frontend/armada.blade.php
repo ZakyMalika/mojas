@@ -891,94 +891,169 @@
     <x-dashboard.navbar />
 
       {{-- main --}}
-    <section class="fleet-section" id="armada">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <h2 >Armada Pilihan Kami 🚗</h2>
-                <p>Kami menyediakan berbagai pilihan mobil MPV yang terawat, bersih, dan siap mengantar Anda dengan
-                    nyaman.</p>
-            </div>
+    <!-- Armada Kami -->
+<section class="fleet-section" id="armada">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>Armada Kami</h2>
+      <p>Pilihan armada terbaik untuk perjalanan Anda, nyaman, bersih, dan terawat.</p>
+    </div>
 
-            <div class="fleet-grid">
-                <div class="car-card" data-aos="fade-up">
-                    <div class="car-image-container">
-                        <img src="https://img.cintamobil.com/2022/04/11/F03gT50g/avanza-2019-putih-1-9a74.jpg"
-                            alt="Toyota Avanza Putih">
-                        <div class="car-badge">Paling Laris</div>
-                    </div>
-                    <div class="car-details">
-                        <h3>Toyota Avanza</h3>
-                        <p class="car-description">Pilihan ideal untuk keluarga atau perjalanan grup kecil dengan
-                            efisiensi bahan bakar yang baik.</p>
-                        <ul class="car-features">
-                            <li><i class="fas fa-users"></i> 6 Penumpang</li>
-                            <li><i class="fas fa-suitcase-rolling"></i> 2 Koper Besar</li>
-                            <li><i class="fas fa-cogs"></i> Manual</li>
-                            <li><i class="fas fa-snowflake"></i> Full AC</li>
-                        </ul>
-                        <a href="#rental" class="btn-primary">Pesan Sekarang</a>
-                    </div>
-                </div>
-
-                <div class="car-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="car-image-container">
-                        <img src="{{ asset('images/mojas1.jpg') }}" alt="Logo MOJAS Batam"
-                       >
-                    </div>
-                    <div class="car-details">
-                        <h3>Mitsubishi Xpander</h3>
-                        <p class="car-description">Menawarkan kenyamanan premium dengan interior yang luas dan desain
-                            modern.</p>
-                        <ul class="car-features">
-                            <li><i class="fas fa-users"></i> 6 Penumpang</li>
-                            <li><i class="fas fa-suitcase-rolling"></i> 3 Koper Besar</li>
-                            <li><i class="fas fa-cogs"></i> Otomatis</li>
-                            <li><i class="fas fa-snowflake"></i> Full AC</li>
-                        </ul>
-                        <a href="#rental" class="btn-primary">Pesan Sekarang</a>
-                    </div>
-                </div>
-
-                <div class="car-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="car-image-container">
-                        <img src="{{ asset('images/mojas2.jpg') }}" alt="Logo MOJAS Batam"
-                            alt="Mitsubishi Xpander Putih">
-                    </div>
-                    <div class="car-details">
-                        <h3>Mitsubishi Xpander</h3>
-                        <p class="car-description">Menawarkan kenyamanan premium dengan interior yang luas dan desain
-                            modern.</p>
-                        <ul class="car-features">
-                            <li><i class="fas fa-users"></i> 6 Penumpang</li>
-                            <li><i class="fas fa-suitcase-rolling"></i> 3 Koper Besar</li>
-                            <li><i class="fas fa-cogs"></i> Otomatis</li>
-                            <li><i class="fas fa-snowflake"></i> Full AC</li>
-                        </ul>
-                        <a href="#rental" class="btn-primary">Pesan Sekarang</a>
-                    </div>
-                </div>
-
-                <div class="car-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="car-image-container">
-                        <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
-                       >
-                    </div>
-                    <div class="car-details">
-                        <h3>Suzuki Ertiga</h3>
-                        <p class="car-description">Kombinasi sempurna antara gaya, kenyamanan, dan performa yang handal
-                            di segala medan.</p>
-                        <ul class="car-features">
-                            <li><i class="fas fa-users"></i> 6 Penumpang</li>
-                            <li><i class="fas fa-suitcase-rolling"></i> 2 Koper Besar</li>
-                            <li><i class="fas fa-cogs"></i> Manual</li>
-                            <li><i class="fas fa-snowflake"></i> Full AC</li>
-                        </ul>
-                        <a href="#rental" class="btn-primary">Pesan Sekarang</a>
-                    </div>
-                </div>
-            </div>
+    <div class="fleet-grid">
+      <!-- Innova Reborn -->
+      <div class="car-card" data-aos="fade-up">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=Innova+Reborn" alt="Innova Reborn">
+          <span class="car-badge">Favorit</span>
         </div>
-    </section>
+        <div class="car-details">
+          <h3>Innova Reborn</h3>
+          <p class="car-description">MPV nyaman untuk keluarga maupun bisnis dengan kabin luas.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 7 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+            <li><i class="fa fa-car"></i> Transmisi M/T</li>
+            <li><i class="fa fa-gas-pump"></i> Irit BBM</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- All New Xenia -->
+      <div class="car-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=All+New+Xenia" alt="All New Xenia">
+          <span class="car-badge">Baru</span>
+        </div>
+        <div class="car-details">
+          <h3>All New Xenia</h3>
+          <p class="car-description">MPV modern dengan kenyamanan dan fitur terbaru.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 7 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+            <li><i class="fa fa-car"></i> Transmisi A/T</li>
+            <li><i class="fa fa-gas-pump"></i> Irit BBM</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- All New Avanza -->
+      <div class="car-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=All+New+Avanza" alt="All New Avanza">
+        </div>
+        <div class="car-details">
+          <h3>All New Avanza</h3>
+          <p class="car-description">Pilihan hemat untuk perjalanan bersama keluarga.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 7 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- Honda Yaris -->
+      <div class="car-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=Honda+Yaris" alt="Honda Yaris">
+        </div>
+        <div class="car-details">
+          <h3>Honda Yaris</h3>
+          <p class="car-description">Hatchback stylish, cocok untuk perjalanan perkotaan.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 5 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- Suzuki APV -->
+      <div class="car-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=Suzuki+APV" alt="Suzuki APV">
+        </div>
+        <div class="car-details">
+          <h3>Suzuki APV</h3>
+          <p class="car-description">Kapasitas besar, ideal untuk rombongan atau bisnis.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 8 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- Wuling Confero -->
+      <div class="car-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=Wuling+Confero" alt="Wuling Confero">
+        </div>
+        <div class="car-details">
+          <h3>Wuling Confero</h3>
+          <p class="car-description">MPV dengan desain elegan dan kabin lega.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 7 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- Chevrolet Spin -->
+      <div class="car-card" data-aos="fade-up" data-aos-delay="600">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=Chevrolet+Spin" alt="Chevrolet Spin">
+        </div>
+        <div class="car-details">
+          <h3>Chevrolet Spin</h3>
+          <p class="car-description">Kombinasi kenyamanan dan efisiensi untuk keluarga.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 7 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- Elf -->
+      <div class="car-card" data-aos="fade-up" data-aos-delay="700">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=Isuzu+Elf" alt="Isuzu Elf">
+        </div>
+        <div class="car-details">
+          <h3>Elf</h3>
+          <p class="car-description">Mini bus untuk rombongan besar dengan kenyamanan optimal.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 12–15 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+      <!-- Hiace -->
+      <div class="car-card" data-aos="fade-up" data-aos-delay="800">
+        <div class="car-image-container">
+          <img src="https://via.placeholder.com/400x220?text=Toyota+Hiace" alt="Toyota Hiace">
+        </div>
+        <div class="car-details">
+          <h3>Hiace</h3>
+          <p class="car-description">Pilihan terbaik untuk perjalanan jarak jauh bersama rombongan.</p>
+          <ul class="car-features">
+            <li><i class="fa fa-users"></i> 14–16 Penumpang</li>
+            <li><i class="fa fa-snowflake"></i> AC Dingin</li>
+          </ul>
+          <a href="#" class="btn-primary">Pesan Sekarang</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
 
     <x-dashboard.tarif />
