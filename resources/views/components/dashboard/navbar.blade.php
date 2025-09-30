@@ -906,7 +906,7 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(locationMap);
         L.marker(officeCoords).addTo(locationMap).bindPopup(
-                '<b>CV. MOJAS BATAM</b><br>Perumahan Anggrek Sari Blok F8 no.11, Batam ')
+                '<b>PT. MOJAS BATAM</b><br>Perumahan Anggrek Sari Blok F8 no.11, Batam ')
             .openPopup();
 
         const modal = document.getElementById("orderModal");

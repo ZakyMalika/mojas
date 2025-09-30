@@ -11,6 +11,50 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <style>
+        .review-section {
+            background: #897f7f;
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 2px solid #ddd;
+        }
+
+        .review-section h2 {
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .review-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .review-form input,
+        .review-form textarea {
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .review-form button {
+            background: #0077cc;
+            color: rgb(219, 217, 217);
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.3s;
+        }
+
+        .review-form button:hover {
+            background: #005fa3;
+        }
+
         /* === GENERAL & SETUP === */
         * {
             margin: 0;
@@ -775,30 +819,31 @@
 <body>
     <x-dashboard.navbar />
 
-   <section id="home" class="hero">
-    <div class="hero-container">
-        <div class="hero-content" data-aos="fade-right">
-            <h1>Layanan Antar Jemput Siswa Terpercaya</h1>
-            <p>Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda di Area Batam.</p>
-            <div class="cta-buttons">
-                <a href="/rental" class="btn-primary"><i class="fas fa-car"></i> Lihat Layanan</a>
-                <a href="#kontak" class="btn-secondary"><i class="fas fa-phone"></i> Hubungi Kami</a>
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content" data-aos="fade-right">
+                <h1>Layanan Antar Jemput Siswa Terpercaya</h1>
+                <p>Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda di Area Batam.</p>
+                <div class="cta-buttons">
+                    <a href="/rental" class="btn-primary"><i class="fas fa-car"></i> Lihat Layanan</a>
+                    <a href="#kontak" class="btn-secondary"><i class="fas fa-phone"></i> Hubungi Kami</a>
+                </div>
             </div>
-        </div>
 
-        <!-- Bagian hero-visual yang telah diubah -->
-        <div class="hero-visual" data-aos="fade-left" style="display: flex; justify-content: center; align-items: center;">
-            <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
-                 style="
+            <!-- Bagian hero-visual yang telah diubah -->
+            <div class="hero-visual" data-aos="fade-left"
+                style="display: flex; justify-content: center; align-items: center;">
+                <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
+                    style="
                     max-width: 400px; /* Lebar maksimum gambar agar tidak terlalu besar di layar lebar */
                     width: 100%;      /* Membuat gambar responsif */
                     height: auto;     /* Tinggi menyesuaikan secara otomatis */
                     border-radius: 20px; /* Sudut sedikit membulat agar lebih modern */
                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Efek bayangan halus untuk membuatnya menonjol */
                  ">
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section id="visimisi" class="visimisi">
         <div class="container">
@@ -880,11 +925,21 @@
 
     <x-dashboard.faq />
 
+    <!-- Bagian Ulasan -->
+    <div class="review-section">
+        <h2>Berikan Ulasan Anda</h2>
+        <form class="review-form">
+            <input type="text" name="nama" placeholder="Nama Anda" required>
+            <textarea name="ulasan" rows="4" placeholder="Tulis ulasan Anda..." required></textarea>
+            <button type="submit">Kirim Ulasan</button>
+        </form>
+    </div>
     <x-dashboard.kontak />
+
 
     <x-dashboard.footer />
 
-    <d-dashboard"orderModal" class="modal">
+    <div id="orderModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Formulir Pemesanan & Simulasi</h2>
@@ -929,225 +984,225 @@
                 </div>
             </div>
         </div>
-        </d-dashboard>
+    </div>
 
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
 
-                AOS.init({
-                    duration: 800,
-                    easing: 'ease-in-out',
-                    once: true
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+
+            const navbar = document.querySelector('.navbar');
+            if (navbar) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                        navbar.style.boxShadow = '0 2px 30px rgba(0,0,0,0.1)';
+                    } else {
+                        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                        navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+                    }
+                });
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+
+            const heroCard = document.querySelector('.hero-card');
+            if (heroCard) {
+                let y = 0;
+                let direction = 1;
+                setInterval(() => {
+                    y += direction * 0.1;
+                    if (y > 10 || y < -10) {
+                        direction *= -1;
+                    }
+                    heroCard.style.transform = `translateY(${y}px)`;
+                }, 10);
+            }
+
+            // === KODE FAQ DENGAN USABILITY LEBIH BAIK ===
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const questionButton = item.querySelector('.faq-question');
+                const answerDiv = item.querySelector('.faq-answer');
+
+                questionButton.addEventListener('click', () => {
+                    // Cek status item saat ini (apakah sedang aktif/terbuka)
+                    const isActive = item.classList.contains('active');
+
+                    // Toggle class 'active' pada .faq-item
+                    item.classList.toggle('active');
+
+                    // Update atribut ARIA untuk aksesibilitas
+                    questionButton.setAttribute('aria-expanded', !isActive);
+
+                    // Atur max-height untuk animasi buka-tutup
+                    if (!isActive) {
+                        // Jika tidak aktif (akan dibuka), set max-height sesuai tinggi konten
+                        answerDiv.style.maxHeight = answerDiv.scrollHeight + 'px';
+                    } else {
+                        // Jika sudah aktif (akan ditutup), kembalikan max-height ke 0
+                        answerDiv.style.maxHeight = 0;
+                    }
                 });
 
-                const navbar = document.querySelector('.navbar');
-                if (navbar) {
-                    window.addEventListener('scroll', function() {
-                        if (window.scrollY > 50) {
-                            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                            navbar.style.boxShadow = '0 2px 30px rgba(0,0,0,0.1)';
-                        } else {
-                            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                            navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-                        }
+
+                const officeCoords = [1.1160, 104.0385];
+                const locationMap = L.map('locationMap').setView(officeCoords, 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(locationMap);
+                L.marker(officeCoords).addTo(locationMap).bindPopup(
+                        '<b>PT. MOJAS BATAM</b><br>Perumahan Anggrek Sari Blok F8 no.11, Batam ')
+                    .openPopup();
+
+                const modal = document.getElementById("orderModal");
+                const closeBtn = modal.querySelector(".close");
+                const pesanBtns = document.querySelectorAll(".pesan-btn");
+
+                let modalMapsInitialized = false;
+                let mapAsal, mapTujuan;
+
+                function initializeModalMaps() {
+                    if (modalMapsInitialized) return;
+
+                    mapAsal = L.map("mapAsal").setView([1.0456, 104.0305], 12);
+                    mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
+
+                    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                        attribution: "© OpenStreetMap"
+                    }).addTo(mapAsal);
+                    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                        attribution: "© OpenStreetMap"
+                    }).addTo(mapTujuan);
+
+                    mapAsal.on("click", e => {
+                        if (markerAsal) markerAsal.setLatLng(e.latlng);
+                        else markerAsal = L.marker(e.latlng).addTo(mapAsal);
+                        document.getElementById("alamatAsal").value =
+                            `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
+                        updateSimulasi();
                     });
+
+                    mapTujuan.on("click", e => {
+                        if (markerTujuan) markerTujuan.setLatLng(e.latlng);
+                        else markerTujuan = L.marker(e.latlng).addTo(mapTujuan);
+                        document.getElementById("alamatTujuan").value =
+                            `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
+                        updateSimulasi();
+                    });
+
+                    modalMapsInitialized = true;
                 }
 
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const target = document.querySelector(this.getAttribute('href'));
-                        if (target) {
-                            target.scrollIntoView({
-                                behavior: 'smooth'
-                            });
-                        }
+                let markerAsal = null,
+                    markerTujuan = null;
+
+                pesanBtns.forEach(btn => {
+                    btn.addEventListener("click", function() {
+                        modal.style.display = "flex";
+                        initializeModalMaps();
+                        setTimeout(() => {
+                            mapAsal.invalidateSize();
+                            mapTujuan.invalidateSize();
+                        }, 10);
                     });
                 });
 
+                closeBtn.addEventListener("click", () => modal.style.display = "none");
+                window.addEventListener("click", e => {
+                    if (e.target == modal) modal.style.display = "none";
+                });
 
-                const heroCard = document.querySelector('.hero-card');
-                if (heroCard) {
-                    let y = 0;
-                    let direction = 1;
-                    setInterval(() => {
-                        y += direction * 0.1;
-                        if (y > 10 || y < -10) {
-                            direction *= -1;
-                        }
-                        heroCard.style.transform = `translateY(${y}px)`;
-                    }, 10);
+                function hitungJarak(lat1, lon1, lat2, lon2) {
+                    const R = 6371;
+                    const dLat = (lat2 - lat1) * Math.PI / 180;
+                    const dLon = (lon2 - lon1) * Math.PI / 180;
+                    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) *
+                        Math.cos(lat2 *
+                            Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
                 }
 
-                // === KODE FAQ DENGAN USABILITY LEBIH BAIK ===
-                const faqItems = document.querySelectorAll('.faq-item');
-
-                faqItems.forEach(item => {
-                    const questionButton = item.querySelector('.faq-question');
-                    const answerDiv = item.querySelector('.faq-answer');
-
-                    questionButton.addEventListener('click', () => {
-                        // Cek status item saat ini (apakah sedang aktif/terbuka)
-                        const isActive = item.classList.contains('active');
-
-                        // Toggle class 'active' pada .faq-item
-                        item.classList.toggle('active');
-
-                        // Update atribut ARIA untuk aksesibilitas
-                        questionButton.setAttribute('aria-expanded', !isActive);
-
-                        // Atur max-height untuk animasi buka-tutup
-                        if (!isActive) {
-                            // Jika tidak aktif (akan dibuka), set max-height sesuai tinggi konten
-                            answerDiv.style.maxHeight = answerDiv.scrollHeight + 'px';
-                        } else {
-                            // Jika sudah aktif (akan ditutup), kembalikan max-height ke 0
-                            answerDiv.style.maxHeight = 0;
-                        }
-                    });
-
-
-                    const officeCoords = [1.1160, 104.0385];
-                    const locationMap = L.map('locationMap').setView(officeCoords, 15);
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '© OpenStreetMap contributors'
-                    }).addTo(locationMap);
-                    L.marker(officeCoords).addTo(locationMap).bindPopup(
-                            '<b>CV. MOJAS BATAM</b><br>Perumahan Anggrek Sari Blok F8 no.11, Batam ')
-                        .openPopup();
-
-                    const modal = document.getElementById("orderModal");
-                    const closeBtn = modal.querySelector(".close");
-                    const pesanBtns = document.querySelectorAll(".pesan-btn");
-
-                    let modalMapsInitialized = false;
-                    let mapAsal, mapTujuan;
-
-                    function initializeModalMaps() {
-                        if (modalMapsInitialized) return;
-
-                        mapAsal = L.map("mapAsal").setView([1.0456, 104.0305], 12);
-                        mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
-
-                        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                            attribution: "© OpenStreetMap"
-                        }).addTo(mapAsal);
-                        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                            attribution: "© OpenStreetMap"
-                        }).addTo(mapTujuan);
-
-                        mapAsal.on("click", e => {
-                            if (markerAsal) markerAsal.setLatLng(e.latlng);
-                            else markerAsal = L.marker(e.latlng).addTo(mapAsal);
-                            document.getElementById("alamatAsal").value =
-                                `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-                            updateSimulasi();
-                        });
-
-                        mapTujuan.on("click", e => {
-                            if (markerTujuan) markerTujuan.setLatLng(e.latlng);
-                            else markerTujuan = L.marker(e.latlng).addTo(mapTujuan);
-                            document.getElementById("alamatTujuan").value =
-                                `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-                            updateSimulasi();
-                        });
-
-                        modalMapsInitialized = true;
+                function hitungTarif(jarak) {
+                    const hariEfektif = 20;
+                    let oneWay = 0;
+                    if (jarak <= 3) {
+                        oneWay = 400000;
+                    } else {
+                        oneWay = Math.round(jarak * hariEfektif * 7000);
                     }
+                    return {
+                        oneWay,
+                        twoWay: oneWay * 2
+                    };
+                }
 
-                    let markerAsal = null,
-                        markerTujuan = null;
-
-                    pesanBtns.forEach(btn => {
-                        btn.addEventListener("click", function() {
-                            modal.style.display = "flex";
-                            initializeModalMaps();
-                            setTimeout(() => {
-                                mapAsal.invalidateSize();
-                                mapTujuan.invalidateSize();
-                            }, 10);
-                        });
-                    });
-
-                    closeBtn.addEventListener("click", () => modal.style.display = "none");
-                    window.addEventListener("click", e => {
-                        if (e.target == modal) modal.style.display = "none";
-                    });
-
-                    function hitungJarak(lat1, lon1, lat2, lon2) {
-                        const R = 6371;
-                        const dLat = (lat2 - lat1) * Math.PI / 180;
-                        const dLon = (lon2 - lon1) * Math.PI / 180;
-                        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(lat1 * Math.PI / 180) *
-                            Math.cos(lat2 *
-                                Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
-                    }
-
-                    function hitungTarif(jarak) {
-                        const hariEfektif = 20;
-                        let oneWay = 0;
-                        if (jarak <= 3) {
-                            oneWay = 400000;
-                        } else {
-                            oneWay = Math.round(jarak * hariEfektif * 7000);
-                        }
-                        return {
-                            oneWay,
-                            twoWay: oneWay * 2
-                        };
-                    }
-
-                    function updateSimulasi() {
-                        if (!markerAsal || !markerTujuan) return;
-                        const a = markerAsal.getLatLng();
-                        const t = markerTujuan.getLatLng();
-                        const jarak = hitungJarak(a.lat, a.lng, t.lat, t.lng);
-                        const tarif = hitungTarif(jarak);
-                        document.getElementById("simulasi").innerHTML = `
+                function updateSimulasi() {
+                    if (!markerAsal || !markerTujuan) return;
+                    const a = markerAsal.getLatLng();
+                    const t = markerTujuan.getLatLng();
+                    const jarak = hitungJarak(a.lat, a.lng, t.lat, t.lng);
+                    const tarif = hitungTarif(jarak);
+                    document.getElementById("simulasi").innerHTML = `
                     <p><b>Jarak:</b> ${jarak.toFixed(2)} km</p>
                     <p><b>One Way:</b> Rp ${tarif.oneWay.toLocaleString("id-ID")}</p>
                     <p><b>Two Way:</b> Rp ${tarif.twoWay.toLocaleString("id-ID")}</p>`;
+                }
+
+                document.getElementById("kirimWA").addEventListener("click", () => {
+                    const nama = document.getElementById("nama").value;
+                    const alamat = document.getElementById("alamat").value;
+                    const sekolah = document.getElementById("sekolah").value;
+                    const simulasi = document.getElementById("simulasi").innerText;
+
+                    if (!nama || !alamat || !sekolah) {
+                        alert("Harap isi Nama, Alamat, dan Sekolah!");
+                        return;
+                    }
+                    if (!markerAsal || !markerTujuan) {
+                        alert("Harap pilih Lokasi Asal dan Tujuan di peta!");
+                        return;
                     }
 
-                    document.getElementById("kirimWA").addEventListener("click", () => {
-                        const nama = document.getElementById("nama").value;
-                        const alamat = document.getElementById("alamat").value;
-                        const sekolah = document.getElementById("sekolah").value;
-                        const simulasi = document.getElementById("simulasi").innerText;
+                    const coordsAsal = markerAsal.getLatLng();
+                    const coordsTujuan = markerTujuan.getLatLng();
+                    const urlAsal =
+                        `https://www.google.com/maps?q=${coordsAsal.lat},${coordsAsal.lng}`;
+                    const urlTujuan =
+                        `https://www.google.com/maps?q=${coordsTujuan.lat},${coordsTujuan.lng}`;
 
-                        if (!nama || !alamat || !sekolah) {
-                            alert("Harap isi Nama, Alamat, dan Sekolah!");
-                            return;
-                        }
-                        if (!markerAsal || !markerTujuan) {
-                            alert("Harap pilih Lokasi Asal dan Tujuan di peta!");
-                            return;
-                        }
+                    const pesan = `Halo, saya ingin memesan layanan antar jemput.\n\n` +
+                        `*Nama Siswa:* ${nama}\n` +
+                        `*Alamat Rumah:* ${alamat}\n` +
+                        `*Nama Sekolah:* ${sekolah}\n\n` +
+                        `*Lokasi Jemput (Asal):*\n${urlAsal}\n\n` +
+                        `*Lokasi Antar (Tujuan):*\n${urlTujuan}\n\n` +
+                        `*Hasil Simulasi:*\n${simulasi}`;
 
-                        const coordsAsal = markerAsal.getLatLng();
-                        const coordsTujuan = markerTujuan.getLatLng();
-                        const urlAsal =
-                            `https://www.google.com/maps?q=${coordsAsal.lat},${coordsAsal.lng}`;
-                        const urlTujuan =
-                            `https://www.google.com/maps?q=${coordsTujuan.lat},${coordsTujuan.lng}`;
-
-                        const pesan = `Halo, saya ingin memesan layanan antar jemput.\n\n` +
-                            `*Nama Siswa:* ${nama}\n` +
-                            `*Alamat Rumah:* ${alamat}\n` +
-                            `*Nama Sekolah:* ${sekolah}\n\n` +
-                            `*Lokasi Jemput (Asal):*\n${urlAsal}\n\n` +
-                            `*Lokasi Antar (Tujuan):*\n${urlTujuan}\n\n` +
-                            `*Hasil Simulasi:*\n${simulasi}`;
-
-                        const url = `https://wa.me/6281268712321?text=${encodeURIComponent(pesan)}`;
-                        window.open(url, "_blank");
-                    });
+                    const url = `https://wa.me/6281268712321?text=${encodeURIComponent(pesan)}`;
+                    window.open(url, "_blank");
                 });
             });
-        </script>
+        });
+    </script>
 </body>
 
 </html>
