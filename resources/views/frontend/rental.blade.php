@@ -404,7 +404,7 @@
                         </div>
                          <div class="form-group">
                             <label for="phone-number"><i class="fab fa-whatsapp"></i> Nomor WhatsApp Anda</label>
-                            <input type="tel" id="phone-number" name="phone_number" placeholder="Contoh: 081234567890" required>
+                            <input type="number" id="phone-number" name="phone_number" placeholder="Contoh: 081234567890" required>
                         </div>
                         <button type="submit" class="btn-primary full-width">Pesan via WhatsApp</button>
                     </form>
@@ -425,7 +425,7 @@
                             <span class="currency-flag">🇮🇩</span>
                             <h5>Indonesia</h5>
                         </div>
-                        <div class="price-value"><sup>Rp</sup>850.000</div>
+                        <div class="price-value"><sup>Rp</sup>500.000</div>
                         {{-- Diubah --}}
                         <div class="price-note">/ 12 Jam</div>
                     </div>
@@ -446,7 +446,7 @@
                             <span class="currency-flag">🇲🇾</span>
                             <h5>Malaysia</h5>
                         </div>
-                        <div class="price-value"><sup>RM</sup>245</div>
+                        <div class="price-value"><sup>RM</sup>177</div>
                         {{-- Diubah --}}
                         <div class="price-note">/ 12 Jam</div>
                     </div>

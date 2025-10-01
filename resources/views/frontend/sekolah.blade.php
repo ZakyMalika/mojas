@@ -943,67 +943,49 @@
             <div class="partners-grid">
                 <!-- Item 1 -->
                 <div class="partner-card" data-aos="fade-up">
-                    <div class="partner-logo">
-                        <img src="https://via.placeholder.com/150x80?text=SDIT+Tunas+Cendikia"
-                            alt="SDIT Tunas Cendikia">
-                    </div>
+                   
                     <h3>SDIT TUNAS CENDIKIA</h3>
                 </div>
 
                 <!-- Item 2 -->
                 <div class="partner-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="partner-logo">
-                        <img src="https://via.placeholder.com/150x80?text=AIS" alt="AIS">
-                    </div>
+                   
                     <h3>AIS (Australian Intercultural School)</h3>
                 </div>
 
                 <!-- Item 3 -->
                 <div class="partner-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="partner-logo">
-                        <img src="https://via.placeholder.com/150x80?text=Baitul+Hikmah" alt="Baitul Hikmah">
-                    </div>
+                  
                     <h3>BAITUL HIKMAH</h3>
                 </div>
 
                 <!-- Item 4 -->
                 <div class="partner-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="partner-logo">
-                        <img src="https://via.placeholder.com/150x80?text=Mutiara+Insani" alt="Mutiara Insani">
-                    </div>
+                  
                     <h3>MUTIARA INSANI</h3>
                 </div>
 
                 <!-- Item 5 -->
                 <div class="partner-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="partner-logo">
-                        <img src="https://via.placeholder.com/150x80?text=YAMET" alt="Yamet">
-                    </div>
+                 
                     <h3>YAMET</h3>
                 </div>
 
                 <!-- Item 6 -->
                 <div class="partner-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="partner-logo">
-                        <img src="https://via.placeholder.com/150x80?text=TK+KDA" alt="TK KDA">
-                    </div>
+                  
                     <h3>TK KDA</h3>
                 </div>
 
                 <!-- Item 7 -->
                 <div class="partner-card" data-aos="fade-up" data-aos-delay="600">
-                    <div class="partner-logo">
-                        <img src="https://via.placeholder.com/150x80?text=SMK+Kartini" alt="SMK Kartini">
-                    </div>
+                    
                     <h3>SMK KARTINI</h3>
                 </div>
 
                 <!-- Item 8 -->
                 <div class="partner-card" data-aos="fade-up" data-aos-delay="700">
-                    <div class="partner-logo">
-                        <img src="https://via.placeholder.com/150x80?text=Global+Islamic+School"
-                            alt="Global Islamic School">
-                    </div>
+                   
                     <h3>GLOBAL ISLAMIC SCHOOL</h3>
                 </div>
             </div>

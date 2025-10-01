@@ -903,7 +903,7 @@
       <!-- Innova Reborn -->
       <div class="car-card" data-aos="fade-up">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=Innova+Reborn" alt="Innova Reborn">
+          <img src="{{ asset('images/innova.jpg') }}" alt="Innova Reborn">
           <span class="car-badge">Favorit</span>
         </div>
         <div class="car-details">
@@ -922,7 +922,7 @@
       <!-- All New Xenia -->
       <div class="car-card" data-aos="fade-up" data-aos-delay="100">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=All+New+Xenia" alt="All New Xenia">
+          <img src="{{ asset('images/xinea.jpg') }}" alt="All New Xenia">
           <span class="car-badge">Baru</span>
         </div>
         <div class="car-details">
@@ -941,7 +941,7 @@
       <!-- All New Avanza -->
       <div class="car-card" data-aos="fade-up" data-aos-delay="200">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=All+New+Avanza" alt="All New Avanza">
+          <img src="{{ asset('images/avanza.jpg') }}" alt="All New Avanza">
         </div>
         <div class="car-details">
           <h3>All New Avanza</h3>
@@ -957,7 +957,7 @@
       <!-- Honda Yaris -->
       <div class="car-card" data-aos="fade-up" data-aos-delay="300">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=Honda+Yaris" alt="Honda Yaris">
+          <img src="{{ asset('images/yaris.jpg') }}" alt="Honda Yaris">
         </div>
         <div class="car-details">
           <h3>Honda Yaris</h3>
@@ -973,7 +973,7 @@
       <!-- Suzuki APV -->
       <div class="car-card" data-aos="fade-up" data-aos-delay="400">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=Suzuki+APV" alt="Suzuki APV">
+          <img src="{{ asset('images/suzuki_apv.jpg') }}" alt="Suzuki APV">
         </div>
         <div class="car-details">
           <h3>Suzuki APV</h3>
@@ -989,7 +989,7 @@
       <!-- Wuling Confero -->
       <div class="car-card" data-aos="fade-up" data-aos-delay="500">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=Wuling+Confero" alt="Wuling Confero">
+          <img src="{{ asset('images/wuling.jpg') }}" alt="Wuling Confero">
         </div>
         <div class="car-details">
           <h3>Wuling Confero</h3>
@@ -1005,7 +1005,7 @@
       <!-- Chevrolet Spin -->
       <div class="car-card" data-aos="fade-up" data-aos-delay="600">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=Chevrolet+Spin" alt="Chevrolet Spin">
+          <img src="{{ asset('images/spin.jpg') }}" alt="Chevrolet Spin">
         </div>
         <div class="car-details">
           <h3>Chevrolet Spin</h3>
@@ -1021,7 +1021,7 @@
       <!-- Elf -->
       <div class="car-card" data-aos="fade-up" data-aos-delay="700">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=Isuzu+Elf" alt="Isuzu Elf">
+          <img src="{{ asset('images/mobil_elf.jpg') }}" alt="Isuzu Elf">
         </div>
         <div class="car-details">
           <h3>Elf</h3>
@@ -1037,7 +1037,7 @@
       <!-- Hiace -->
       <div class="car-card" data-aos="fade-up" data-aos-delay="800">
         <div class="car-image-container">
-          <img src="https://via.placeholder.com/400x220?text=Toyota+Hiace" alt="Toyota Hiace">
+          <img src="{{ asset('images/hiace.jpg') }}" alt="Toyota Hiace">
         </div>
         <div class="car-details">
           <h3>Hiace</h3>
