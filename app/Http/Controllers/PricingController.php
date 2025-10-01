@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\School;
 use App\Models\RentalService;
+use App\Models\School;
 use App\Models\Tarif_jarak;
 use App\Services\PricingService;
+use Illuminate\Http\Request;
 
 class PricingController extends Controller
 {
@@ -25,7 +25,7 @@ class PricingController extends Controller
         $schools = School::where('is_active', true)->orderBy('name')->get();
         $rentalServices = RentalService::where('is_active', true)->orderBy('name')->get();
         $tarifJaraks = Tarif_jarak::where('is_active', true)->orderBy('min_distance_km')->get();
-        
+
         return view('pricing.calculator', compact('schools', 'rentalServices', 'tarifJaraks'));
     }
 
@@ -43,7 +43,7 @@ class PricingController extends Controller
             'rental_service_id' => 'required_if:service_type,rental|exists:rental_services,id',
             'hours' => 'required_if:service_type,rental|numeric|min:1',
         ]);
-        
+
         try {
             // Prepare parameters for pricing service
             $params = [
@@ -51,25 +51,25 @@ class PricingController extends Controller
                 'children_ids' => range(1, $request->children_count ?? 1), // Dummy children IDs
                 'trip_type' => $request->trip_type ?? 'one_way',
             ];
-            
+
             if ($request->service_type === 'school_transport') {
                 $params['school_id'] = $request->school_id;
             } elseif ($request->service_type === 'rental') {
                 $params['rental_service_id'] = $request->rental_service_id;
                 $params['hours'] = $request->hours;
             }
-            
+
             $quote = $this->pricingService->getQuote($request->service_type, $params);
-            
+
             return response()->json([
                 'success' => true,
-                'data' => $quote
+                'data' => $quote,
             ]);
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -80,7 +80,7 @@ class PricingController extends Controller
     public function tariffs()
     {
         $tariffs = Tarif_jarak::orderBy('min_distance_km')->get();
-        
+
         return view('pricing.tariffs', compact('tariffs'));
     }
 
@@ -90,7 +90,7 @@ class PricingController extends Controller
     public function tiers()
     {
         $tiers = \App\Models\PricingTier::where('is_active', true)->get();
-        
+
         return view('pricing.tiers', compact('tiers'));
     }
 

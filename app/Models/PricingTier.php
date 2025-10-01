@@ -18,7 +18,7 @@ class PricingTier extends Model
         'conditions',
         'same_location_required',
         'same_time_required',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [
@@ -26,13 +26,13 @@ class PricingTier extends Model
         'same_location_required' => 'boolean',
         'same_time_required' => 'boolean',
         'is_active' => 'boolean',
-        'multiplier' => 'decimal:2'
+        'multiplier' => 'decimal:2',
     ];
 
     // Check if this pricing tier applies to a given number of children and conditions
     public function appliesTo($childrenCount, $sameLocation = true, $sameTime = true)
     {
-        if (!$this->is_active) {
+        if (! $this->is_active) {
             return false;
         }
 
@@ -44,11 +44,11 @@ class PricingTier extends Model
             return false;
         }
 
-        if ($this->same_location_required && !$sameLocation) {
+        if ($this->same_location_required && ! $sameLocation) {
             return false;
         }
 
-        if ($this->same_time_required && !$sameTime) {
+        if ($this->same_time_required && ! $sameTime) {
             return false;
         }
 

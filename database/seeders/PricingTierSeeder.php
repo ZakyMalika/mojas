@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\PricingTier;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PricingTierSeeder extends Seeder
@@ -23,7 +22,7 @@ class PricingTierSeeder extends Seeder
                 'conditions' => [
                     'type' => 'single',
                     'billing_units' => 1,
-                    'discount_percent' => 0
+                    'discount_percent' => 0,
                 ],
                 'same_location_required' => false,
                 'same_time_required' => false,
@@ -39,7 +38,7 @@ class PricingTierSeeder extends Seeder
                     'type' => 'sibling_pair',
                     'billing_units' => 1,
                     'discount_percent' => 50,
-                    'requirements' => ['same_family', 'same_location', 'same_time']
+                    'requirements' => ['same_family', 'same_location', 'same_time'],
                 ],
                 'same_location_required' => true,
                 'same_time_required' => true,
@@ -55,7 +54,7 @@ class PricingTierSeeder extends Seeder
                     'type' => 'sibling_trio',
                     'billing_units' => 2,
                     'discount_percent' => 33.33,
-                    'requirements' => ['same_family', 'same_location', 'same_time']
+                    'requirements' => ['same_family', 'same_location', 'same_time'],
                 ],
                 'same_location_required' => true,
                 'same_time_required' => true,
@@ -71,7 +70,7 @@ class PricingTierSeeder extends Seeder
                     'type' => 'multiple',
                     'billing_formula' => 'ceil(children_count / 2)',
                     'max_discount_percent' => 50,
-                    'requirements' => ['same_location', 'same_time']
+                    'requirements' => ['same_location', 'same_time'],
                 ],
                 'same_location_required' => true,
                 'same_time_required' => true,
@@ -87,7 +86,7 @@ class PricingTierSeeder extends Seeder
                     'type' => 'different_location',
                     'billing_units' => 2,
                     'location_multiplier' => 0.9,
-                    'discount_percent' => 10
+                    'discount_percent' => 10,
                 ],
                 'same_location_required' => false,
                 'same_time_required' => true,
@@ -103,7 +102,7 @@ class PricingTierSeeder extends Seeder
                     'type' => 'different_time',
                     'billing_units' => 2,
                     'time_multiplier' => 0.95,
-                    'discount_percent' => 5
+                    'discount_percent' => 5,
                 ],
                 'same_location_required' => true,
                 'same_time_required' => false,
@@ -119,7 +118,7 @@ class PricingTierSeeder extends Seeder
                     'type' => 'completely_different',
                     'billing_units' => 2,
                     'discount_percent' => 0,
-                    'note' => 'Full price for each child due to different location and time'
+                    'note' => 'Full price for each child due to different location and time',
                 ],
                 'same_location_required' => false,
                 'same_time_required' => false,
@@ -136,7 +135,7 @@ class PricingTierSeeder extends Seeder
                     'billing_formula' => 'ceil(children_count * 0.6)',
                     'volume_discount' => 40,
                     'requirements' => ['same_location', 'same_time'],
-                    'minimum_commitment' => 'monthly'
+                    'minimum_commitment' => 'monthly',
                 ],
                 'same_location_required' => true,
                 'same_time_required' => true,
@@ -155,9 +154,9 @@ class PricingTierSeeder extends Seeder
                         'luxury_vehicle',
                         'professional_driver',
                         'priority_booking',
-                        'flexible_schedule'
+                        'flexible_schedule',
                     ],
-                    'surcharge_percent' => 50
+                    'surcharge_percent' => 50,
                 ],
                 'same_location_required' => false,
                 'same_time_required' => false,
@@ -173,7 +172,7 @@ class PricingTierSeeder extends Seeder
                     'type' => 'weekend_surcharge',
                     'applicable_days' => ['saturday', 'sunday'],
                     'surcharge_percent' => 25,
-                    'applies_to' => 'all_services'
+                    'applies_to' => 'all_services',
                 ],
                 'same_location_required' => false,
                 'same_time_required' => false,

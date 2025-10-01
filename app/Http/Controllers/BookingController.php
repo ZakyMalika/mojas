@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Orang_tua;
-use App\Models\School;
 use App\Models\RentalService;
-use App\Models\Anak;
+use App\Models\School;
 use App\Services\PricingService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
@@ -26,28 +25,28 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $query = Booking::with(['orangTua', 'school', 'rentalService']);
-        
+
         // Filter by status
         if ($request->has('status') && $request->status != '') {
             $query->where('status', $request->status);
         }
-        
+
         // Filter by service type
         if ($request->has('service_type') && $request->service_type != '') {
             $query->where('service_type', $request->service_type);
         }
-        
+
         // Filter by date range
         if ($request->has('date_from') && $request->date_from != '') {
             $query->whereDate('pickup_time', '>=', $request->date_from);
         }
-        
+
         if ($request->has('date_to') && $request->date_to != '') {
             $query->whereDate('pickup_time', '<=', $request->date_to);
         }
-        
+
         $bookings = $query->orderBy('created_at', 'desc')->paginate(15);
-        
+
         return view('bookings.index', compact('bookings'));
     }
 
@@ -59,7 +58,7 @@ class BookingController extends Controller
         $orangTuas = Orang_tua::where('is_active', true)->get();
         $schools = School::where('is_active', true)->get();
         $rentalServices = RentalService::where('is_active', true)->get();
-        
+
         return view('bookings.create', compact('orangTuas', 'schools', 'rentalServices'));
     }
 
@@ -82,11 +81,11 @@ class BookingController extends Controller
             'rental_service_id' => 'nullable|exists:rental_services,id',
             'return_time' => 'nullable|date',
             'return_address' => 'nullable|string|max:500',
-            'notes' => 'nullable|string'
+            'notes' => 'nullable|string',
         ]);
-        
+
         DB::beginTransaction();
-        
+
         try {
             // Calculate pricing
             $pricingParams = [
@@ -94,18 +93,18 @@ class BookingController extends Controller
                 'children_ids' => $request->children_ids,
                 'trip_type' => $request->trip_type,
                 'pickup_time' => $request->pickup_time,
-                'return_time' => $request->return_time
+                'return_time' => $request->return_time,
             ];
-            
+
             if ($request->service_type === 'school_transport') {
                 $pricingParams['school_id'] = $request->school_id;
             } elseif ($request->service_type === 'rental') {
                 $pricingParams['rental_service_id'] = $request->rental_service_id;
                 $pricingParams['hours'] = 12; // Default 12 hours
             }
-            
+
             $pricing = $this->pricingService->getQuote($request->service_type, $pricingParams);
-            
+
             // Create booking
             $booking = Booking::create([
                 'orang_tua_id' => $request->orang_tua_id,
@@ -125,20 +124,20 @@ class BookingController extends Controller
                 'destination_address' => $request->destination_address,
                 'return_address' => $request->return_address,
                 'pricing_breakdown' => $pricing['breakdown'],
-                'notes' => $request->notes
+                'notes' => $request->notes,
             ]);
-            
+
             DB::commit();
-            
+
             return redirect()->route('bookings.show', $booking->id)
-                           ->with('success', 'Booking berhasil dibuat!');
-            
+                ->with('success', 'Booking berhasil dibuat!');
+
         } catch (\Exception $e) {
             DB::rollback();
-            
+
             return redirect()->back()
-                           ->withInput()
-                           ->withErrors(['error' => 'Gagal membuat booking: ' . $e->getMessage()]);
+                ->withInput()
+                ->withErrors(['error' => 'Gagal membuat booking: '.$e->getMessage()]);
         }
     }
 
@@ -148,12 +147,12 @@ class BookingController extends Controller
     public function show(string $id)
     {
         $booking = Booking::with(['orangTua', 'school', 'rentalService'])->find($id);
-        
-        if (!$booking) {
+
+        if (! $booking) {
             return redirect()->route('bookings.index')
-                           ->withErrors(['error' => 'Booking tidak ditemukan']);
+                ->withErrors(['error' => 'Booking tidak ditemukan']);
         }
-        
+
         return view('bookings.show', compact('booking'));
     }
 
@@ -163,16 +162,16 @@ class BookingController extends Controller
     public function edit(string $id)
     {
         $booking = Booking::with(['orangTua', 'school', 'rentalService'])->find($id);
-        
-        if (!$booking) {
+
+        if (! $booking) {
             return redirect()->route('bookings.index')
-                           ->withErrors(['error' => 'Booking tidak ditemukan']);
+                ->withErrors(['error' => 'Booking tidak ditemukan']);
         }
-        
+
         $orangTuas = Orang_tua::where('is_active', true)->get();
         $schools = School::where('is_active', true)->get();
         $rentalServices = RentalService::where('is_active', true)->get();
-        
+
         return view('bookings.edit', compact('booking', 'orangTuas', 'schools', 'rentalServices'));
     }
 
@@ -182,12 +181,12 @@ class BookingController extends Controller
     public function update(Request $request, string $id)
     {
         $booking = Booking::find($id);
-        
-        if (!$booking) {
+
+        if (! $booking) {
             return redirect()->route('bookings.index')
-                           ->withErrors(['error' => 'Booking tidak ditemukan']);
+                ->withErrors(['error' => 'Booking tidak ditemukan']);
         }
-        
+
         $request->validate([
             'status' => 'sometimes|in:pending,confirmed,in_progress,completed,cancelled',
             'pickup_time' => 'sometimes|date',
@@ -195,16 +194,16 @@ class BookingController extends Controller
             'pickup_address' => 'sometimes|string|max:500',
             'destination_address' => 'sometimes|string|max:500',
             'return_address' => 'nullable|string|max:500',
-            'notes' => 'nullable|string'
+            'notes' => 'nullable|string',
         ]);
-        
+
         $booking->update($request->only([
-            'status', 'pickup_time', 'return_time', 'pickup_address', 
-            'destination_address', 'return_address', 'notes'
+            'status', 'pickup_time', 'return_time', 'pickup_address',
+            'destination_address', 'return_address', 'notes',
         ]));
-        
+
         return redirect()->route('bookings.show', $booking->id)
-                         ->with('success', 'Booking berhasil diupdate!');
+            ->with('success', 'Booking berhasil diupdate!');
     }
 
     /**
@@ -213,21 +212,21 @@ class BookingController extends Controller
     public function destroy(string $id)
     {
         $booking = Booking::find($id);
-        
-        if (!$booking) {
+
+        if (! $booking) {
             return redirect()->route('bookings.index')
-                           ->withErrors(['error' => 'Booking tidak ditemukan']);
+                ->withErrors(['error' => 'Booking tidak ditemukan']);
         }
-        
-        if (!in_array($booking->status, ['pending', 'cancelled'])) {
+
+        if (! in_array($booking->status, ['pending', 'cancelled'])) {
             return redirect()->route('bookings.index')
-                           ->withErrors(['error' => 'Tidak dapat menghapus booking dengan status: ' . $booking->status]);
+                ->withErrors(['error' => 'Tidak dapat menghapus booking dengan status: '.$booking->status]);
         }
-        
+
         $booking->delete();
-        
+
         return redirect()->route('bookings.index')
-                         ->with('success', 'Booking berhasil dihapus!');
+            ->with('success', 'Booking berhasil dihapus!');
     }
 
     /**
@@ -244,30 +243,30 @@ class BookingController extends Controller
             'rental_service_id' => 'required_if:service_type,rental|exists:rental_services,id',
             'hours' => 'required_if:service_type,rental|numeric|min:1',
             'pickup_time' => 'sometimes|date',
-            'return_time' => 'sometimes|date'
+            'return_time' => 'sometimes|date',
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Validation failed',
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 422);
         }
-        
+
         try {
             $params = $request->all();
             $quote = $this->pricingService->getQuote($request->service_type, $params);
-            
+
             return response()->json([
                 'success' => true,
-                'data' => $quote
+                'data' => $quote,
             ]);
-            
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to calculate quote: ' . $e->getMessage()
+                'message' => 'Failed to calculate quote: '.$e->getMessage(),
             ], 500);
         }
     }

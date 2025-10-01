@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\ParentArea;
 
-use Illuminate\Http\Request;
-use App\Models\Jadwal_antar_jemput;
 use App\Http\Controllers\Controller;
+use App\Models\Jadwal_antar_jemput;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class JadwalController extends Controller
@@ -16,7 +16,7 @@ class JadwalController extends Controller
         $jadwal = Jadwal_antar_jemput::whereHas('anak', function ($query) use ($parent) {
             $query->where('orang_tua_id', $parent->id);
         })->with(['anak', 'driver.user'])->get();
-        
+
         return view('parent.jadwal.index', compact('jadwal'));
     }
 
@@ -26,6 +26,7 @@ class JadwalController extends Controller
         abort_if(! $parent, 403);
         abort_if($jadwal->anak->orang_tua_id !== $parent->id, 403);
         $jadwal->load(['anak', 'driver.user']);
+
         return view('parent.jadwal.show', compact('jadwal'));
     }
 

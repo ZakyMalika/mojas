@@ -92,9 +92,9 @@
                         </a>
                     </li>
                      <li class="nav-item">
-                        <a href="{{ route('admin.pendaftaran-anak.index') }}" class="nav-link {{ request()->routeIs('admin.pendaftaran-anak.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.schools.index') }}" class="nav-link {{ request()->routeIs('admin.schools.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-signature"></i>
-                            <p>Pendaftaran Tuncen</p>
+                            <p>Mitra</p>
                         </a>
                     </li>
                     <li class="nav-item">

@@ -9,26 +9,7 @@ class School extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'type',
-        'address',
-        'has_partnership',
-        'partnership_rate',
-        'one_way_price',
-        'two_way_price',
-        'general_rate',
-        'is_active'
-    ];
-
-    protected $casts = [
-        'has_partnership' => 'boolean',
-        'is_active' => 'boolean',
-        'partnership_rate' => 'decimal:2',
-        'one_way_price' => 'decimal:2',
-        'two_way_price' => 'decimal:2',
-        'general_rate' => 'decimal:2'
-    ];
+    protected $guarded = [''];
 
     public function bookings()
     {
@@ -37,7 +18,7 @@ class School extends Model
 
     public function children()
     {
-        return $this->hasMany(Anak::class);
+        return $this->hasMany(Anak::class, 'school_id');
     }
 
     // Get applicable rate based on school type and partnership
@@ -46,6 +27,7 @@ class School extends Model
         if ($this->has_partnership) {
             return $tripType === 'two_way' ? $this->two_way_price : $this->one_way_price;
         }
+
         return $this->general_rate;
     }
 }

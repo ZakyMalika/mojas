@@ -30,7 +30,7 @@ class Booking extends Model
         'return_address',
         'pricing_breakdown',
         'status',
-        'notes'
+        'notes',
     ];
 
     protected $casts = [
@@ -41,16 +41,16 @@ class Booking extends Model
         'distance_km' => 'decimal:2',
         'base_price' => 'decimal:2',
         'additional_charges' => 'decimal:2',
-        'total_price' => 'decimal:2'
+        'total_price' => 'decimal:2',
     ];
 
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($booking) {
             if (empty($booking->booking_code)) {
-                $booking->booking_code = 'BK-' . strtoupper(Str::random(8));
+                $booking->booking_code = 'BK-'.strtoupper(Str::random(8));
             }
         });
     }
@@ -75,7 +75,7 @@ class Booking extends Model
         if (empty($this->children_ids)) {
             return collect();
         }
-        
+
         return Anak::whereIn('id', $this->children_ids)->get();
     }
 

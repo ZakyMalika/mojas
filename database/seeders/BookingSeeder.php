@@ -2,14 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Anak;
 use App\Models\Booking;
 use App\Models\Orang_tua;
-use App\Models\School;
 use App\Models\RentalService;
-use App\Models\Anak;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
+use App\Models\School;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class BookingSeeder extends Seeder
 {
@@ -26,6 +25,7 @@ class BookingSeeder extends Seeder
 
         if (empty($orangTuaIds) || empty($schoolIds) || empty($rentalServiceIds)) {
             $this->command->warn('Skipping BookingSeeder: Required data not found. Please run other seeders first.');
+
             return;
         }
 
@@ -36,11 +36,11 @@ class BookingSeeder extends Seeder
             $orangTuaId = $orangTuaIds[array_rand($orangTuaIds)];
             $schoolId = $schoolIds[array_rand($schoolIds)];
             $rentalServiceId = $rentalServiceIds[array_rand($rentalServiceIds)];
-            
+
             // Get children for this orang_tua
             $childrenForParent = $anakByOrangTua->get($orangTuaId, collect());
             $childrenIds = $childrenForParent->pluck('id')->toArray();
-            
+
             // If no children, create a dummy booking with empty children_ids
             if (empty($childrenIds)) {
                 $childrenIds = [];
@@ -56,13 +56,13 @@ class BookingSeeder extends Seeder
             $serviceType = $this->getRandomServiceType();
             $tripType = $this->getRandomTripType();
             $distance = round(rand(5, 50) + (rand(0, 99) / 100), 2); // 5.00 - 50.99 km
-            
+
             $basePrice = $this->calculateBasePrice($distance, $serviceType, $childrenCount);
             $additionalCharges = $this->getRandomAdditionalCharges();
             $totalPrice = $basePrice + $additionalCharges;
 
             $pickupTime = Carbon::now()->addDays(rand(1, 30))->setTime(rand(6, 8), rand(0, 59));
-            $returnTime = $tripType === 'two_way' ? 
+            $returnTime = $tripType === 'two_way' ?
                 $pickupTime->copy()->addHours(rand(8, 12)) : null;
 
             $bookings[] = [
@@ -94,18 +94,20 @@ class BookingSeeder extends Seeder
             Booking::create($booking);
         }
 
-        $this->command->info('Created ' . count($bookings) . ' sample bookings.');
+        $this->command->info('Created '.count($bookings).' sample bookings.');
     }
 
     private function getRandomServiceType()
     {
         $types = ['school_transport', 'rental', 'general'];
+
         return $types[array_rand($types)];
     }
 
     private function getRandomTripType()
     {
         $types = ['one_way', 'two_way'];
+
         return $types[array_rand($types)];
     }
 
@@ -137,6 +139,7 @@ class BookingSeeder extends Seeder
     private function getRandomAdditionalCharges()
     {
         $charges = [0, 25000, 50000, 75000, 100000];
+
         return $charges[array_rand($charges)];
     }
 
@@ -154,12 +157,14 @@ class BookingSeeder extends Seeder
             'Jl. Senayan No. 369, Jakarta Pusat',
             'Jl. Menteng No. 741, Jakarta Pusat',
         ];
+
         return $addresses[array_rand($addresses)];
     }
 
     private function getSchoolAddress($schoolId)
     {
         $school = School::find($schoolId);
+
         return $school ? $school->address : 'Alamat Sekolah Tidak Ditemukan';
     }
 
@@ -182,17 +187,17 @@ class BookingSeeder extends Seeder
     {
         $statuses = ['pending', 'confirmed', 'in_progress', 'completed', 'cancelled'];
         $weights = [20, 30, 10, 35, 5]; // Percentage weights
-        
+
         $rand = rand(1, 100);
         $cumulative = 0;
-        
+
         foreach ($statuses as $index => $status) {
             $cumulative += $weights[$index];
             if ($rand <= $cumulative) {
                 return $status;
             }
         }
-        
+
         return 'pending';
     }
 
@@ -210,7 +215,7 @@ class BookingSeeder extends Seeder
             'Mohon hubungi jika ada keterlambatan',
             'Anak alergi parfum, tolong tidak pakai wewangian berlebihan',
         ];
-        
+
         return $notes[array_rand($notes)];
     }
 }

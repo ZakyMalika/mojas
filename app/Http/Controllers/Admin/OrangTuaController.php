@@ -65,5 +65,4 @@ class OrangTuaController extends Controller
 
         return redirect()->route('admin.orang_tua.index');
     }
-    
 }

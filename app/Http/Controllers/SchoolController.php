@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Anak;
 use App\Models\School;
+use Illuminate\Http\Request;
 
 class SchoolController extends Controller
 {
@@ -12,31 +13,10 @@ class SchoolController extends Controller
      */
     public function index(Request $request)
     {
-        $query = School::query();
-        
-        // Filter by type
-        if ($request->has('type') && $request->type != '') {
-            $query->where('type', $request->type);
-        }
-        
-        // Filter by partnership status
-        if ($request->has('has_partnership') && $request->has_partnership != '') {
-            $query->where('has_partnership', $request->has_partnership);
-        }
-        
-        // Search by name
-        if ($request->has('search') && $request->search != '') {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-        
-        // Filter by active status
-        if ($request->has('is_active') && $request->is_active != '') {
-            $query->where('is_active', $request->is_active);
-        }
-        
-        $schools = $query->orderBy('name')->paginate(15);
-        
-        return view('schools.index', compact('schools'));
+        $schools = School::with('children')->paginate(15);
+        $children = Anak::with('school', 'orangTua.user')->get();
+
+        return view('admin.schools.index', compact('schools', 'children'));
     }
 
     /**
@@ -44,7 +24,7 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        return view('schools.create');
+        return view('admin.schools.create');
     }
 
     /**
@@ -61,13 +41,13 @@ class SchoolController extends Controller
             'one_way_price' => 'nullable|numeric|min:0',
             'two_way_price' => 'nullable|numeric|min:0',
             'general_rate' => 'required|numeric|min:0',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
         ]);
-        
+
         $school = School::create($request->all());
-        
-        return redirect()->route('schools.show', $school->id)
-                         ->with('success', 'Sekolah berhasil ditambahkan!');
+
+        return redirect()->route('admin.schools.show', $school->id)
+            ->with('success', 'Sekolah berhasil ditambahkan!');
     }
 
     /**
@@ -76,20 +56,20 @@ class SchoolController extends Controller
     public function show(string $id)
     {
         $school = School::find($id);
-        
-        if (!$school) {
-            return redirect()->route('schools.index')
-                           ->withErrors(['error' => 'Sekolah tidak ditemukan']);
+
+        if (! $school) {
+            return redirect()->route('admin.schools.index')
+                ->withErrors(['error' => 'Sekolah tidak ditemukan']);
         }
-        
+
         // Get bookings for this school
         $recentBookings = $school->bookings()
-                                ->with('orangTua')
-                                ->orderBy('created_at', 'desc')
-                                ->limit(10)
-                                ->get();
-        
-        return view('schools.show', compact('school', 'recentBookings'));
+            ->with('orangTua')
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get();
+
+        return view('admin.schools.show', compact('school', 'recentBookings'));
     }
 
     /**
@@ -98,13 +78,13 @@ class SchoolController extends Controller
     public function edit(string $id)
     {
         $school = School::find($id);
-        
-        if (!$school) {
+
+        if (! $school) {
             return redirect()->route('schools.index')
-                           ->withErrors(['error' => 'Sekolah tidak ditemukan']);
+                ->withErrors(['error' => 'Sekolah tidak ditemukan']);
         }
-        
-        return view('schools.edit', compact('school'));
+
+        return view('admin.schools.edit', compact('school'));
     }
 
     /**
@@ -113,12 +93,12 @@ class SchoolController extends Controller
     public function update(Request $request, string $id)
     {
         $school = School::find($id);
-        
-        if (!$school) {
+
+        if (! $school) {
             return redirect()->route('schools.index')
-                           ->withErrors(['error' => 'Sekolah tidak ditemukan']);
+                ->withErrors(['error' => 'Sekolah tidak ditemukan']);
         }
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|in:sekolah,umum',
@@ -128,13 +108,13 @@ class SchoolController extends Controller
             'one_way_price' => 'nullable|numeric|min:0',
             'two_way_price' => 'nullable|numeric|min:0',
             'general_rate' => 'required|numeric|min:0',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
         ]);
-        
+
         $school->update($request->all());
-        
-        return redirect()->route('schools.show', $school->id)
-                         ->with('success', 'Sekolah berhasil diupdate!');
+
+        return redirect()->route('admin.schools.show', $school->id)
+            ->with('success', 'Sekolah berhasil diupdate!');
     }
 
     /**
@@ -143,21 +123,21 @@ class SchoolController extends Controller
     public function destroy(string $id)
     {
         $school = School::find($id);
-        
-        if (!$school) {
-            return redirect()->route('schools.index')
-                           ->withErrors(['error' => 'Sekolah tidak ditemukan']);
+
+        if (! $school) {
+            return redirect()->route('admin.schools.index')
+                ->withErrors(['error' => 'Sekolah tidak ditemukan']);
         }
-        
+
         // Check if school has bookings
         if ($school->bookings()->count() > 0) {
             return redirect()->route('schools.index')
-                           ->withErrors(['error' => 'Tidak dapat menghapus sekolah yang masih memiliki booking']);
+                ->withErrors(['error' => 'Tidak dapat menghapus sekolah yang masih memiliki booking']);
         }
-        
+
         $school->delete();
-        
-        return redirect()->route('schools.index')
-                         ->with('success', 'Sekolah berhasil dihapus!');
+
+        return redirect()->route('admin.schools.index')
+            ->with('success', 'Sekolah berhasil dihapus!');
     }
 }

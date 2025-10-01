@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\ParentArea;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pendaftaran_anak;
-use App\Models\Anak; // Penting: Tambahkan ini untuk mengambil data anak
+use App\Models\Anak;
+use App\Models\Pendaftaran_anak; // Penting: Tambahkan ini untuk mengambil data anak
 use App\Models\Tarif_jarak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +37,8 @@ class PendaftaranAnakController extends Controller
 
         // 2. Ambil semua data anak yang dimiliki oleh orang tua ini DAN belum terdaftar
         $anakList = Anak::where('orang_tua_id', $parent->id)
-                         ->whereNotIn('id', $registeredAnakIds)
-                         ->get();
+            ->whereNotIn('id', $registeredAnakIds)
+            ->get();
         $tarifList = Tarif_jarak::all();
 
         // 3. Kirim daftar anak yang tersedia tersebut ke view
@@ -88,22 +88,22 @@ class PendaftaranAnakController extends Controller
 
         // 1. Dapatkan ID anak-anak lain yang sudah terdaftar
         $registeredAnakIds = Pendaftaran_anak::where('id', '!=', $pendaftaran_anak->id)
-                                              ->pluck('anak_id')
-                                              ->toArray();
+            ->pluck('anak_id')
+            ->toArray();
 
         // 2. Ambil daftar anak yang BISA dipilih di form edit
         $anakList = Anak::where('orang_tua_id', $parent->id)
-                         ->where(function ($query) use ($registeredAnakIds, $pendaftaran_anak) {
-                             $query->whereNotIn('id', $registeredAnakIds)
-                                   ->orWhere('id', $pendaftaran_anak->anak_id);
-                         })
-                         ->get();
+            ->where(function ($query) use ($registeredAnakIds, $pendaftaran_anak) {
+                $query->whereNotIn('id', $registeredAnakIds)
+                    ->orWhere('id', $pendaftaran_anak->anak_id);
+            })
+            ->get();
 
         $pendaftaran_anak->load(['anak', 'tarif_jarak']);
 
         return view('parent.pendaftaran_anak.edit', [
             'item' => $pendaftaran_anak,
-            'anakList' => $anakList
+            'anakList' => $anakList,
         ]);
     }
 
@@ -139,4 +139,3 @@ class PendaftaranAnakController extends Controller
         return redirect()->route('parent.pendaftaran-anak.index');
     }
 }
-

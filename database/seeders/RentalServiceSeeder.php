@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\RentalService;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RentalServiceSeeder extends Seeder
@@ -27,7 +26,7 @@ class RentalServiceSeeder extends Seeder
                     'Driver berpengalaman',
                     'BBM dalam kota',
                     'Parkir dan tol',
-                    'Air mineral untuk penumpang'
+                    'Air mineral untuk penumpang',
                 ],
                 'is_active' => true,
             ],
@@ -46,7 +45,7 @@ class RentalServiceSeeder extends Seeder
                     'BBM dalam kota',
                     'Parkir dan tol',
                     'WiFi portable',
-                    'Tissue dan hand sanitizer'
+                    'Tissue dan hand sanitizer',
                 ],
                 'is_active' => true,
             ],
@@ -64,7 +63,7 @@ class RentalServiceSeeder extends Seeder
                     'Rute optimized untuk sekolah',
                     'BBM sesuai rute',
                     'Parkir sekolah',
-                    'Asuransi penumpang'
+                    'Asuransi penumpang',
                 ],
                 'is_active' => true,
             ],
@@ -83,7 +82,7 @@ class RentalServiceSeeder extends Seeder
                     'BBM ke/dari bandara',
                     'Parkir bandara',
                     'Bantuan bagasi',
-                    'Flight monitoring'
+                    'Flight monitoring',
                 ],
                 'is_active' => true,
             ],
@@ -102,7 +101,7 @@ class RentalServiceSeeder extends Seeder
                     'Dekorasi mobil basic',
                     'BBM untuk event',
                     'Parkir dan tol',
-                    'Standby selama event'
+                    'Standby selama event',
                 ],
                 'is_active' => true,
             ],
@@ -121,7 +120,7 @@ class RentalServiceSeeder extends Seeder
                     'BBM unlimited dalam kota',
                     'Parkir dan tol',
                     'Car wash mingguan',
-                    '24/7 customer support'
+                    '24/7 customer support',
                 ],
                 'is_active' => true,
             ],
@@ -140,7 +139,7 @@ class RentalServiceSeeder extends Seeder
                     'BBM dalam kota',
                     'Parkir tempat wisata',
                     'Air mineral dan snack',
-                    'Dokumentasi foto'
+                    'Dokumentasi foto',
                 ],
                 'is_active' => true,
             ],
@@ -159,7 +158,7 @@ class RentalServiceSeeder extends Seeder
                     'Prioritas route ke RS',
                     'BBM dan parkir RS',
                     'Standby waiting',
-                    'Emergency contact 24/7'
+                    'Emergency contact 24/7',
                 ],
                 'is_active' => true,
             ],

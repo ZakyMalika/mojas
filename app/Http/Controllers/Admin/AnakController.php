@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Anak;
-use Illuminate\Http\Request;
 use App\Models\Orang_tua;
-
+use Illuminate\Http\Request;
 
 class AnakController extends Controller
 {
@@ -22,6 +21,7 @@ class AnakController extends Controller
     public function create()
     {
         $orang_tua = Orang_tua::all();
+
         return view('admin.anak.create', compact('orang_tua'));
     }
 
