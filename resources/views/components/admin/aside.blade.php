@@ -88,7 +88,13 @@
                      <li class="nav-item">
                         <a href="{{ route('admin.pendaftaran-anak.index') }}" class="nav-link {{ request()->routeIs('admin.pendaftaran-anak.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-signature"></i>
-                            <p>Pendaftaran Anak</p>
+                            <p>Pendaftaran Umum</p>
+                        </a>
+                    </li>
+                     <li class="nav-item">
+                        <a href="{{ route('admin.pendaftaran-anak.index') }}" class="nav-link {{ request()->routeIs('admin.pendaftaran-anak.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file-signature"></i>
+                            <p>Pendaftaran Tuncen</p>
                         </a>
                     </li>
                     <li class="nav-item">
