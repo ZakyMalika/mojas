@@ -11,6 +11,266 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <style>
+        /* Hamburger Menu Styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 22px;
+            cursor: pointer;
+            z-index: 1000;
+            position: relative;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: #2c5530;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 999;
+            padding: 20px;
+            transition: all 0.4s ease;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            left: 0;
+        }
+
+        .mobile-nav .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .mobile-nav .nav-menu li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-nav-header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .mobile-nav-header img {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-nav-header h3 {
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .mobile-nav .nav-menu a {
+            font-size: 1.1rem;
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #2c5530;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav .nav-menu a i {
+            width: 24px;
+            text-align: center;
+            color: #ff8c42;
+        }
+
+        .mobile-nav .nav-menu a:hover {
+            color: #ff8c42;
+            padding-left: 10px;
+        }
+
+        .mobile-nav .admin-btn {
+            margin-top: 20px;
+            text-align: center;
+            padding: 12px 25px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-content {
+                order: 2;
+            }
+
+            .hero-visual {
+                order: 1;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .visimisi-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .reviews-display {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar .nav-menu {
+                display: none;
+            }
+
+            .navbar .hamburger-menu {
+                display: flex;
+            }
+            
+            /* Tampilkan nav-menu khusus di mobile-nav */
+            .mobile-nav .nav-menu {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card {
+                padding: 1.5rem;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .alasan-checkboxes {
+                grid-template-columns: 1fr;
+            }
+
+            .map-section {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn-primary, 
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+
+            .pricing-table {
+                font-size: 0.9rem;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+
         .review-section {
             background: #897f7f;
             padding: 30px 20px;
@@ -926,6 +1186,94 @@
             font-size: 1.2rem;
         }
 
+        /* Styling untuk form input dan search */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #2c5530;
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+            outline: none;
+        }
+
+        .form-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .phone-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phone-prefix {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            margin-top: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .search-result-item:hover {
+            background: #f8f9fa;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .location-search-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
         /* Styling untuk modal pendaftaran */
         .daftar-modal .modal-content {
             max-width: 600px;
@@ -1213,7 +1561,64 @@
 </head>
 
 <body>
-    <x-dashboard.navbar />
+        <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">MOJAS BATAM</a>
+            
+            <!-- Hamburger Menu -->
+            <div class="hamburger-menu" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <ul class="nav-menu">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#visimisi">Visi & Misi</a></li>
+                <li><a href="#layanan">Layanan</a></li>
+                <li><a href="#tarif">Tarif</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+                <li><a href="/login" class="admin-btn">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-header">
+            <img src="{{ asset('images/logomojas.jpg') }}" alt="MOJAS BATAM" style="width: 50px; height: 50px; border-radius: 50%; margin-bottom: 20px;">
+            <h3 style="color: #2c5530; margin-bottom: 30px;">MOJAS BATAM</h3>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#home" onclick="closeMobileMenu()">
+                <i class="fas fa-home"></i> Beranda
+            </a></li>
+            <li><a href="#visimisi" onclick="closeMobileMenu()">
+                <i class="fas fa-bullseye"></i> Visi & Misi
+            </a></li>
+            <li><a href="#layanan" onclick="closeMobileMenu()">
+                <i class="fas fa-taxi"></i> Layanan
+            </a></li>
+            <li><a href="#tarif" onclick="closeMobileMenu()">
+                <i class="fas fa-tag"></i> Tarif
+            </a></li>
+            <li><a href="#faq" onclick="closeMobileMenu()">
+                <i class="fas fa-question-circle"></i> FAQ
+            </a></li>
+            <li><a href="#kontak" onclick="closeMobileMenu()">
+                <i class="fas fa-phone"></i> Kontak
+            </a></li>
+            <li><a href="/login" class="admin-btn">
+                <i class="fas fa-user-lock"></i> Admin
+            </a></li>
+        </ul>
+    </div>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
 
     <section id="home" class="hero">
         <div class="hero-container">
@@ -1470,7 +1875,43 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        // Mobile Menu Functions
+function toggleMobileMenu() {
+    const hamburger = document.querySelector('.hamburger-menu');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const overlay = document.querySelector('.mobile-overlay');
+    
+    hamburger.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+    overlay.classList.toggle('active');
+    
+    // Prevent body scrolling when menu is open
+    if (mobileNav.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+function closeMobileMenu() {
+    const hamburger = document.querySelector('.hamburger-menu');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const overlay = document.querySelector('.mobile-overlay');
+    
+    hamburger.classList.remove('active');
+    mobileNav.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Close mobile menu when window is resized to desktop size
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 768) {
+        closeMobileMenu();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
 
             AOS.init({
                 duration: 800,
