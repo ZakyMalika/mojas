@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link"> {{-- Tautan ini bisa diarahkan ke dashboard masing-masing role --}}
+    <a href="/" class="brand-link"> {{-- Tautan ini bisa diarahkan ke dashboard masing-masing role --}}
          <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
                         style="height: 50px; width: auto;">
         <span class="brand-text font-weight-light ">MOJAS</span>
@@ -16,7 +16,7 @@
             </div>
             <div class="info">
                 {{-- Menampilkan nama user yang sedang login --}}
-                <a href="#" class="d-block">{{ Auth::user()->name ?? 'Guest User' }}</a>
+                <a href="/{{ Auth::user()->role }}" class="d-block">{{ Auth::user()->name ?? 'Guest User' }}</a>
             </div>
         </div>
 
@@ -99,7 +99,7 @@
                     </li>
                      <li class="nav-item">
                         <a href="{{ route('admin.schools.index') }}" class="nav-link {{ request()->routeIs('admin.schools.*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-file-signature"></i>
+                            <i class="nav-icon fas fa-school"></i>
                             <p>Mitra</p>
                         </a>
                     </li>

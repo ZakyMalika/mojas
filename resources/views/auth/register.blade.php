@@ -16,7 +16,7 @@
   {{-- Custom CSS for background and enhancements --}}
   <style>
     body.register-page {
-        background-image: url('https://placehold.co/1920x1080/EBF4FF/737373?text=School+Bus+Background');
+        /* background-image: url('https://placehold.co/1920x1080/EBF4FF/737373?text=School+Bus+Background'); */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
