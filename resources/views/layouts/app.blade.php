@@ -23,6 +23,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
         href="{{ asset('adminlte') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     @vite('resources/js/app.js')
+    <style>
+        /* Profile dropdown styling */
+        .navbar .dropdown-menu {
+            border: 1px solid #dee2e6;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        .navbar .dropdown-item {
+            padding: 0.5rem 1rem;
+            transition: background-color 0.15s ease-in-out;
+        }
+        .navbar .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+        .navbar .dropdown-item i {
+            width: 16px;
+            margin-right: 8px;
+        }
+        .navbar .nav-link.dropdown-toggle {
+            color: #495057 !important;
+        }
+        .navbar .nav-link.dropdown-toggle:hover {
+            color: #007bff !important;
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -43,16 +67,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <!-- User Profile Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i> {{ Auth::user()->name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('profile.show') }}">
+                            <i class="fas fa-user"></i> Lihat Profil
+                        </a>
+                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                            <i class="fas fa-edit"></i> Edit Profil
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <form action="/logout" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </form>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <form action="/logout" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-                    </form>
                 </li>
             </ul>
         </nav>

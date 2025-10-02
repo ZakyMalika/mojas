@@ -5,6 +5,7 @@ use App\Models\School;
 use App\Models\RentalService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\BookingController;
@@ -37,6 +38,13 @@ Route::get('/', [ReviewController::class, 'home'])->name('home');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 Route::get('/api/reviews', [ReviewController::class, 'getReviews'])->name('api.reviews');
 Route::get('/api/reviews/stats', [ReviewController::class, 'getStats'])->name('api.reviews.stats');
+
+// Profile routes (untuk user yang sudah login)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 Route::get('/kegiatan', function () {
     return view('frontend.kegiatan');
