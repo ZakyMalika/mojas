@@ -19,7 +19,7 @@
             width: 30px;
             height: 22px;
             cursor: pointer;
-            z-index: 1000;
+            z-index: 1003;
             position: relative;
         }
 
@@ -52,11 +52,12 @@
             width: 80%;
             height: 100vh;
             background: #ffffff;
-            z-index: 999;
+            z-index: 1001;
             padding: 20px;
             transition: all 0.4s ease;
             box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
+            padding-top: calc(70px + 1rem);
         }
 
         .mobile-nav.active {
@@ -82,6 +83,7 @@
             padding-bottom: 20px;
             border-bottom: 2px solid #eee;
             margin-bottom: 20px;
+            margin-top: -10px;
         }
 
         .mobile-nav-header img {
@@ -116,6 +118,42 @@
             padding-left: 10px;
         }
 
+        /* Mobile dropdown styles */
+        .mobile-nav .mobile-dropdown {
+            position: relative;
+        }
+
+        .mobile-nav .mobile-dropdown-menu {
+            display: none;
+            background: rgba(44, 85, 48, 0.05);
+            margin: 5px 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .mobile-nav .mobile-dropdown-menu.active {
+            display: block;
+        }
+
+        .mobile-nav .mobile-dropdown-menu li a {
+            padding: 12px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-nav .mobile-dropdown-menu li:last-child a {
+            border-bottom: none;
+        }
+
+        .mobile-nav .mobile-dropdown-toggle i.fa-chevron-down {
+            margin-left: 5px;
+            transition: transform 0.2s ease;
+        }
+
+        .mobile-nav .mobile-dropdown-toggle.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
         .mobile-nav .admin-btn {
             margin-top: 20px;
             text-align: center;
@@ -132,12 +170,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 998;
+            z-index: 1000;
             display: none;
             opacity: 0;
             transition: opacity 0.3s ease;
+            backdrop-filter: blur(2px);
         }
 
         .mobile-overlay.active {
@@ -195,6 +234,10 @@
         }
 
         @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 0;
+            }
+            
             .navbar .nav-menu {
                 display: none;
             }
@@ -343,13 +386,16 @@
         .navbar {
             position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             padding: 1rem 0;
-            z-index: 1000;
+            z-index: 1002;
             transition: all 0.3s ease;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            height: 70px;
         }
 
         .nav-container {
@@ -399,6 +445,66 @@
 
         .nav-menu a:hover::after {
             width: 100%;
+        }
+
+        /* Dropdown styles */
+        .nav-menu .dropdown {
+            position: relative;
+        }
+
+        .nav-menu .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            min-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 8px 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-menu .dropdown-menu li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu .dropdown-menu li a {
+            padding: 10px 20px;
+            display: block;
+            color: #333;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-menu .dropdown-menu li a:hover {
+            background-color: rgba(44, 85, 48, 0.1);
+            color: #2c5530;
+            padding-left: 25px;
+        }
+
+        .nav-menu .dropdown-menu li a::after {
+            display: none;
+        }
+
+        .nav-menu .dropdown-toggle i {
+            margin-left: 5px;
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-menu .dropdown:hover .dropdown-toggle i {
+            transform: rotate(180deg);
         }
 
         /* === BUTTONS === */
@@ -473,12 +579,14 @@
 
         /* === HERO SECTION === */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             background: linear-gradient(135deg, #2c5530 0%, #4a7c59 50%, #ff8c42 100%);
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
+            padding-top: 70px;
+            margin-top: 0;
         }
 
         .hero-container {
@@ -534,6 +642,11 @@
         }
 
         /* === SECTIONS (GENERAL) === */
+        section:not(.hero) {
+            padding-top: calc(2rem + 70px);
+            margin-top: -70px;
+        }
+        
         .section-title {
             text-align: center;
             margin-bottom: 4rem;
@@ -1186,94 +1299,6 @@
             font-size: 1.2rem;
         }
 
-        /* Styling untuk form input dan search */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: #2c5530;
-            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
-            outline: none;
-        }
-
-        .form-text {
-            font-size: 0.85rem;
-            color: #6c757d;
-            margin-top: 5px;
-        }
-
-        .phone-input-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .phone-prefix {
-            background: #f8f9fa;
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-            color: #495057;
-            font-weight: 600;
-        }
-
-        .search-container {
-            position: relative;
-        }
-
-        .search-results {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            margin-top: 5px;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        .search-results.active {
-            display: block;
-        }
-
-        .search-result-item {
-            padding: 10px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid #e9ecef;
-            transition: all 0.3s ease;
-        }
-
-        .search-result-item:hover {
-            background: #f8f9fa;
-        }
-
-        .search-result-item:last-child {
-            border-bottom: none;
-        }
-
-        .location-search-section {
-            margin-bottom: 20px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
-        }
-
         /* Styling untuk modal pendaftaran */
         .daftar-modal .modal-content {
             max-width: 600px;
@@ -1564,7 +1589,13 @@
         <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">MOJAS BATAM</a>
+            <a href="#" class="logo">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="{{ asset('images/logomojas.jpg') }}" alt="Logo MOJAS Batam"
+                        style="height: 50px; width: auto;">
+                    <span>MOJAS BATAM</span>
+                </div>
+            </a>
             
             <!-- Hamburger Menu -->
             <div class="hamburger-menu" onclick="toggleMobileMenu()">
@@ -1575,13 +1606,23 @@
 
             <!-- Desktop Menu -->
             <ul class="nav-menu">
-                <li><a href="#home">Beranda</a></li>
-                <li><a href="#visimisi">Visi & Misi</a></li>
-                <li><a href="#layanan">Layanan</a></li>
+                <li><a href="/">Beranda</a></li>
                 <li><a href="#tarif">Tarif</a></li>
+                <li><a href="#kerjasama">Kerjasama</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#kontak">Kontak</a></li>
-                <li><a href="/login" class="admin-btn">Admin</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">
+                        Kategori <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/kegiatan">Kegiatan</a></li>
+                        <li><a href="/rental">Rental</a></li>
+                        <li><a href="/armada">Armada</a></li>
+                        <li><a href="/sekolah">Sekolah</a></li>
+                    </ul>
+                </li>
+                <li><a href="/login" class="admin-btn"><i class="fas fa-user-shield"></i> Login</a></li>
             </ul>
         </div>
     </nav>
@@ -1589,21 +1630,19 @@
     <!-- Mobile Navigation -->
     <div class="mobile-nav">
         <div class="mobile-nav-header">
-            <img src="{{ asset('images/logomojas.jpg') }}" alt="MOJAS BATAM" style="width: 50px; height: 50px; border-radius: 50%; margin-bottom: 20px;">
-            <h3 style="color: #2c5530; margin-bottom: 30px;">MOJAS BATAM</h3>
+            <img src="{{ asset('images/logomojas.jpg') }}" alt="MOJAS BATAM" 
+                style="width: 80px; height: 80px; border-radius: 10px; margin-bottom: 20px;">
+            <h3>MOJAS BATAM</h3>
         </div>
         <ul class="nav-menu">
-            <li><a href="#home" onclick="closeMobileMenu()">
+            <li><a href="/" onclick="closeMobileMenu()">
                 <i class="fas fa-home"></i> Beranda
-            </a></li>
-            <li><a href="#visimisi" onclick="closeMobileMenu()">
-                <i class="fas fa-bullseye"></i> Visi & Misi
-            </a></li>
-            <li><a href="#layanan" onclick="closeMobileMenu()">
-                <i class="fas fa-taxi"></i> Layanan
             </a></li>
             <li><a href="#tarif" onclick="closeMobileMenu()">
                 <i class="fas fa-tag"></i> Tarif
+            </a></li>
+            <li><a href="#kerjasama" onclick="closeMobileMenu()">
+                <i class="fas fa-handshake"></i> Kerjasama
             </a></li>
             <li><a href="#faq" onclick="closeMobileMenu()">
                 <i class="fas fa-question-circle"></i> FAQ
@@ -1611,8 +1650,20 @@
             <li><a href="#kontak" onclick="closeMobileMenu()">
                 <i class="fas fa-phone"></i> Kontak
             </a></li>
+            <li class="mobile-dropdown">
+                <a href="#" class="mobile-dropdown-toggle" onclick="toggleMobileDropdown(this)">
+                    <i class="fas fa-th-list"></i> Kategori
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="/kegiatan">Kegiatan</a></li>
+                    <li><a href="/rental">Rental</a></li>
+                    <li><a href="/armada">Armada</a></li>
+                    <li><a href="/sekolah">Sekolah</a></li>
+                </ul>
+            </li>
             <li><a href="/login" class="admin-btn">
-                <i class="fas fa-user-lock"></i> Admin
+                <i class="fas fa-user-shield"></i> Login
             </a></li>
         </ul>
     </div>
@@ -1910,6 +1961,33 @@ window.addEventListener('resize', function() {
         closeMobileMenu();
     }
 });
+
+// Mobile dropdown toggle
+function toggleMobileDropdown(element) {
+    event.preventDefault();
+    const dropdownMenu = element.nextElementSibling;
+    const dropdownIcon = element.querySelector('.fa-chevron-down');
+    
+    // Toggle the active class on the dropdown menu
+    dropdownMenu.classList.toggle('active');
+    element.classList.toggle('active');
+    
+    // Close other open dropdowns
+    const allDropdowns = document.querySelectorAll('.mobile-dropdown-menu');
+    const allToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+    
+    allDropdowns.forEach(dropdown => {
+        if (dropdown !== dropdownMenu && dropdown.classList.contains('active')) {
+            dropdown.classList.remove('active');
+        }
+    });
+    
+    allToggles.forEach(toggle => {
+        if (toggle !== element && toggle.classList.contains('active')) {
+            toggle.classList.remove('active');
+        }
+    });
+}
 
 document.addEventListener("DOMContentLoaded", function() {
 

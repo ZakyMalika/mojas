@@ -915,7 +915,7 @@
             <li><i class="fa fa-car"></i> Transmisi M/T</li>
             <li><i class="fa fa-gas-pump"></i> Irit BBM</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
@@ -934,7 +934,7 @@
             <li><i class="fa fa-car"></i> Transmisi A/T</li>
             <li><i class="fa fa-gas-pump"></i> Irit BBM</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
@@ -950,7 +950,7 @@
             <li><i class="fa fa-users"></i> 7 Penumpang</li>
             <li><i class="fa fa-snowflake"></i> AC Dingin</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
@@ -966,7 +966,7 @@
             <li><i class="fa fa-users"></i> 5 Penumpang</li>
             <li><i class="fa fa-snowflake"></i> AC Dingin</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
@@ -982,7 +982,7 @@
             <li><i class="fa fa-users"></i> 8 Penumpang</li>
             <li><i class="fa fa-snowflake"></i> AC Dingin</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
@@ -998,7 +998,7 @@
             <li><i class="fa fa-users"></i> 7 Penumpang</li>
             <li><i class="fa fa-snowflake"></i> AC Dingin</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
@@ -1014,7 +1014,7 @@
             <li><i class="fa fa-users"></i> 7 Penumpang</li>
             <li><i class="fa fa-snowflake"></i> AC Dingin</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
@@ -1030,7 +1030,7 @@
             <li><i class="fa fa-users"></i> 12–15 Penumpang</li>
             <li><i class="fa fa-snowflake"></i> AC Dingin</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
@@ -1046,7 +1046,7 @@
             <li><i class="fa fa-users"></i> 14–16 Penumpang</li>
             <li><i class="fa fa-snowflake"></i> AC Dingin</li>
           </ul>
-          <a href="#" class="btn-primary">Pesan Sekarang</a>
+         
         </div>
       </div>
 
