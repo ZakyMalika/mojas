@@ -590,6 +590,163 @@
             /* Putar ikon panah ke atas */
         }
 
+        /* === REVIEW SECTION === */
+        .review-section {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%);
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .review-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .review-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .review-header h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .review-header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .review-form {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 30px;
+            padding: 20px 0;
+        }
+
+        .rating i {
+            color: #ffd700;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .rating i:hover {
+            transform: scale(1.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .review-form input,
+        .review-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 16px;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .review-form input:focus,
+        .review-form textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .review-form button {
+            width: 100%;
+            padding: 15px;
+            background: #ff8c42;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .review-form button:hover {
+            background: #ff6b1a;
+            transform: translateY(-2px);
+        }
+
+        .reviews-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ff8c42;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .reviewer-info h4 {
+            margin: 0;
+            color: white;
+        }
+
+        .reviewer-info .review-date {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: #ffd700;
+            margin: 10px 0;
+        }
+
+        .review-content {
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
         /* === CONTACT SECTION & MAP === */
         .contact {
             padding: 6rem 0;
@@ -666,6 +823,245 @@
             position: relative;
             max-height: 95vh;
             overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c5530;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5530;
+            box-shadow: 0 0 0 2px rgba(44, 85, 48, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+
+        /* Styling untuk checkbox alasan */
+        .alasan-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .alasan-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .alasan-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .alasan-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .alasan-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: #495057;
+            flex: 1;
+        }
+
+        .textarea-counter {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 1.1rem;
+            background: #25D366;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Styling untuk modal pendaftaran */
+        .daftar-modal .modal-content {
+            max-width: 600px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .registration-form {
+            padding: 30px;
+        }
+
+        .registration-form .modal-header {
+            border-bottom: 2px solid #2c5530;
+            margin-bottom: 25px;
+        }
+
+        .registration-form .modal-header h2 {
+            color: #2c5530;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .registration-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        .registration-form label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2c5530;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .registration-form label i {
+            color: #ff8c42;
+        }
+
+        .registration-form input,
+        .registration-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .registration-form input:focus,
+        .registration-form textarea:focus {
+            border-color: #2c5530;
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+            outline: none;
+        }
+
+        .alasan-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        .alasan-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .alasan-item {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .alasan-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-color: #2c5530;
+        }
+
+        .alasan-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            accent-color: #2c5530;
+        }
+
+        .textarea-counter {
+            text-align: right;
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+        }
+
+        /* Animasi untuk modal */
+        .daftar-modal {
+            animation: modalFade 0.3s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .modal-header {
@@ -926,14 +1322,99 @@
     <x-dashboard.faq />
 
     <!-- Bagian Ulasan -->
-    <div class="review-section">
-        <h2>Berikan Ulasan Anda</h2>
-        <form class="review-form">
-            <input type="text" name="nama" placeholder="Nama Anda" required>
-            <textarea name="ulasan" rows="4" placeholder="Tulis ulasan Anda..." required></textarea>
-            <button type="submit">Kirim Ulasan</button>
-        </form>
-    </div>
+    <section class="review-section">
+        <div class="review-container">
+            <div class="review-header">
+                <h2>Ulasan Pelanggan</h2>
+                <p>Apa kata mereka tentang layanan MOJAS BATAM?</p>
+            </div>
+
+            <form class="review-form" id="reviewForm">
+                <div class="rating">
+                    <i class="fas fa-star" data-rating="1"></i>
+                    <i class="fas fa-star" data-rating="2"></i>
+                    <i class="fas fa-star" data-rating="3"></i>
+                    <i class="fas fa-star" data-rating="4"></i>
+                    <i class="fas fa-star" data-rating="5"></i>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" name="nama" placeholder="Nama Anda" required>
+                </div>
+                
+                <div class="form-group">
+                    <textarea name="ulasan" rows="4" placeholder="Bagikan pengalaman Anda menggunakan layanan kami..." required></textarea>
+                </div>
+                
+                <button type="submit">Kirim Ulasan</button>
+            </form>
+
+            <div class="reviews-display">
+                <!-- Contoh Ulasan 1 -->
+                <div class="review-card" data-aos="fade-up">
+                    <div class="review-card-header">
+                        <div class="reviewer-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="reviewer-info">
+                            <h4>Ahmad Setiawan</h4>
+                            <span class="review-date">28 September 2025</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-content">"Sangat puas dengan layanan MOJAS BATAM! Driver ramah dan selalu tepat waktu. Anak saya merasa nyaman dan aman. Terima kasih!"</p>
+                </div>
+
+                <!-- Contoh Ulasan 2 -->
+                <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="review-card-header">
+                        <div class="reviewer-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="reviewer-info">
+                            <h4>Siti Rahayu</h4>
+                            <span class="review-date">25 September 2025</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-content">"Pelayanan terbaik! Armada selalu bersih dan nyaman. Sistem pemantauan sangat membantu untuk memantau perjalanan anak."</p>
+                </div>
+
+                <!-- Contoh Ulasan 3 -->
+                <div class="review-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="review-card-header">
+                        <div class="reviewer-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="reviewer-info">
+                            <h4>Budi Santoso</h4>
+                            <span class="review-date">20 September 2025</span>
+                        </div>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="review-content">"Sudah 2 tahun menggunakan jasa MOJAS BATAM dan tidak pernah mengecewakan. Sangat recommended untuk para orang tua!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
     <x-dashboard.kontak />
 
 
@@ -1166,6 +1647,51 @@
                     <p><b>One Way:</b> Rp ${tarif.oneWay.toLocaleString("id-ID")}</p>
                     <p><b>Two Way:</b> Rp ${tarif.twoWay.toLocaleString("id-ID")}</p>`;
                 }
+
+                // Inisialisasi sistem rating
+                const ratingStars = document.querySelectorAll('.rating i');
+                let selectedRating = 0;
+
+                ratingStars.forEach(star => {
+                    star.addEventListener('mouseover', function() {
+                        const rating = this.getAttribute('data-rating');
+                        updateStars(rating);
+                    });
+
+                    star.addEventListener('mouseout', function() {
+                        updateStars(selectedRating);
+                    });
+
+                    star.addEventListener('click', function() {
+                        selectedRating = this.getAttribute('data-rating');
+                        updateStars(selectedRating);
+                    });
+                });
+
+                function updateStars(rating) {
+                    ratingStars.forEach(star => {
+                        const starRating = star.getAttribute('data-rating');
+                        if (starRating <= rating) {
+                            star.style.color = '#ffd700';
+                        } else {
+                            star.style.color = 'rgba(255, 255, 255, 0.3)';
+                        }
+                    });
+                }
+
+                // Form submission
+                document.getElementById('reviewForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (selectedRating === 0) {
+                        alert('Mohon berikan rating bintang!');
+                        return;
+                    }
+                    // Di sini Anda bisa menambahkan logika untuk menyimpan ulasan
+                    alert('Terima kasih atas ulasan Anda!');
+                    this.reset();
+                    selectedRating = 0;
+                    updateStars(0);
+                });
 
                 document.getElementById("kirimWA").addEventListener("click", () => {
                     const nama = document.getElementById("nama").value;

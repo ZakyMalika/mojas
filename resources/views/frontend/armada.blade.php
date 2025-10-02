@@ -883,7 +883,7 @@
             }
         }
     </style>
-    <title>Document</title>
+    <title>Armada</title>
 
 </head>
 
@@ -1068,8 +1068,6 @@
 
     <x-dashboard.footer />
 
-    {{-- footer --}}
-    <x-dashboard.footer />
 </body>
 
 </html>

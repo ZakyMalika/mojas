@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pendaftaran_anak', function (Blueprint $table) {
             $table->id();
             $table->foreignId('anak_id')->constrained('anak')->onDelete('cascade');
-            // $table->decimal('jarak_km', 10, 2);
+            $table->decimal('jarak_km', 10, 2);
             $table->enum('tipe_layanan', ['one_way', 'two_way']);
             $table->decimal('tarif_bulanan', 10, 2);
             $table->foreignId('tarif_id')->constrained('tarif_jarak')->onDelete('cascade');
