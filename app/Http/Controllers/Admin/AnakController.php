@@ -20,7 +20,7 @@ class AnakController extends Controller
 
     public function create()
     {
-        $orang_tua = Orang_tua::all();
+        $orang_tua = Orang_tua::with(['user'])->get();
 
         return view('admin.anak.create', compact('orang_tua'));
     }
@@ -50,9 +50,10 @@ class AnakController extends Controller
 
     public function edit(Anak $anak)
     {
-        $anak->load(['orangTua']);
+        $orang_tua = Orang_tua::with(['user'])->get();
+        $item = $anak;
 
-        return view('admin.anak.edit', ['item' => $anak]);
+        return view('admin.anak.edit', compact('orang_tua', 'item'));
     }
 
     public function update(Request $request, Anak $anak)

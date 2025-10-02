@@ -11,7 +11,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="{{ route('admin.orang-tua.store') }}" method="POST">
+            <form action="{{ route('admin.orang_tua.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
                     @if ($errors->any())
@@ -31,9 +31,9 @@
                         <select class="form-control @error('user_id') is-invalid @enderror" id="user_id" name="user_id">
                             <option value="">Pilih Akun Pengguna</option>
                             {{-- Contoh statis, ganti dengan data dinamis dari controller --}}
-                            {{-- @foreach($users as $user) --}}
-                            {{-- <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }} ({{ $user->email }})</option> --}}
-                            {{-- @endforeach --}}
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }} ({{ $user->email }})</option>
+                            @endforeach
                             <option value="1">Contoh: Budi Santoso (budi@example.com)</option>
                         </select>
                         @error('user_id')
@@ -58,7 +58,7 @@
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{ route('admin.orang-tua.index') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ route('admin.orang_tua.index') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>

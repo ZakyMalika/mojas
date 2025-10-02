@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Orang_tua;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrangTuaController extends Controller
@@ -18,7 +19,8 @@ class OrangTuaController extends Controller
 
     public function create()
     {
-        return view('admin.orang_tua.create');
+        $users = User::where('role', 'orang_tua')->get();
+        return view('admin.orang_tua.create',compact('users'));
     }
 
     public function store(Request $request)
@@ -61,8 +63,40 @@ class OrangTuaController extends Controller
 
     public function destroy(Orang_tua $orang_tua)
     {
-        $orang_tua->delete();
-
-        return redirect()->route('admin.orang_tua.index');
+        // Cek apakah ada data terkait yang mencegah penghapusan
+        $relatedData = [];
+        
+        // Cek bookings
+        $bookingsCount = $orang_tua->bookings()->count();
+        if ($bookingsCount > 0) {
+            $relatedData[] = "$bookingsCount booking(s)";
+        }
+        
+        // Cek anak
+        $anakCount = $orang_tua->anak()->count();
+        if ($anakCount > 0) {
+            $relatedData[] = "$anakCount anak";
+        }
+        
+        // Cek pembayaran
+        $pembayaranCount = $orang_tua->pembayaran()->count();
+        if ($pembayaranCount > 0) {
+            $relatedData[] = "$pembayaranCount pembayaran";
+        }
+        
+        // Jika ada data terkait, tidak bisa dihapus
+        if (!empty($relatedData)) {
+            return redirect()->route('admin.orang_tua.index')
+                ->with('error', 'Tidak dapat menghapus orang tua ini karena masih terkait dengan: ' . implode(', ', $relatedData) . '. Hapus data terkait terlebih dahulu.');
+        }
+        
+        try {
+            $orang_tua->delete();
+            return redirect()->route('admin.orang_tua.index')
+                ->with('success', 'Data orang tua berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.orang_tua.index')
+                ->with('error', 'Gagal menghapus data orang tua. Error: ' . $e->getMessage());
+        }
     }
 }

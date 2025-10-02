@@ -16,6 +16,21 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+                {{-- Flash Messages --}}
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <i class="icon fas fa-check"></i> {{ session('success') }}
+                    </div>
+                @endif
+                
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <i class="icon fas fa-exclamation-triangle"></i> {{ session('error') }}
+                    </div>
+                @endif
+
                 @if($items->count() > 0)
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
@@ -50,6 +65,14 @@
                                         <a href="{{ route('admin.orang_tua.edit', $item) }}" class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
+                                        <form action="{{ route('admin.orang_tua.destroy', $item) }}" method="POST" class="d-inline"
+                                              onsubmit="return confirm('PERHATIAN: Menghapus orang tua ini akan gagal jika masih ada data terkait (anak, booking, pembayaran). Apakah Anda yakin ingin melanjutkan?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

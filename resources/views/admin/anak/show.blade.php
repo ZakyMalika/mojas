@@ -23,13 +23,11 @@
                 <dl class="row">
                     <dt class="col-sm-4">Nama Orang Tua</dt>
                     {{-- Menggunakan relasi untuk menampilkan nama orang tua --}}
-                    <dd class="col-sm-8">{{ $item->orangTua->name ?? 'N/A' }}</dd>
+                    <dd class="col-sm-8">{{ $item->orangTua->user->name ?? 'N/A' }}</dd>
 
                     <dt class="col-sm-4">Umur</dt>
                     <dd class="col-sm-8">{{ $item->umur ? $item->umur . ' tahun' : '-' }}</dd>
 
-                    <dt class="col-sm-4">Jenis Kelamin</dt>
-                    <dd class="col-sm-8">{{ $item->jenis_kelamin ?? '-' }}</dd>
 
                     <dt class="col-sm-4">Sekolah</dt>
                     <dd class="col-sm-8">{{ $item->sekolah ?? '-' }}</dd>

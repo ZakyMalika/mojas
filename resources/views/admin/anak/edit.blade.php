@@ -30,22 +30,16 @@
                         </div>
                     @endif
 
-                    <div class="form-group">
+                    <<div class="form-group">
                         <label for="orang_tua_id">Orang Tua</label>
-                        {{-- PENTING: Anda perlu mengirimkan daftar orang tua ($orangTuaList) dari controller --}}
-                        <select class="form-control @error('orang_tua_id') is-invalid @enderror" id="orang_tua_id" name="orang_tua_id">
-                            <option value="">Pilih Orang Tua</option>
-                            {{-- Contoh dinamis, uncomment jika sudah ada data --}}
-                            {{-- @foreach($orangTuaList as $ortu) --}}
-                            {{-- <option value="{{ $ortu->id }}" {{ old('orang_tua_id', $item->orang_tua_id) == $ortu->id ? 'selected' : '' }}>{{ $ortu->nama }}</option> --}}
-                            {{-- @endforeach --}}
-                             <option value="1" {{ old('orang_tua_id', $item->orang_tua_id) == 1 ? 'selected' : '' }}>Contoh: Budi</option> {{-- Hapus ini jika sudah dinamis --}}
+                        <select class="form-control" id="orang_tua_id" name="orang_tua_id">
+                            <option value="orang_tua_id">-- Pilih Orang Tua --</option>
+                            @foreach ($orang_tua as $ortu)
+                                <option value="{{ $ortu->id }}" {{ old('orang_tua_id') == $ortu->id ? 'selected' : '' }}>
+                                    {{ $ortu->user->name ?? '-' }}
+                                </option>
+                            @endforeach
                         </select>
-                        @error('orang_tua_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
 
                     <div class="form-group">
@@ -70,7 +64,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-sm-6">  
+                        {{-- <div class="col-sm-6">  
                              <div class="form-group">
                                 <label for="jenis_kelamin">Jenis Kelamin</label>
                                 <select class="form-control @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin">
@@ -84,7 +78,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     
                     <div class="row">

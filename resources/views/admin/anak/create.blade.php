@@ -29,7 +29,7 @@
                     <div class="form-group">
                         <label for="orang_tua_id">Orang Tua</label>
                         <select class="form-control" id="orang_tua_id" name="orang_tua_id">
-                            <option value="">-- Pilih Orang Tua --</option>
+                            <option value="orang_tua_id">-- Pilih Orang Tua --</option>
                             @foreach ($orang_tua as $ortu)
                                 <option value="{{ $ortu->id }}" {{ old('orang_tua_id') == $ortu->id ? 'selected' : '' }}>
                                     {{ $ortu->user->name ?? '-' }}
@@ -50,7 +50,7 @@
                                 <input type="number" class="form-control" id="umur" name="umur" value="{{ old('umur') }}" placeholder="Contoh: 5">
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        {{-- <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="jenis_kelamin">Jenis Kelamin</label>
                                 <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
@@ -59,7 +59,7 @@
                                     <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="row">
