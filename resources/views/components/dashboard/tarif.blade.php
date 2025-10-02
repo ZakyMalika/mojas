@@ -106,27 +106,6 @@
                         <label for="asalSekolah"><i class="fas fa-school"></i> Asal Sekolah:</label>
                         <input type="text" id="asalSekolah" placeholder="Masukkan nama sekolah" required>
                     </div>
-                    <div class="form-group alasan-section">
-                        <label><i class="fas fa-clipboard-list"></i> Alasan Mendaftar:</label>
-                        <div class="alasan-checkboxes">
-                            <div class="alasan-item">
-                                <input type="checkbox" id="alasan1" class="alasan-checkbox">
-                                <label for="alasan1">Kesibukan Kerja</label>
-                            </div>
-                            <div class="alasan-item">
-                                <input type="checkbox" id="alasan2" class="alasan-checkbox">
-                                <label for="alasan2">Tidak Memiliki Kendaraan</label>
-                            </div>
-                            <div class="alasan-item">
-                                <input type="checkbox" id="alasan3" class="alasan-checkbox">
-                                <label for="alasan3">Jarak Rumah ke Sekolah Jauh</label>
-                            </div>
-                            <div class="alasan-item">
-                                <input type="checkbox" id="alasan4" class="alasan-checkbox">
-                                <label for="alasan4">Keamanan dan Kenyamanan Anak</label>
-                            </div>
-                        </div>
-                    </div>
                     
                     <div class="form-group">
                         <label for="alasanTambahan"><i class="fas fa-comment-alt"></i> Alasan Tambahan (Opsional):</label>
