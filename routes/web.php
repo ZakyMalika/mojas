@@ -1,40 +1,43 @@
 <?php
 
+use App\Models\Driver;
+use App\Models\School;
+use App\Models\RentalService;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PricingController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\RentalServiceController;
+use App\Http\Controllers\ParentArea\JadwalController;
 use App\Http\Controllers\Admin\AnakController as AdminAnakController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DriverController as AdminDriverController;
-use App\Http\Controllers\Admin\JadwalAntarJemputController as AdminJadwalAntarJemputController;
-use App\Http\Controllers\Admin\LogJadwalController as AdminLogJadwalController;
-use App\Http\Controllers\Admin\OrangTuaController as AdminOrangTuaController;
-use App\Http\Controllers\Admin\PembayaranController as AdminPembayaranController;
-use App\Http\Controllers\Admin\PendaftaranAnakController as AdminPendaftaranAnakController;
-use App\Http\Controllers\Admin\PenghasilanDriverController as AdminPenghasilanDriverController;
-use App\Http\Controllers\Admin\TarifJarakController as AdminTarifJarakController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DriverArea\DashboardController as DriverDashboard;
-use App\Http\Controllers\DriverArea\JadwalAntarJemputController as DriverJadwalAntarJemputController;
-use App\Http\Controllers\DriverArea\LogJadwalController as DriverLogJadwalController;
-use App\Http\Controllers\DriverArea\PenghasilanController as DriverPenghasilanController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParentArea\AnakController as ParentAnakController;
 use App\Http\Controllers\ParentArea\DashboardController as ParentDashboard;
-use App\Http\Controllers\ParentArea\JadwalController;
-use App\Http\Controllers\ParentArea\PendaftaranAnakController as ParentPendaftaranAnakController;
+use App\Http\Controllers\Admin\OrangTuaController as AdminOrangTuaController;
+use App\Http\Controllers\Admin\LogJadwalController as AdminLogJadwalController;
 // New Controllers
-use App\Http\Controllers\PricingController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\RentalServiceController;
-use App\Http\Controllers\SchoolController;
-use App\Models\Driver;
-use App\Models\RentalService;
-use App\Models\School;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PembayaranController as AdminPembayaranController;
+use App\Http\Controllers\Admin\TarifJarakController as AdminTarifJarakController;
+use App\Http\Controllers\DriverArea\LogJadwalController as DriverLogJadwalController;
+use App\Http\Controllers\DriverArea\PenghasilanController as DriverPenghasilanController;
+use App\Http\Controllers\Admin\PendaftaranAnakController as AdminPendaftaranAnakController;
+use App\Http\Controllers\Admin\JadwalAntarJemputController as AdminJadwalAntarJemputController;
+use App\Http\Controllers\Admin\PenghasilanDriverController as AdminPenghasilanDriverController;
+use App\Http\Controllers\ParentArea\PendaftaranAnakController as ParentPendaftaranAnakController;
+use App\Http\Controllers\DriverArea\JadwalAntarJemputController as DriverJadwalAntarJemputController;
 
 // Halaman utama
-Route::get('/', function () {
-    return view('frontend.home');
-});
+Route::get('/', [ReviewController::class, 'home'])->name('home');
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/api/reviews', [ReviewController::class, 'getReviews'])->name('api.reviews');
+Route::get('/api/reviews/stats', [ReviewController::class, 'getStats'])->name('api.reviews.stats');
+
 Route::get('/kegiatan', function () {
     return view('frontend.kegiatan');
 });

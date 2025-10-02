@@ -1001,6 +1001,15 @@
             margin: 10px 0;
         }
 
+        .review-rating .fa-star {
+            color: #ddd;
+            transition: color 0.2s ease;
+        }
+
+        .review-rating .fa-star.filled {
+            color: #ffd700;
+        }
+
         .review-content {
             color: rgba(255, 255, 255, 0.9);
             font-style: italic;
@@ -1734,7 +1743,10 @@
                 <p>Apa kata mereka tentang layanan MOJAS BATAM?</p>
             </div>
 
-            <form class="review-form" id="reviewForm">
+            <form class="review-form" id="reviewForm" action="{{ route('reviews.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="rating" id="ratingInput" value="5">
+                
                 <div class="rating">
                     <i class="fas fa-star" data-rating="1"></i>
                     <i class="fas fa-star" data-rating="2"></i>
@@ -1754,30 +1766,40 @@
                 <button type="submit">Kirim Ulasan</button>
             </form>
 
-            <div class="reviews-display">
-                <!-- Contoh Ulasan 1 -->
-                <div class="review-card" data-aos="fade-up">
-                    <div class="review-card-header">
-                        <div class="reviewer-avatar">
-                            <i class="fas fa-user"></i>
+            <div class="reviews-display" id="reviewsDisplay">
+                @forelse($reviews as $review)
+                    <div class="review-card" data-aos="fade-up">
+                        <div class="review-card-header">
+                            <div class="reviewer-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="reviewer-info">
+                                <h4>{{ $review->nama }}</h4>
+                                <span class="review-date">{{ $review->formatted_date }}</span>
+                            </div>
                         </div>
-                        <div class="reviewer-info">
-                            <h4>Ahmad Setiawan</h4>
-                            <span class="review-date">28 September 2025</span>
+                        <div class="review-rating">
+                            @for($i = 1; $i <= 5; $i++)
+                                <i class="fas fa-star {{ $i <= $review->rating ? 'filled' : '' }}"></i>
+                            @endfor
                         </div>
+                        <p class="review-content">"{{ $review->ulasan }}"</p>
                     </div>
-                    <div class="review-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                @empty
+                    <div class="no-reviews">
+                        <p>Belum ada ulasan. Jadilah yang pertama memberikan ulasan!</p>
                     </div>
-                    <p class="review-content">"Sangat puas dengan layanan MOJAS BATAM! Driver ramah dan selalu tepat waktu. Anak saya merasa nyaman dan aman. Terima kasih!"</p>
-                </div>
+                @endforelse
 
-                <!-- Contoh Ulasan 2 -->
-                <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+                @if($reviews->count() >= 6)
+                    <div class="load-more-reviews">
+                        <button type="button" id="loadMoreReviews" class="btn-load-more">
+                            Lihat Ulasan Lainnya
+                        </button>
+                    </div>
+                @endif
+            </div>
+                {{-- <div class="review-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="review-card-header">
                         <div class="reviewer-avatar">
                             <i class="fas fa-user"></i>
@@ -1795,10 +1817,10 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="review-content">"Pelayanan terbaik! Armada selalu bersih dan nyaman. Sistem pemantauan sangat membantu untuk memantau perjalanan anak."</p>
-                </div>
+                </div> --}}
 
                 <!-- Contoh Ulasan 3 -->
-                <div class="review-card" data-aos="fade-up" data-aos-delay="200">
+                {{-- <div class="review-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="review-card-header">
                         <div class="reviewer-avatar">
                             <i class="fas fa-user"></i>
@@ -1816,7 +1838,7 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="review-content">"Sudah 2 tahun menggunakan jasa MOJAS BATAM dan tidak pernah mengecewakan. Sangat recommended untuk para orang tua!"</p>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -2123,16 +2145,150 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Form submission
                 document.getElementById('reviewForm').addEventListener('submit', function(e) {
                     e.preventDefault();
+                    
                     if (selectedRating === 0) {
                         alert('Mohon berikan rating bintang!');
                         return;
                     }
-                    // Di sini Anda bisa menambahkan logika untuk menyimpan ulasan
-                    alert('Terima kasih atas ulasan Anda!');
-                    this.reset();
-                    selectedRating = 0;
-                    updateStars(0);
+
+                    // Set rating value ke hidden input
+                    document.getElementById('ratingInput').value = selectedRating;
+                    
+                    // Ambil data form
+                    const formData = new FormData(this);
+                    const nama = formData.get('nama');
+                    const ulasan = formData.get('ulasan');
+                    const rating = selectedRating;
+                    
+                    // Kirim via AJAX
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Gunakan data review dari server
+                            const reviewData = data.review;
+                            const newReviewHtml = createReviewElement(
+                                reviewData.nama, 
+                                reviewData.ulasan, 
+                                reviewData.rating, 
+                                reviewData.formatted_date
+                            );
+                            
+                            // Cari container reviews
+                            const reviewsContainer = document.getElementById('reviewsDisplay');
+                            const noReviewsMessage = reviewsContainer.querySelector('.no-reviews');
+                            
+                            // Hapus pesan "belum ada ulasan" jika ada
+                            if (noReviewsMessage) {
+                                noReviewsMessage.remove();
+                            }
+                            
+                            // Tambahkan review baru di bagian atas
+                            reviewsContainer.insertAdjacentHTML('afterbegin', newReviewHtml);
+                            
+                            // Reset form
+                            this.reset();
+                            selectedRating = 0;
+                            updateStars(0);
+                            
+                            // Tampilkan notifikasi sukses
+                            showSuccessNotification('Terima kasih atas ulasan Anda! Ulasan berhasil ditambahkan.');
+                            
+                            // Scroll ke review yang baru ditambahkan
+                            setTimeout(() => {
+                                const newReview = reviewsContainer.querySelector('.review-card');
+                                newReview.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                newReview.style.border = '2px solid #4CAF50';
+                                setTimeout(() => {
+                                    newReview.style.border = '';
+                                }, 3000);
+                            }, 100);
+                        } else {
+                            alert('Terjadi kesalahan: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat menyimpan ulasan. Silakan coba lagi.');
+                    });
                 });
+
+                // Fungsi untuk membuat elemen review baru
+                function createReviewElement(nama, ulasan, rating, tanggal) {
+                    let starsHtml = '';
+                    for (let i = 1; i <= 5; i++) {
+                        starsHtml += `<i class="fas fa-star ${i <= rating ? 'filled' : ''}"></i>`;
+                    }
+                    
+                    return `
+                        <div class="review-card new-review" data-aos="fade-up">
+                            <div class="review-card-header">
+                                <div class="reviewer-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="reviewer-info">
+                                    <h4>${nama}</h4>
+                                    <span class="review-date">${tanggal}</span>
+                                </div>
+                            </div>
+                            <div class="review-rating">
+                                ${starsHtml}
+                            </div>
+                            <p class="review-content">"${ulasan}"</p>
+                        </div>
+                    `;
+                }
+
+                // Fungsi untuk menampilkan notifikasi sukses
+                function showSuccessNotification(message) {
+                    // Buat elemen notifikasi
+                    const notification = document.createElement('div');
+                    notification.className = 'success-notification';
+                    notification.innerHTML = `
+                        <div class="notification-content">
+                            <i class="fas fa-check-circle"></i>
+                            <span>${message}</span>
+                        </div>
+                    `;
+                    
+                    // Style notifikasi
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #4CAF50;
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                        z-index: 9999;
+                        transform: translateX(400px);
+                        transition: transform 0.3s ease;
+                        max-width: 350px;
+                    `;
+                    
+                    // Tambahkan ke body
+                    document.body.appendChild(notification);
+                    
+                    // Animasi masuk
+                    setTimeout(() => {
+                        notification.style.transform = 'translateX(0)';
+                    }, 100);
+                    
+                    // Hapus setelah 5 detik
+                    setTimeout(() => {
+                        notification.style.transform = 'translateX(400px)';
+                        setTimeout(() => {
+                            document.body.removeChild(notification);
+                        }, 300);
+                    }, 5000);
+                }
 
                 document.getElementById("kirimWA").addEventListener("click", () => {
                     const nama = document.getElementById("nama").value;
