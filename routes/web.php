@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\PembayaranController as AdminPembayaranController
 use App\Http\Controllers\Admin\PendaftaranAnakController as AdminPendaftaranAnakController;
 use App\Http\Controllers\Admin\PenghasilanDriverController as AdminPenghasilanDriverController;
 use App\Http\Controllers\Admin\TarifJarakController as AdminTarifJarakController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DriverArea\DashboardController as DriverDashboard;
 use App\Http\Controllers\DriverArea\JadwalAntarJemputController as DriverJadwalAntarJemputController;
@@ -81,6 +82,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::resource('jadwal', AdminJadwalAntarJemputController::class);
     Route::resource('log-jadwal', AdminLogJadwalController::class);
     Route::resource('penghasilan', AdminPenghasilanDriverController::class);
+    Route::resource('users', UserController::class);
 
     // New Resources for Transportation Management
     Route::resource('schools', SchoolController::class);

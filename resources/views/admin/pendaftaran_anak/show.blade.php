@@ -43,12 +43,35 @@
                     <dd class="col-sm-8">{{ $item->anak->nama ?? 'N/A' }}</dd>
                     <dt class="col-sm-4">Orang Tua</dt>
                     <dd class="col-sm-8">{{ $item->anak->orangTua->user->name ?? 'N/A' }}</dd>
-                     <dt class="col-sm-4">Jarak Rumah-Sekolah</dt>
-                    <dd class="col-sm-8">{{ $item->jarak_km }} KM</dd>
-                    <dt class="col-sm-4">Referensi Tarif</dt>
-                    <dd class="col-sm-8">
-                        Tarif untuk {{ $item->tarif_jarak->min_distance_km ?? 'N/A' }} - {{ $item->tarif_jarak->max_distance_km ?? 'N/A' }} KM
-                    </dd>
+                    
+                    @if($item->school_id)
+                        <dt class="col-sm-4">Kemitraan Sekolah</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-info">
+                                <i class="fas fa-school"></i> {{ $item->school->name ?? 'N/A' }}
+                            </span>
+                            <br><small class="text-muted">Tarif berdasarkan kemitraan sekolah</small>
+                        </dd>
+                        <dt class="col-sm-4">Jarak Rumah-Sekolah</dt>
+                        <dd class="col-sm-8">
+                            <span class="text-muted">Tidak berlaku untuk kemitraan sekolah</span>
+                        </dd>
+                        <dt class="col-sm-4">Referensi Tarif</dt>
+                        <dd class="col-sm-8">
+                            <span class="text-muted">Tarif khusus kemitraan sekolah</span>
+                        </dd>
+                    @else
+                        <dt class="col-sm-4">Jarak Rumah-Sekolah</dt>
+                        <dd class="col-sm-8">{{ $item->jarak_km }} KM</dd>
+                        <dt class="col-sm-4">Referensi Tarif</dt>
+                        <dd class="col-sm-8">
+                            @if($item->tarif_jarak)
+                                Tarif untuk {{ $item->tarif_jarak->min_distance_km }} - {{ $item->tarif_jarak->max_distance_km }} KM
+                            @else
+                                <span class="text-muted">Tidak ada referensi tarif</span>
+                            @endif
+                        </dd>
+                    @endif
                 </dl>
             </div>
         </div>

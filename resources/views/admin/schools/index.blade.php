@@ -29,6 +29,7 @@
                                 <th>ID</th>
                                 <th>Nama Sekolah</th>
                                 <th>Alamat Sekolah</th>
+                                <th>Tarif Kemitraan</th>
                                 <th style="width: 20%;">Aksi</th>
                             </tr>
                         </thead>
@@ -38,6 +39,14 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name ?? 'N/A' }}</td>
                                     <td>{{ Str::limit($item->address, 50) ?? 'N/A' }}</td>
+                                    <td>
+                                        @if ($item->type == 'sekolah' && $item->partnership_rate)
+                                            Rp{{ number_format($item->partnership_rate, 0, ',', '.') }}/bulan
+                                        @elseif ($item->type == 'umum' && $item->general_rate)
+                                            Rp{{ number_format($item->general_rate, 0, ',', '.') }}/hari
+                                        @else
+                                            N/A
+                                        @endif
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ route('admin.schools.show', $item->id) }}"

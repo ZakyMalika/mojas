@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Detail Pendaftaran: {{ $school->name ?? 'N/A' }}</h3>
+                    <h3 class="card-title">Detail Mitra: **{{ $school->name ?? 'N/A' }}**</h3>
                     <div class="card-tools">
                         <a href="{{ route('admin.schools.index') }}" class="btn btn-secondary btn-sm">
                             <i class="fas fa-arrow-left"></i> Kembali ke Daftar
@@ -33,27 +33,88 @@
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <th style="width: 20%;">ID Pendaftaran</th>
+                                        <th style="width: 25%;">ID Mitra</th>
                                         <td>{{ $school->id }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Nama Sekolah</th>
+                                        <th>Nama Mitra</th>
                                         <td>{{ $school->name ?? 'N/A' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Alamat Sekolah</th>
-                                        <td>{{ $school->address ?? 'N/A' }}</td>
+                                        <th>Tipe Mitra</th>
+                                        <td>
+                                            @if ($school->type == 'sekolah')
+                                                <span class="badge badge-primary">Sekolah</span>
+                                            @elseif ($school->type == 'umum')
+                                                <span class="badge badge-info">Umum</span>
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
+                                        <th>Alamat</th>
+                                        <td>{{ $school->address ?? 'N/A' }}</td>
+                                    </tr>
+                                    
+                                    {{-- Data Kemitraan --}}
+                                    <tr>
+                                        <th>Status Kemitraan</th>
+                                        <td>
+                                            @if ($school->has_partnership)
+                                                <span class="badge badge-success">Ya (Aktif)</span>
+                                            @else
+                                                <span class="badge badge-danger">Tidak</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @if ($school->has_partnership)
+                                    <tr>
+                                        <th>Tarif Kemitraan (Bulan)</th>
+                                        <td>{{ $school->partnership_rate !== null ? 'Rp ' . number_format($school->partnership_rate, 0, ',', '.') : 'Tidak Ditetapkan' }}</td>
+                                    </tr>
+                                    @endif
+
+                                    {{-- Data Harga Perjalanan --}}
+                                    <tr class="table-info">
+                                        <th colspan="2" class="text-center">Informasi Tarif Perjalanan</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Tarif Umum Perjalanan (Per KM)</th>
+                                        <td>**Rp {{ number_format($school->general_rate, 0, ',', '.') }}** (Wajib)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Harga Dasar Satu Arah (Bulan)</th>
+                                        <td>{{ $school->one_way_price !== null ? 'Rp ' . number_format($school->one_way_price, 0, ',', '.') : 'Tidak Ditetapkan' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Harga Dasar Dua Arah (Bulan)</th>
+                                        <td>{{ $school->two_way_price !== null ? 'Rp ' . number_format($school->two_way_price, 0, ',', '.') : 'Tidak Ditetapkan' }}</td>
+                                    </tr>
+
+                                    {{-- Data Kontak (dipertahankan dari template lama) --}}
+                                    <tr>
                                         <th>Nomor Telepon</th>
-                                        {{-- Asumsi ada kolom phone_number di tabel schools --}}
                                         <td>{{ $school->phone_number ?? 'N/A' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Email Sekolah</th>
-                                        {{-- Asumsi ada kolom email di tabel schools --}}
+                                        <th>Email</th>
                                         <td>{{ $school->email ?? 'N/A' }}</td>
                                     </tr>
+
+                                    {{-- Status Aktif --}}
+                                    <tr>
+                                        <th>Status Aktif Sistem</th>
+                                        <td>
+                                            @if ($school->is_active)
+                                                <span class="badge badge-success">Aktif</span>
+                                            @else
+                                                <span class="badge badge-danger">Nonaktif</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+
+                                    {{-- Timestamp --}}
                                     <tr>
                                         <th>Tanggal Dibuat</th>
                                         <td>{{ $school->created_at ? $school->created_at->format('d M Y H:i:s') : 'N/A' }}</td>
@@ -62,7 +123,6 @@
                                         <th>Terakhir Diperbarui</th>
                                         <td>{{ $school->updated_at ? $school->updated_at->format('d M Y H:i:s') : 'N/A' }}</td>
                                     </tr>
-                                    {{-- Anda bisa menambahkan detail lain yang relevan di sini --}}
                                 </tbody>
                             </table>
                         </div>
@@ -74,5 +134,5 @@
 @endsection
 
 @push('scripts')
-    {{-- Tambahkan skrip khusus jika ada, misalnya untuk konfirmasi hapus kustom --}}
+    {{-- Tambahkan skrip khusus jika ada --}}
 @endpush

@@ -31,6 +31,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Anak</th>
+                            <th>Kemitraan Sekolah</th>
                             <th>Tipe Layanan</th>
                             <th>Tarif Bulanan</th>
                             <th>Periode</th>
@@ -43,6 +44,21 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->anak->nama ?? 'N/A' }}</td>
+                                <td>
+                                    @if($item->school_id && $item->school)
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-school"></i> {{ $item->school->name }}
+                                        </span>
+                                        <br><small class="text-muted">Rp{{ number_format($item->school->partnership_rate, 0, ',', '.') }}/hari</small>
+                                    @else
+                                        <span class="badge bg-secondary">
+                                            <i class="fas fa-route"></i> Umum
+                                        </span>
+                                        @if($item->tarif_jarak)
+                                            <br><small class="text-muted">{{ $item->tarif_jarak->min_distance_km }}-{{ $item->tarif_jarak->max_distance_km }}km</small>
+                                        @endif
+                                    @endif
+                                </td>
                                 <td>{{ $item->tipe_layanan == 'one_way' ? 'Sekali Jalan' : 'Pulang Pergi' }}</td>
                                 <td>Rp{{ number_format($item->tarif_bulanan, 0, ',', '.') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->periode_mulai)->format('d M Y') }}</td>
@@ -71,7 +87,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="7" class="text-center">Belum ada data pendaftaran.</td></tr>
+                            <tr><td colspan="8" class="text-center">Belum ada data pendaftaran.</td></tr>
                         @endforelse
                     </tbody>
                 </table>

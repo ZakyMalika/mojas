@@ -23,4 +23,9 @@ class Pendaftaran_anak extends Model
     {
         return $this->belongsTo(Tarif_jarak::class, 'tarif_id');
     }
+
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
 }
