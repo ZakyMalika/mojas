@@ -11,8 +11,14 @@ class DashboardController extends Controller
     {
         $driver = Auth::user()->driver;
         abort_if(! $driver, 403);
+        
         $jadwalHariIni = $driver->jadwal_antar_jemput()->whereDate('tanggal', today())->get();
-        $penghasilanBulanIni = $driver->penghasilan_driver ? $driver->penghasilan_driver->whereMonth('created_at', now()->month)->sum('komisi_pengemudi') : 0;
+        
+        // Ambil penghasilan bulan ini untuk driver yang sedang login
+        $penghasilanBulanIni = $driver->penghasilan_driver()
+            ->whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->sum('komisi_pengemudi');
 
         return view('driver.driver', compact('jadwalHariIni', 'driver', 'penghasilanBulanIni'));
     }
