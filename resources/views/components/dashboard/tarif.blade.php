@@ -56,7 +56,7 @@
                     </tbody>
                 </table>
                 <div style="text-align: center; margin-top: 40px;">
-                    <a href="#" class="btn-primary">Daftar Sekarang</a>
+                    <button class="btn-primary daftar-btn" onclick="showDaftarForm()">Daftar Sekarang</button>
                 </div>
             </div>
         </div>
@@ -82,6 +82,66 @@
         </div>
         <div style="text-align: center; margin-top: 40px;">
             <button class="btn-primary pesan-btn">Pesan & Simulasi Tarif</button>
+        </div>
+    </div>
+
+    <!-- Form Modal Pendaftaran -->
+    <div id="daftarModal" class="modal daftar-modal">
+        <div class="modal-content registration-form">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Form Pendaftaran</h2>
+                <span class="close" onclick="closeDaftarModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="namaPendaftar"><i class="fas fa-user"></i> Nama Orang Tua:</label>
+                        <input type="text" id="namaPendaftar" placeholder="Masukkan nama lengkap Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="namaAnak"><i class="fas fa-child"></i> Nama Anak:</label>
+                        <input type="text" id="namaAnak" placeholder="Masukkan nama lengkap anak" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="asalSekolah"><i class="fas fa-school"></i> Asal Sekolah:</label>
+                        <input type="text" id="asalSekolah" placeholder="Masukkan nama sekolah" required>
+                    </div>
+                    <div class="form-group alasan-section">
+                        <label><i class="fas fa-clipboard-list"></i> Alasan Mendaftar:</label>
+                        <div class="alasan-checkboxes">
+                            <div class="alasan-item">
+                                <input type="checkbox" id="alasan1" class="alasan-checkbox">
+                                <label for="alasan1">Kesibukan Kerja</label>
+                            </div>
+                            <div class="alasan-item">
+                                <input type="checkbox" id="alasan2" class="alasan-checkbox">
+                                <label for="alasan2">Tidak Memiliki Kendaraan</label>
+                            </div>
+                            <div class="alasan-item">
+                                <input type="checkbox" id="alasan3" class="alasan-checkbox">
+                                <label for="alasan3">Jarak Rumah ke Sekolah Jauh</label>
+                            </div>
+                            <div class="alasan-item">
+                                <input type="checkbox" id="alasan4" class="alasan-checkbox">
+                                <label for="alasan4">Keamanan dan Kenyamanan Anak</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="alasanTambahan"><i class="fas fa-comment-alt"></i> Alasan Tambahan (Opsional):</label>
+                        <textarea id="alasanTambahan" rows="3" 
+                            placeholder="Ceritakan alasan lain mengapa Anda memilih layanan kami..."></textarea>
+                        <div class="textarea-counter">
+                            <span id="charCount">0</span>/200 karakter
+                        </div>
+                    </div>
+
+                    <button class="btn-primary submit-btn" onclick="kirimPendaftaran()">
+                        <i class="fab fa-whatsapp"></i> Kirim Pendaftaran via WhatsApp
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -255,6 +315,86 @@ function updateSimulasi() {
 }
 
 // === KIRIM KE WHATSAPP ===
+// Fungsi untuk form pendaftaran
+function showDaftarForm() {
+    document.getElementById('daftarModal').style.display = 'flex';
+}
+
+function closeDaftarModal() {
+    document.getElementById('daftarModal').style.display = 'none';
+}
+
+// Tambahkan event listener untuk counter karakter
+document.getElementById('alasanTambahan').addEventListener('input', function() {
+    const maxLength = 200;
+    const currentLength = this.value.length;
+    document.getElementById('charCount').textContent = currentLength;
+    
+    if (currentLength > maxLength) {
+        this.value = this.value.substring(0, maxLength);
+        document.getElementById('charCount').textContent = maxLength;
+    }
+});
+
+function kirimPendaftaran() {
+    const namaPendaftar = document.getElementById('namaPendaftar').value;
+    const namaAnak = document.getElementById('namaAnak').value;
+    const asalSekolah = document.getElementById('asalSekolah').value;
+    
+    // Mengumpulkan alasan yang dipilih
+    const alasanCheckboxes = document.querySelectorAll('.alasan-checkbox:checked');
+    const alasanTerpilih = Array.from(alasanCheckboxes).map(cb => cb.nextElementSibling.textContent);
+    const alasanTambahan = document.getElementById('alasanTambahan').value;
+
+    // Validasi form
+    if (!namaPendaftar || !namaAnak || !asalSekolah) {
+        alert('Mohon lengkapi Nama Orang Tua, Nama Anak, dan Asal Sekolah!');
+        return;
+    }
+
+    if (alasanTerpilih.length === 0) {
+        alert('Mohon pilih setidaknya satu alasan mendaftar!');
+        return;
+    }
+
+    // Format pesan WhatsApp
+    let pesan = `Halo, saya ingin mendaftar layanan antar jemput MOJAS BATAM.\n\n` +
+        `*Data Pendaftaran:*\n` +
+        `-------------------\n` +
+        `*Nama Orang Tua:* ${namaPendaftar}\n` +
+        `*Nama Anak:* ${namaAnak}\n` +
+        `*Asal Sekolah:* ${asalSekolah}\n\n` +
+        `*Alasan Mendaftar:*\n`;
+    
+    // Menambahkan alasan yang dipilih
+    alasanTerpilih.forEach((alasan, index) => {
+        pesan += `${index + 1}. ${alasan}\n`;
+    });
+
+    // Menambahkan alasan tambahan jika ada
+    if (alasanTambahan.trim()) {
+        pesan += `\n*Alasan Tambahan:*\n${alasanTambahan}\n\n`;
+    } else {
+        pesan += '\n';
+    }
+        `Mohon informasi lebih lanjut mengenai prosedur pendaftaran. Terima kasih.`;
+
+    // Buka WhatsApp dengan pesan yang sudah diformat
+    const whatsappURL = `https://wa.me/6281268712321?text=${encodeURIComponent(pesan)}`;
+    window.open(whatsappURL, '_blank');
+    
+    // Tutup modal setelah mengirim
+    closeDaftarModal();
+}
+
+// Tutup modal jika user mengklik di luar modal
+window.onclick = function(event) {
+    const daftarModal = document.getElementById('daftarModal');
+    if (event.target == daftarModal) {
+        daftarModal.style.display = "none";
+    }
+}
+
 document.getElementById("kirimWA").addEventListener("click", () => {
     const nama = document.getElementById("nama").value;
     const alamat = document.getElementById("alamat").value;

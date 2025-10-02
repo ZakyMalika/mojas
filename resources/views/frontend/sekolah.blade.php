@@ -924,7 +924,7 @@
             color: #333;
         }
     </style>
-    <title>Document</title>
+    <title>Pelanggan Sekolah</title>
 
 </head>
 
@@ -1006,8 +1006,6 @@
 
     <x-dashboard.footer />
 
-    {{-- footer --}}
-    <x-dashboard.footer />
 </body>
 
 </html>
