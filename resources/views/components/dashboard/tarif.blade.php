@@ -106,6 +106,28 @@
                         <label for="asalSekolah"><i class="fas fa-school"></i> Asal Sekolah:</label>
                         <input type="text" id="asalSekolah" placeholder="Masukkan nama sekolah" required>
                     </div>
+                    {{--  --}}
+                    {{-- <div class="form-group alasan-section">
+                        <label><i class="fas fa-clipboard-list"></i> Alasan Mendaftar:</label>
+                        <div class="alasan-checkboxes">
+                            <div class="alasan-item">
+                                <input type="checkbox" id="alasan1" class="alasan-checkbox">
+                                <label for="alasan1">Kesibukan Kerja</label>
+                            </div>
+                            <div class="alasan-item">
+                                <input type="checkbox" id="alasan2" class="alasan-checkbox">
+                                <label for="alasan2">Tidak Memiliki Kendaraan</label>
+                            </div>
+                            <div class="alasan-item">
+                                <input type="checkbox" id="alasan3" class="alasan-checkbox">
+                                <label for="alasan3">Jarak Rumah ke Sekolah Jauh</label>
+                            </div>
+                            <div class="alasan-item">
+                                <input type="checkbox" id="alasan4" class="alasan-checkbox">
+                                <label for="alasan4">Keamanan dan Kenyamanan Anak</label>
+                            </div>
+                        </div>
+                    </div> --}}
                     
                     <div class="form-group">
                         <label for="alasanTambahan"><i class="fas fa-comment-alt"></i> Alasan Tambahan (Opsional):</label>
@@ -174,127 +196,6 @@
 
 
 <script>
-// === KODE FAQ DENGAN USABILITY LEBIH BAIK ===
-const faqItems = document.querySelectorAll('.faq-item');
-
-faqItems.forEach(item => {
-    const questionButton = item.querySelector('.faq-question');
-    const answerDiv = item.querySelector('.faq-answer');
-
-    questionButton.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        item.classList.toggle('active');
-        questionButton.setAttribute('aria-expanded', !isActive);
-        answerDiv.style.maxHeight = !isActive ? answerDiv.scrollHeight + 'px' : 0;
-    });
-});
-
-// === MAP LOKASI KANTOR ===
-const officeCoords = [1.1160, 104.0385];
-const locationMap = L.map('locationMap').setView(officeCoords, 15);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-}).addTo(locationMap);
-L.marker(officeCoords).addTo(locationMap).bindPopup(
-    '<b>PT. MOJAS BATAM</b><br>Perumahan Anggrek Sari Blok F8 no.11, Batam '
-).openPopup();
-
-// === MODAL PESAN & SIMULASI TARIF ===
-const modal = document.getElementById("orderModal");
-const closeBtn = modal.querySelector(".close");
-const pesanBtns = document.querySelectorAll(".pesan-btn");
-
-let modalMapsInitialized = false;
-let mapAsal, mapTujuan;
-let markerAsal = null, markerTujuan = null;
-
-function initializeModalMaps() {
-    if (modalMapsInitialized) return;
-
-    mapAsal = L.map("mapAsal").setView([1.0456, 104.0305], 12);
-    mapTujuan = L.map("mapTujuan").setView([1.0456, 104.0305], 12);
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap"
-    }).addTo(mapAsal);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap"
-    }).addTo(mapTujuan);
-
-    mapAsal.on("click", e => {
-        if (markerAsal) markerAsal.setLatLng(e.latlng);
-        else markerAsal = L.marker(e.latlng).addTo(mapAsal);
-        document.getElementById("alamatAsal").value =
-            `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-        updateSimulasi();
-    });
-
-    mapTujuan.on("click", e => {
-        if (markerTujuan) markerTujuan.setLatLng(e.latlng);
-        else markerTujuan = L.marker(e.latlng).addTo(mapTujuan);
-        document.getElementById("alamatTujuan").value =
-            `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
-        updateSimulasi();
-    });
-
-    modalMapsInitialized = true;
-}
-
-// === EVENT LISTENER UNTUK TOMBOL PESAN ===
-pesanBtns.forEach(btn => {
-    btn.addEventListener("click", function() {
-        modal.style.display = "flex";
-        initializeModalMaps();
-        setTimeout(() => {
-            mapAsal.invalidateSize();
-            mapTujuan.invalidateSize();
-        }, 10);
-    });
-});
-
-// === CLOSE MODAL ===
-closeBtn.addEventListener("click", () => modal.style.display = "none");
-window.addEventListener("click", e => {
-    if (e.target == modal) modal.style.display = "none";
-});
-
-// === HITUNG JARAK DAN TARIF ===
-function hitungJarak(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(lat1 * Math.PI / 180) *
-              Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
-}
-
-function hitungTarif(jarak) {
-    const hariEfektif = 20;
-    let oneWay = 0;
-    if (jarak <= 3) {
-        oneWay = 400000;
-    } else {
-        oneWay = Math.round(jarak * hariEfektif * 7000);
-    }
-    return { oneWay, twoWay: oneWay * 2 };
-}
-
-function updateSimulasi() {
-    if (!markerAsal || !markerTujuan) return;
-    const a = markerAsal.getLatLng();
-    const t = markerTujuan.getLatLng();
-    const jarak = hitungJarak(a.lat, a.lng, t.lat, t.lng);
-    const tarif = hitungTarif(jarak);
-    document.getElementById("simulasi").innerHTML = `
-        <p><b>Jarak:</b> ${jarak.toFixed(2)} km</p>
-        <p><b>One Way:</b> Rp ${tarif.oneWay.toLocaleString("id-ID")}</p>
-        <p><b>Two Way:</b> Rp ${tarif.twoWay.toLocaleString("id-ID")}</p>`;
-}
-
-// === KIRIM KE WHATSAPP ===
-// Fungsi untuk form pendaftaran
 function showDaftarForm() {
     document.getElementById('daftarModal').style.display = 'flex';
 }
@@ -303,36 +204,28 @@ function closeDaftarModal() {
     document.getElementById('daftarModal').style.display = 'none';
 }
 
-// Tambahkan event listener untuk counter karakter
+// === Counter karakter alasan tambahan ===
 document.getElementById('alasanTambahan').addEventListener('input', function() {
     const maxLength = 200;
     const currentLength = this.value.length;
     document.getElementById('charCount').textContent = currentLength;
-    
+
     if (currentLength > maxLength) {
         this.value = this.value.substring(0, maxLength);
         document.getElementById('charCount').textContent = maxLength;
     }
 });
 
+// === Kirim Form Pendaftaran via WhatsApp ===
 function kirimPendaftaran() {
-    const namaPendaftar = document.getElementById('namaPendaftar').value;
-    const namaAnak = document.getElementById('namaAnak').value;
-    const asalSekolah = document.getElementById('asalSekolah').value;
-    
-    // Mengumpulkan alasan yang dipilih
-    const alasanCheckboxes = document.querySelectorAll('.alasan-checkbox:checked');
-    const alasanTerpilih = Array.from(alasanCheckboxes).map(cb => cb.nextElementSibling.textContent);
-    const alasanTambahan = document.getElementById('alasanTambahan').value;
+    const namaPendaftar = document.getElementById('namaPendaftar').value.trim();
+    const namaAnak = document.getElementById('namaAnak').value.trim();
+    const asalSekolah = document.getElementById('asalSekolah').value.trim();
+    const alasanTambahan = document.getElementById('alasanTambahan').value.trim();
 
-    // Validasi form
+    // Validasi wajib isi
     if (!namaPendaftar || !namaAnak || !asalSekolah) {
         alert('Mohon lengkapi Nama Orang Tua, Nama Anak, dan Asal Sekolah!');
-        return;
-    }
-
-    if (alasanTerpilih.length === 0) {
-        alert('Mohon pilih setidaknya satu alasan mendaftar!');
         return;
     }
 
@@ -342,67 +235,26 @@ function kirimPendaftaran() {
         `-------------------\n` +
         `*Nama Orang Tua:* ${namaPendaftar}\n` +
         `*Nama Anak:* ${namaAnak}\n` +
-        `*Asal Sekolah:* ${asalSekolah}\n\n` +
-        `*Alasan Mendaftar:*\n`;
-    
-    // Menambahkan alasan yang dipilih
-    alasanTerpilih.forEach((alasan, index) => {
-        pesan += `${index + 1}. ${alasan}\n`;
-    });
+        `*Asal Sekolah:* ${asalSekolah}\n`;
 
-    // Menambahkan alasan tambahan jika ada
-    if (alasanTambahan.trim()) {
-        pesan += `\n*Alasan Tambahan:*\n${alasanTambahan}\n\n`;
-    } else {
-        pesan += '\n';
+    if (alasanTambahan) {
+        pesan += `\n*Alasan Tambahan:*\n${alasanTambahan}\n`;
     }
-        `Mohon informasi lebih lanjut mengenai prosedur pendaftaran. Terima kasih.`;
 
-    // Buka WhatsApp dengan pesan yang sudah diformat
+    pesan += `\nMohon informasi lebih lanjut mengenai prosedur pendaftaran. Terima kasih.`;
+
+    // Buka WhatsApp
     const whatsappURL = `https://wa.me/6281268712321?text=${encodeURIComponent(pesan)}`;
     window.open(whatsappURL, '_blank');
-    
-    // Tutup modal setelah mengirim
+
     closeDaftarModal();
 }
 
-// Tutup modal jika user mengklik di luar modal
+// Tutup modal jika user klik di luar modal
 window.onclick = function(event) {
     const daftarModal = document.getElementById('daftarModal');
     if (event.target == daftarModal) {
         daftarModal.style.display = "none";
     }
-}
-
-document.getElementById("kirimWA").addEventListener("click", () => {
-    const nama = document.getElementById("nama").value;
-    const alamat = document.getElementById("alamat").value;
-    const sekolah = document.getElementById("sekolah").value;
-    const simulasi = document.getElementById("simulasi").innerText;
-
-    if (!nama || !alamat || !sekolah) {
-        alert("Harap isi Nama, Alamat, dan Sekolah!");
-        return;
-    }
-    if (!markerAsal || !markerTujuan) {
-        alert("Harap pilih Lokasi Asal dan Tujuan di peta!");
-        return;
-    }
-
-    const coordsAsal = markerAsal.getLatLng();
-    const coordsTujuan = markerTujuan.getLatLng();
-    const urlAsal = `https://www.google.com/maps?q=${coordsAsal.lat},${coordsAsal.lng}`;
-    const urlTujuan = `https://www.google.com/maps?q=${coordsTujuan.lat},${coordsTujuan.lng}`;
-
-    const pesan = `Halo, saya ingin memesan layanan antar jemput.\n\n` +
-        `*Nama Siswa:* ${nama}\n` +
-        `*Alamat Rumah:* ${alamat}\n` +
-        `*Nama Sekolah:* ${sekolah}\n\n` +
-        `*Lokasi Jemput (Asal):*\n${urlAsal}\n\n` +
-        `*Lokasi Antar (Tujuan):*\n${urlTujuan}\n\n` +
-        `*Hasil Simulasi:*\n${simulasi}`;
-
-    const url = `https://wa.me/6281268712321?text=${encodeURIComponent(pesan)}`;
-    window.open(url, "_blank");
-});
+};
 </script>

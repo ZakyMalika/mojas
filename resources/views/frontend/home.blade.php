@@ -49,7 +49,7 @@
             position: fixed;
             top: 0;
             left: -100%;
-            width: 80%;
+            width: 85%;
             height: 100vh;
             background: #ffffff;
             z-index: 1001;
@@ -57,7 +57,7 @@
             transition: all 0.4s ease;
             box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
-            padding-top: calc(70px + 1rem);
+            padding-top: calc(70px + 0.5rem);
         }
 
         .mobile-nav.active {
@@ -97,11 +97,12 @@
 
         .mobile-nav .nav-menu a {
             font-size: 1.1rem;
-            padding: 15px 0;
+            padding: 12px 0;
             display: flex;
             align-items: center;
-            gap: 15px;
-            color: #2c5530;
+            gap: 12px;
+            color: #1a4023;
+            font-weight: 500;
             text-decoration: none;
             border-bottom: 1px solid #eee;
             transition: all 0.3s ease;
@@ -192,6 +193,13 @@
 
             .hero-content h1 {
                 font-size: 3rem;
+                padding: 0 1rem;
+            }
+
+            .hero-visual img {
+                max-width: 90%;
+                margin: 0 auto;
+                display: block;
             }
         }
 
@@ -235,9 +243,9 @@
 
         @media (max-width: 768px) {
             .navbar {
-                padding: 0.8rem 0;
+                padding: 0.8rem 1rem;
             }
-            
+
             .navbar .nav-menu {
                 display: none;
             }
@@ -245,18 +253,45 @@
             .navbar .hamburger-menu {
                 display: flex;
             }
-            
+
             /* Tampilkan nav-menu khusus di mobile-nav */
             .mobile-nav .nav-menu {
                 display: flex;
             }
 
+            .mobile-nav {
+                width: 85%;
+            }
+
+            .mobile-nav .nav-menu a {
+                padding: 12px 0;
+                font-weight: 500;
+                color: #1a4023;
+                font-size: 1.1rem;
+            }
+
+            .hero-content {
+                padding: 2rem 1rem;
+            }
+
             .hero-content h1 {
                 font-size: 2.5rem;
+                margin-bottom: 1rem;
             }
 
             .hero-content p {
                 font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+
+            .hero-features {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                padding: 0 1rem;
             }
 
             .section-title h2 {
@@ -265,15 +300,19 @@
 
             .features-grid {
                 grid-template-columns: 1fr;
+                padding: 0 1rem;
+                gap: 1.5rem;
             }
 
             .pricing-card {
                 padding: 1.5rem;
+                margin: 0 1rem;
             }
 
             .modal-content {
                 padding: 20px;
                 margin: 10px;
+                max-height: 90vh;
             }
 
             .alasan-checkboxes {
@@ -282,16 +321,42 @@
 
             .map-section {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .services-grid {
                 grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .cta-buttons {
+                padding: 0 1rem;
             }
         }
 
         @media (max-width: 576px) {
             .hero-content h1 {
                 font-size: 2rem;
+                line-height: 1.3;
+                padding: 0 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+
+            .hero-feature-item {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-features {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                padding: 0 1rem;
             }
 
             .cta-buttons {
@@ -299,7 +364,7 @@
                 gap: 1rem;
             }
 
-            .btn-primary, 
+            .btn-primary,
             .btn-secondary {
                 width: 100%;
                 text-align: center;
@@ -534,6 +599,38 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(255, 140, 66, 0.4);
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary i.fa-arrow-right {
+            transition: transform 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover i.fa-arrow-right {
+            transform: translateX(3px);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50px;
+            transition: transform 0.4s ease;
+        }
+
+        .btn-primary:hover::after {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 0;
         }
 
         .btn-primary:hover {
@@ -604,6 +701,45 @@
             color: white;
             margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .hero-feature-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hero-feature-item i {
+            color: #ff8c42;
+            font-size: 1.2rem;
         }
 
         .hero-content p {
@@ -646,7 +782,7 @@
             padding-top: calc(2rem + 70px);
             margin-top: -70px;
         }
-        
+
         .section-title {
             text-align: center;
             margin-bottom: 4rem;
@@ -1440,6 +1576,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1591,11 +1728,102 @@
                 gap: 2rem;
             }
         }
+
+        /* Small Device Optimizations */
+        @media (max-width: 576px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+                padding: 0 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                padding: 0 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-feature-item {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.15);
+            }
+
+            .hero-features {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                padding: 0 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
+                font-size: 0.95rem;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .pricing-table {
+                font-size: 0.9rem;
+                margin: 0 -1rem;
+                width: calc(100% + 2rem);
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+
+            .section-title p {
+                font-size: 0.95rem;
+                padding: 0 1rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .visimisi-card {
+                padding: 1.5rem;
+            }
+
+            .visimisi-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .hero-visual img {
+                width: 85%;
+                border-radius: 15px;
+            }
+
+            .mobile-nav {
+                width: 90%;
+            }
+        }
     </style>
 </head>
 
 <body>
-        <!-- Navbar -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">
@@ -1605,7 +1833,7 @@
                     <span>MOJAS BATAM</span>
                 </div>
             </a>
-            
+
             <!-- Hamburger Menu -->
             <div class="hamburger-menu" onclick="toggleMobileMenu()">
                 <span></span>
@@ -1639,26 +1867,26 @@
     <!-- Mobile Navigation -->
     <div class="mobile-nav">
         <div class="mobile-nav-header">
-            <img src="{{ asset('images/logomojas.jpg') }}" alt="MOJAS BATAM" 
+            <img src="{{ asset('images/logomojas.jpg') }}" alt="MOJAS BATAM"
                 style="width: 80px; height: 80px; border-radius: 10px; margin-bottom: 20px;">
             <h3>MOJAS BATAM</h3>
         </div>
         <ul class="nav-menu">
             <li><a href="/" onclick="closeMobileMenu()">
-                <i class="fas fa-home"></i> Beranda
-            </a></li>
+                    <i class="fas fa-home"></i> Beranda
+                </a></li>
             <li><a href="#tarif" onclick="closeMobileMenu()">
-                <i class="fas fa-tag"></i> Tarif
-            </a></li>
+                    <i class="fas fa-tag"></i> Tarif
+                </a></li>
             <li><a href="#kerjasama" onclick="closeMobileMenu()">
-                <i class="fas fa-handshake"></i> Kerjasama
-            </a></li>
+                    <i class="fas fa-handshake"></i> Kerjasama
+                </a></li>
             <li><a href="#faq" onclick="closeMobileMenu()">
-                <i class="fas fa-question-circle"></i> FAQ
-            </a></li>
+                    <i class="fas fa-question-circle"></i> FAQ
+                </a></li>
             <li><a href="#kontak" onclick="closeMobileMenu()">
-                <i class="fas fa-phone"></i> Kontak
-            </a></li>
+                    <i class="fas fa-phone"></i> Kontak
+                </a></li>
             <li class="mobile-dropdown">
                 <a href="#" class="mobile-dropdown-toggle" onclick="toggleMobileDropdown(this)">
                     <i class="fas fa-th-list"></i> Kategori
@@ -1672,22 +1900,44 @@
                 </ul>
             </li>
             <li><a href="/login" class="admin-btn">
-                <i class="fas fa-user-shield"></i> Login
-            </a></li>
+                    <i class="fas fa-user-shield"></i> Login
+                </a></li>
         </ul>
     </div>
-    
+
     <!-- Mobile Menu Overlay -->
     <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
 
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-content" data-aos="fade-right">
-                <h1>Layanan Antar Jemput Siswa Terpercaya</h1>
-                <p>Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda di Area Batam.</p>
+                <h1>Layanan Antar Jemput<br>Siswa Terpercaya</h1>
+                <p class="hero-subtitle">Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda
+                    di Area Batam. Dipercaya oleh ratusan keluarga sejak 2024.</p>
+                <div class="hero-features">
+                    <div class="hero-feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Aman</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Tepat Waktu</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Driver Profesional</span>
+                    </div>
+                </div>
                 <div class="cta-buttons">
-                    <a href="/rental" class="btn-primary"><i class="fas fa-car"></i> Lihat Layanan</a>
-                    <a href="#kontak" class="btn-secondary"><i class="fas fa-phone"></i> Hubungi Kami</a>
+                    <a href="/rental" class="btn-primary">
+                        <i class="fas fa-car"></i>
+                        <span>Lihat Layanan</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#kontak" class="btn-secondary">
+                        <i class="fas fa-phone"></i>
+                        <span>Hubungi Kami</span>
+                    </a>
                 </div>
             </div>
 
@@ -1797,7 +2047,7 @@
             <form class="review-form" id="reviewForm" action="{{ route('reviews.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="rating" id="ratingInput" value="5">
-                
+
                 <div class="rating">
                     <i class="fas fa-star" data-rating="1"></i>
                     <i class="fas fa-star" data-rating="2"></i>
@@ -1805,15 +2055,15 @@
                     <i class="fas fa-star" data-rating="4"></i>
                     <i class="fas fa-star" data-rating="5"></i>
                 </div>
-                
+
                 <div class="form-group">
                     <input type="text" name="nama" placeholder="Nama Anda" required>
                 </div>
-                
+
                 <div class="form-group">
                     <textarea name="ulasan" rows="4" placeholder="Bagikan pengalaman Anda menggunakan layanan kami..." required></textarea>
                 </div>
-                
+
                 <button type="submit">Kirim Ulasan</button>
             </form>
 
@@ -1830,7 +2080,7 @@
                             </div>
                         </div>
                         <div class="review-rating">
-                            @for($i = 1; $i <= 5; $i++)
+                            @for ($i = 1; $i <= 5; $i++)
                                 <i class="fas fa-star {{ $i <= $review->rating ? 'filled' : '' }}"></i>
                             @endfor
                         </div>
@@ -1842,54 +2092,13 @@
                     </div>
                 @endforelse
 
-                @if($reviews->count() >= 6)
+                @if ($reviews->count() >= 6)
                     <div class="load-more-reviews">
                         <button type="button" id="loadMoreReviews" class="btn-load-more">
                             Lihat Ulasan Lainnya
                         </button>
                     </div>
                 @endif
-            </div>
-                {{-- <div class="review-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="review-card-header">
-                        <div class="reviewer-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="reviewer-info">
-                            <h4>Siti Rahayu</h4>
-                            <span class="review-date">25 September 2025</span>
-                        </div>
-                    </div>
-                    <div class="review-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="review-content">"Pelayanan terbaik! Armada selalu bersih dan nyaman. Sistem pemantauan sangat membantu untuk memantau perjalanan anak."</p>
-                </div> --}}
-
-                <!-- Contoh Ulasan 3 -->
-                {{-- <div class="review-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="review-card-header">
-                        <div class="reviewer-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="reviewer-info">
-                            <h4>Budi Santoso</h4>
-                            <span class="review-date">20 September 2025</span>
-                        </div>
-                    </div>
-                    <div class="review-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="review-content">"Sudah 2 tahun menggunakan jasa MOJAS BATAM dan tidak pernah mengecewakan. Sangat recommended untuk para orang tua!"</p>
-                </div> --}}
             </div>
         </div>
     </section>
@@ -1949,69 +2158,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         // Mobile Menu Functions
-function toggleMobileMenu() {
-    const hamburger = document.querySelector('.hamburger-menu');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const overlay = document.querySelector('.mobile-overlay');
-    
-    hamburger.classList.toggle('active');
-    mobileNav.classList.toggle('active');
-    overlay.classList.toggle('active');
-    
-    // Prevent body scrolling when menu is open
-    if (mobileNav.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
-}
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const overlay = document.querySelector('.mobile-overlay');
 
-function closeMobileMenu() {
-    const hamburger = document.querySelector('.hamburger-menu');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const overlay = document.querySelector('.mobile-overlay');
-    
-    hamburger.classList.remove('active');
-    mobileNav.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            overlay.classList.toggle('active');
 
-// Close mobile menu when window is resized to desktop size
-window.addEventListener('resize', function() {
-    if (window.innerWidth > 768) {
-        closeMobileMenu();
-    }
-});
-
-// Mobile dropdown toggle
-function toggleMobileDropdown(element) {
-    event.preventDefault();
-    const dropdownMenu = element.nextElementSibling;
-    const dropdownIcon = element.querySelector('.fa-chevron-down');
-    
-    // Toggle the active class on the dropdown menu
-    dropdownMenu.classList.toggle('active');
-    element.classList.toggle('active');
-    
-    // Close other open dropdowns
-    const allDropdowns = document.querySelectorAll('.mobile-dropdown-menu');
-    const allToggles = document.querySelectorAll('.mobile-dropdown-toggle');
-    
-    allDropdowns.forEach(dropdown => {
-        if (dropdown !== dropdownMenu && dropdown.classList.contains('active')) {
-            dropdown.classList.remove('active');
+            // Prevent body scrolling when menu is open
+            if (mobileNav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         }
-    });
-    
-    allToggles.forEach(toggle => {
-        if (toggle !== element && toggle.classList.contains('active')) {
-            toggle.classList.remove('active');
-        }
-    });
-}
 
-document.addEventListener("DOMContentLoaded", function() {
+        function closeMobileMenu() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const overlay = document.querySelector('.mobile-overlay');
+
+            hamburger.classList.remove('active');
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close mobile menu when window is resized to desktop size
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
+
+        // Mobile dropdown toggle
+        function toggleMobileDropdown(element) {
+            event.preventDefault();
+            const dropdownMenu = element.nextElementSibling;
+            const dropdownIcon = element.querySelector('.fa-chevron-down');
+
+            // Toggle the active class on the dropdown menu
+            dropdownMenu.classList.toggle('active');
+            element.classList.toggle('active');
+
+            // Close other open dropdowns
+            const allDropdowns = document.querySelectorAll('.mobile-dropdown-menu');
+            const allToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+
+            allDropdowns.forEach(dropdown => {
+                if (dropdown !== dropdownMenu && dropdown.classList.contains('active')) {
+                    dropdown.classList.remove('active');
+                }
+            });
+
+            allToggles.forEach(toggle => {
+                if (toggle !== element && toggle.classList.contains('active')) {
+                    toggle.classList.remove('active');
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
 
             AOS.init({
                 duration: 800,
@@ -2223,7 +2432,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Form submission
                 document.getElementById('reviewForm').addEventListener('submit', function(e) {
                     e.preventDefault();
-                    
+
                     if (selectedRating === 0) {
                         alert('Mohon berikan rating bintang!');
                         return;
@@ -2231,70 +2440,80 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // Set rating value ke hidden input
                     document.getElementById('ratingInput').value = selectedRating;
-                    
+
                     // Ambil data form
                     const formData = new FormData(this);
                     const nama = formData.get('nama');
                     const ulasan = formData.get('ulasan');
                     const rating = selectedRating;
-                    
+
                     // Kirim via AJAX
                     fetch(this.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Gunakan data review dari server
-                            const reviewData = data.review;
-                            const newReviewHtml = createReviewElement(
-                                reviewData.nama, 
-                                reviewData.ulasan, 
-                                reviewData.rating, 
-                                reviewData.formatted_date
-                            );
-                            
-                            // Cari container reviews
-                            const reviewsContainer = document.getElementById('reviewsDisplay');
-                            const noReviewsMessage = reviewsContainer.querySelector('.no-reviews');
-                            
-                            // Hapus pesan "belum ada ulasan" jika ada
-                            if (noReviewsMessage) {
-                                noReviewsMessage.remove();
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
                             }
-                            
-                            // Tambahkan review baru di bagian atas
-                            reviewsContainer.insertAdjacentHTML('afterbegin', newReviewHtml);
-                            
-                            // Reset form
-                            this.reset();
-                            selectedRating = 0;
-                            updateStars(0);
-                            
-                            // Tampilkan notifikasi sukses
-                            showSuccessNotification('Terima kasih atas ulasan Anda! Ulasan berhasil ditambahkan.');
-                            
-                            // Scroll ke review yang baru ditambahkan
-                            setTimeout(() => {
-                                const newReview = reviewsContainer.querySelector('.review-card');
-                                newReview.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                newReview.style.border = '2px solid #4CAF50';
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Gunakan data review dari server
+                                const reviewData = data.review;
+                                const newReviewHtml = createReviewElement(
+                                    reviewData.nama,
+                                    reviewData.ulasan,
+                                    reviewData.rating,
+                                    reviewData.formatted_date
+                                );
+
+                                // Cari container reviews
+                                const reviewsContainer = document.getElementById(
+                                    'reviewsDisplay');
+                                const noReviewsMessage = reviewsContainer.querySelector(
+                                    '.no-reviews');
+
+                                // Hapus pesan "belum ada ulasan" jika ada
+                                if (noReviewsMessage) {
+                                    noReviewsMessage.remove();
+                                }
+
+                                // Tambahkan review baru di bagian atas
+                                reviewsContainer.insertAdjacentHTML('afterbegin',
+                                newReviewHtml);
+
+                                // Reset form
+                                this.reset();
+                                selectedRating = 0;
+                                updateStars(0);
+
+                                // Tampilkan notifikasi sukses
+                                showSuccessNotification(
+                                    'Terima kasih atas ulasan Anda! Ulasan berhasil ditambahkan.'
+                                    );
+
+                                // Scroll ke review yang baru ditambahkan
                                 setTimeout(() => {
-                                    newReview.style.border = '';
-                                }, 3000);
-                            }, 100);
-                        } else {
-                            alert('Terjadi kesalahan: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat menyimpan ulasan. Silakan coba lagi.');
-                    });
+                                    const newReview = reviewsContainer.querySelector(
+                                        '.review-card');
+                                    newReview.scrollIntoView({
+                                        behavior: 'smooth',
+                                        block: 'center'
+                                    });
+                                    newReview.style.border = '2px solid #4CAF50';
+                                    setTimeout(() => {
+                                        newReview.style.border = '';
+                                    }, 3000);
+                                }, 100);
+                            } else {
+                                alert('Terjadi kesalahan: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert(
+                            'Terjadi kesalahan saat menyimpan ulasan. Silakan coba lagi.');
+                        });
                 });
 
                 // Fungsi untuk membuat elemen review baru
@@ -2303,7 +2522,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     for (let i = 1; i <= 5; i++) {
                         starsHtml += `<i class="fas fa-star ${i <= rating ? 'filled' : ''}"></i>`;
                     }
-                    
+
                     return `
                         <div class="review-card new-review" data-aos="fade-up">
                             <div class="review-card-header">
@@ -2334,7 +2553,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <span>${message}</span>
                         </div>
                     `;
-                    
+
                     // Style notifikasi
                     notification.style.cssText = `
                         position: fixed;
@@ -2350,15 +2569,15 @@ document.addEventListener("DOMContentLoaded", function() {
                         transition: transform 0.3s ease;
                         max-width: 350px;
                     `;
-                    
+
                     // Tambahkan ke body
                     document.body.appendChild(notification);
-                    
+
                     // Animasi masuk
                     setTimeout(() => {
                         notification.style.transform = 'translateX(0)';
                     }, 100);
-                    
+
                     // Hapus setelah 5 detik
                     setTimeout(() => {
                         notification.style.transform = 'translateX(400px)';
