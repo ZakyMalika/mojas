@@ -237,6 +237,38 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(255, 140, 66, 0.4);
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary i.fa-arrow-right {
+            transition: transform 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover i.fa-arrow-right {
+            transform: translateX(3px);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50px;
+            transition: transform 0.4s ease;
+        }
+
+        .btn-primary:hover::after {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 0;
         }
 
         .btn-primary:hover {
@@ -827,6 +859,144 @@
             padding: 15px;
             margin-top: 15px;
             font-size: 1.1rem;
+        }
+
+        /* === MODAL PENDAFTARAN === */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c5530;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5530;
+            box-shadow: 0 0 0 2px rgba(44, 85, 48, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+
+        /* Styling untuk modal pendaftaran */
+        .daftar-modal .modal-content {
+            max-width: 600px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .registration-form {
+            padding: 30px;
+        }
+
+        .registration-form .modal-header {
+            border-bottom: 2px solid #2c5530;
+            margin-bottom: 25px;
+        }
+
+        .registration-form .modal-header h2 {
+            color: #2c5530;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .registration-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        .registration-form label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2c5530;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .registration-form label i {
+            color: #ff8c42;
+        }
+
+        .registration-form input,
+        .registration-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .registration-form input:focus,
+        .registration-form textarea:focus {
+            border-color: #2c5530;
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+            outline: none;
+        }
+
+        .textarea-counter {
+            text-align: right;
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background: #25D366 !important;
+            color: white !important;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #128C7E !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+        }
+
+        /* Animasi untuk modal */
+        .daftar-modal {
+            animation: modalFade 0.3s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* === RESPONSIVE STYLES === */

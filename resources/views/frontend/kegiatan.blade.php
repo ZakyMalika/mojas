@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Kegiatan Mojas</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
     <style>
 /* == STYLING UNTUK SECTION KEGIATAN == */
         .kegiatan-section {
@@ -203,6 +207,38 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(255, 140, 66, 0.4);
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary i.fa-arrow-right {
+            transition: transform 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover i.fa-arrow-right {
+            transform: translateX(3px);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50px;
+            transition: transform 0.4s ease;
+        }
+
+        .btn-primary:hover::after {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 0;
         }
 
         .btn-primary:hover {
@@ -225,6 +261,319 @@
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.3);
             border-color: white;
+        }
+
+        /* === PRICING SECTION === */
+        .pricing {
+            padding: 6rem 0;
+            background: #f8f9fa;
+            /* Changed background for alternating colors */
+        }
+
+        .pricing-wrapper {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pricing-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            color: #2c5530;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-table th,
+        .pricing-table td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: center;
+        }
+
+        .pricing-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .pricing-card .pricing-subtitle {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-top: -10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .pricing-card .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto 30px auto;
+            text-align: left;
+            max-width: 400px;
+        }
+
+        .pricing-card .features-list li {
+            margin-bottom: 12px;
+        }
+
+        .pricing-card .table-heading {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #343a40;
+            text-align: center;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+            margin: 60px 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* === MODAL === */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c5530;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5530;
+            box-shadow: 0 0 0 2px rgba(44, 85, 48, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+
+        /* Styling untuk modal pendaftaran */
+        .daftar-modal .modal-content {
+            max-width: 600px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .registration-form {
+            padding: 30px;
+        }
+
+        .registration-form .modal-header {
+            border-bottom: 2px solid #2c5530;
+            margin-bottom: 25px;
+        }
+
+        .registration-form .modal-header h2 {
+            color: #2c5530;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .registration-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        .registration-form label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2c5530;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .registration-form label i {
+            color: #ff8c42;
+        }
+
+        .registration-form input,
+        .registration-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .registration-form input:focus,
+        .registration-form textarea:focus {
+            border-color: #2c5530;
+            box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.1);
+            outline: none;
+        }
+
+        .textarea-counter {
+            text-align: right;
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background: #25D366 !important;
+            color: white !important;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: #128C7E !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+        }
+
+        /* Animasi untuk modal */
+        .daftar-modal {
+            animation: modalFade 0.3s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #2c5530;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-section label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-section input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -293,7 +642,7 @@
     </section>
 </main>
 
- <x-dashboard.tarif />
+    <x-dashboard.tarif />
 
     <x-dashboard.kerjasama />
     <hr style="margin: 0; border: none; height: 3px; background: #eee; margin-left: 100px; margin-right: 100px;">
@@ -304,6 +653,19 @@
     <x-dashboard.kontak />
 
     <x-dashboard.footer />
+
+    <!-- AOS Animation Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        document.addEventListener("DOMContentLoaded", function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
 
 </body>
 </html>
