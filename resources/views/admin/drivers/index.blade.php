@@ -12,9 +12,6 @@
                      <a href="{{ route('admin.drivers.index') }}" class="btn btn-secondary btn-sm">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
-                    <a href="{{ route('admin.drivers.edit', $item) }}" class="btn btn-warning btn-sm">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
                 </div>
             </div>
             <!-- /.card-header -->

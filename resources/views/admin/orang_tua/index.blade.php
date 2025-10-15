@@ -8,11 +8,6 @@
         <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">Daftar Orang Tua</h3>
-                <div class="card-tools">
-                    <a href="{{ route('admin.orang_tua.create') }}" class="btn btn-primary btn-sm">
-                        <i class="fas fa-plus"></i> Tambah Orang Tua
-                    </a>
-                </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -42,14 +37,15 @@
                                     <th>No. Telepon</th>
                                     <th>Alamat</th>
                                     <th>Jumlah Anak</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($items as $key => $item)
                                 <tr>
                                     <td>{{ $items->firstItem() + $key }}</td>
-                                    <td>{{ $item->user->name ?? 'N/A' }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.orang_tua.show', $item) }}">{{ $item->user->name ?? 'N/A' }}</a>
+                                    </td>
                                     <td>{{ $item->user->email ?? 'N/A' }}</td>
                                     <td>{{ $item->user->no_telp ?? 'N/A' }}</td>
                                     <td>{{ Str::limit($item->alamat, 50) ?? '-' }}</td>
@@ -57,22 +53,6 @@
                                         <span class="badge badge-info">
                                             {{ $item->anak->count() }} anak
                                         </span>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.orang_tua.show', $item) }}" class="btn btn-info btn-sm">
-                                            <i class="fas fa-eye"></i> Detail
-                                        </a>
-                                        <a href="{{ route('admin.orang_tua.edit', $item) }}" class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                        <form action="{{ route('admin.orang_tua.destroy', $item) }}" method="POST" class="d-inline"
-                                              onsubmit="return confirm('PERHATIAN: Menghapus orang tua ini akan gagal jika masih ada data terkait (anak, booking, pembayaran). Apakah Anda yakin ingin melanjutkan?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </button>
-                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -93,8 +73,7 @@
                 @else
                     <div class="text-center py-4">
                         <i class="fas fa-users fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">Belum ada data orang tua</h5>
-                        <p class="text-muted">Klik tombol "Tambah Orang Tua" untuk menambah data baru.</p>
+                        <h5 class="text-muted">Tidak ada data orang tua yang tersedia.</h5>
                     </div>
                 @endif
             </div>
