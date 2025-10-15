@@ -43,7 +43,7 @@
 
                     <div class="form-group">
                         <label for="tarif_id">Jarak Rumah ke Sekolah (KM)</label>
-                        <select class="form-control @error('tarif_id') is-invalid @enderror" id="tarif_id" name="tarif_idq" required>
+                        <select class="form-control @error('tarif_id') is-invalid @enderror" id="tarif_id" name="tarif_id" required>
                             <option value="">Pilih Jarak</option>
                             @foreach($tarifList as $tarif)
                                 <option value="{{ $tarif->id }}" {{ old('tarif_id') == $tarif->id ? 'selected' : '' }}>{{ $tarif->min_distance_km }} - {{ $tarif->max_distance_km }} KM</option>
@@ -68,8 +68,7 @@
                          @error('periode_mulai') <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span> @enderror
                     </div>
 
-                    {{-- Field ini seharusnya dihitung otomatis, namun disertakan sesuai validasi controller --}}
-                    <input type="hidden" name="tarif_id" value="1">
+                    {{-- Hidden fields for default values --}}
                     <input type="hidden" name="tarif_bulanan" value="300000">
                     <input type="hidden" name="status" value="pending">
                 </div>

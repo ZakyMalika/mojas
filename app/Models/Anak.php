@@ -16,7 +16,7 @@ class Anak extends Model
 
     public function orangTua()
     {
-        return $this->belongsTo(Orang_tua::class);
+        return $this->belongsTo(Orang_tua::class, 'orang_tua_id');
     }
 
     public function jadwal_antar_jemput()

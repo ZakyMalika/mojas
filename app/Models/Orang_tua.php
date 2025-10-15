@@ -21,7 +21,7 @@ class Orang_tua extends Model
 
     public function anak()
     {
-        return $this->hasMany(Anak::class);
+        return $this->hasMany(Anak::class, 'orang_tua_id');
     }
 
     public function pembayaran()

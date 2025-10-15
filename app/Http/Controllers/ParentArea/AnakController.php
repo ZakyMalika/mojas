@@ -23,7 +23,12 @@ class AnakController extends Controller
 
     public function create()
     {
-        return view('parent.anak.create');
+        $parent = Auth::user()->orangTua;
+        abort_if(! $parent, 403);
+        $items = Anak::with(['orangTua', 'jadwal_antar_jemput', 'pendaftaran_anak'])
+            ->where('orang_tua_id', $parent->id)
+            ->get();
+        return view('parent.anak.create', compact('items'));
     }
 
     public function store(Request $request)
