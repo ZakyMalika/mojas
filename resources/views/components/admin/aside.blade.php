@@ -138,7 +138,7 @@
                 @elseif(Auth::user()->role == 'pengemudi')
                     <li class="nav-item">
                         {{-- Pastikan Anda menamai route '/driver' di web.php, contoh: ->name('driver.dashboard') --}}
-                        <a href="/driver" class="nav-link">
+                        <a href="/pengemudiCan I be? Play Karna FM. OK. I. Or. Hello. I think. Kombke Ki kuliya kamai MMM. The Mao Mongayan. Hey, Cortana. Yeah. Chhattisgarh. Prokh Abdi ustas. The. " class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
@@ -168,8 +168,8 @@
                 {{-- ================================================= --}}
                 @elseif(Auth::user()->role == 'orang_tua')
                     <li class="nav-item">
-                        {{-- Pastikan Anda menamai route '/parent' di web.php, contoh: ->name('parent.dashboard') --}}
-                        <a href="/parent" class="nav-link">
+                        {{-- Pastikan Anda menamai route '/orang_tua' di web.php, contoh: ->name('orang_tua.dashboard') --}}
+                        <a href="/orang_tua" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
