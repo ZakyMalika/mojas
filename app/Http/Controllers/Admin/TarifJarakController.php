@@ -62,18 +62,27 @@ class TarifJarakController extends Controller
     public function update(Request $request, Tarif_jarak $tarif_jarak)
     {
         $data = $request->validate([
-            'min_distance_km' => ['numeric'],
-            'max_distance_km' => ['numeric'],
-            'tarif_one_way' => ['required', 'numeric'],
-            'tarif_two_way' => ['required', 'numeric'],
-            'tarif_per_km' => ['required', 'numeric'],
+            'min_distance_km' => ['required', 'numeric', 'min:0'],
+            'max_distance_km' => ['required', 'numeric', 'min:0', 'gt:min_distance_km'],
+            'tarif_one_way' => ['required', 'numeric', 'min:0'],
+            'tarif_two_way' => ['required', 'numeric', 'min:0', 'gt:tarif_one_way'],
+            'tarif_per_km' => ['required', 'numeric', 'min:0'],
+        ], [
+            'max_distance_km.gt' => 'Jarak maksimal harus lebih besar dari jarak minimal',
+            'tarif_two_way.gt' => 'Tarif two way harus lebih besar dari tarif one way'
         ]);
-        $tarif_jarak->update($data);
 
-        return redirect()->route('admin.tarif-jarak.show', $tarif_jarak);
-    }
-
-    public function destroy(Tarif_jarak $tarif_jarak)
+        try {
+            $tarif_jarak->update($data);
+            return redirect()
+                ->route('admin.tarif-jarak.index')
+                ->with('success', 'Tarif jarak berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return back()
+                ->withInput()
+                ->with('error', 'Gagal memperbarui tarif jarak: ' . $e->getMessage());
+        }
+    }    public function destroy(Tarif_jarak $tarif_jarak)
     {
         $tarif_jarak->delete();
 

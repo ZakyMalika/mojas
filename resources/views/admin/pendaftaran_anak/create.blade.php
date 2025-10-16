@@ -52,7 +52,7 @@
                         <select class="form-control @error('tarif_id') is-invalid @enderror" name="tarif_id" id="tarif_id">
                             <option value="">Pilih Tarif Berdasarkan Jarak</option>
                             @foreach($tarifs as $tarif) <option value="{{ $tarif->id }}">{{ $tarif->min_distance_km }} - {{ $tarif->max_distance_km }} KM</option> @endforeach
-                            <option value="1">Contoh: 0 - 5 KM</option>
+                            
                         </select>
                         @error('tarif_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                     </div>

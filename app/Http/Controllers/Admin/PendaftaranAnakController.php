@@ -89,11 +89,15 @@ class PendaftaranAnakController extends Controller
     public function edit(Pendaftaran_anak $pendaftaran_anak)
     {
         $pendaftaran_anak->load(['anak', 'tarif_jarak', 'school']);
-        $schools = School::where('has_partnership', true)->where('is_active', true)->get();
+        $schools = School::where('has_partnership', true)
+                        ->where('is_active', true)
+                        ->get();
+        $tarifs = Tarif_jarak::orderBy('min_distance_km')->get();
 
         return view('admin.pendaftaran_anak.edit', [
             'item' => $pendaftaran_anak,
-            'schools' => $schools
+            'schools' => $schools,
+            'tarifs' => $tarifs
         ]);
     }
 

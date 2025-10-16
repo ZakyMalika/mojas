@@ -48,7 +48,19 @@
                      <div class="form-group">
                         <label for="tarif_id">Tarif Jarak</label>
                         <select class="form-control @error('tarif_id') is-invalid @enderror" name="tarif_id" id="tarif_id">
-                           <option value="{{ $item->tarif_id }}" selected>{{ $item->tarif_jarak->min_distance_km ?? 'N/A' }} - {{ $item->tarif_jarak->max_distance_km ?? 'N/A' }} KM</option>
+                            <option value="">Pilih Tarif Jarak</option>
+                            @foreach($tarifs ?? [] as $tarif)
+                                <option value="{{ $tarif->id }}" 
+                                        data-min="{{ $tarif->min_distance_km }}"
+                                        data-max="{{ $tarif->max_distance_km }}"
+                                        data-one-way="{{ $tarif->tarif_one_way }}"
+                                        data-two-way="{{ $tarif->tarif_two_way }}"
+                                        data-per-km="{{ $tarif->tarif_per_km }}"
+                                        {{ old('tarif_id', $item->tarif_id) == $tarif->id ? 'selected' : '' }}>
+                                    {{ $tarif->min_distance_km }} - {{ $tarif->max_distance_km }} KM 
+                                    (One Way: Rp{{ number_format($tarif->tarif_one_way, 0, ',', '.') }})
+                                </option>
+                            @endforeach
                         </select>
                         @error('tarif_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                     </div>
@@ -56,7 +68,18 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="jarak_km">Jarak Tempuh (KM)</label>
-                                <input type="number" step="0.1" class="form-control @error('jarak_km') is-invalid @enderror" name="jarak_km" id="jarak_km" value="{{ old('jarak_km', $item->jarak_km) }}">
+                                <div class="input-group">
+                                    <input type="number" 
+                                           step="0.1" 
+                                           class="form-control @error('jarak_km') is-invalid @enderror" 
+                                           name="jarak_km" 
+                                           id="jarak_km" 
+                                           value="{{ old('jarak_km', $item->jarak_km) }}"
+                                           min="0">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">KM</span>
+                                    </div>
+                                </div>
                                 @error('jarak_km')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
@@ -134,6 +157,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    function calculateTarif() {
+        const selectedTarif = tarifSelect.options[tarifSelect.selectedIndex];
+        const jarak = parseFloat(jarakInput.value) || 0;
+        const tipeLayanan = tipeLayananSelect.value;
+        
+        if (selectedTarif && selectedTarif.value && jarak > 0) {
+            const minJarak = parseFloat(selectedTarif.dataset.min);
+            const maxJarak = parseFloat(selectedTarif.dataset.max);
+            
+            if (jarak >= minJarak && jarak <= maxJarak) {
+                let baseTarif = tipeLayanan === 'two_way' ? 
+                    parseFloat(selectedTarif.dataset.twoWay) : 
+                    parseFloat(selectedTarif.dataset.oneWay);
+                
+                // Tambahan tarif per KM jika melebihi jarak minimum
+                if (jarak > minJarak) {
+                    const extraKm = jarak - minJarak;
+                    const extraCharge = extraKm * parseFloat(selectedTarif.dataset.perKm);
+                    baseTarif += extraCharge;
+                }
+                
+                tarifBulananInput.value = Math.round(baseTarif);
+            }
+        }
+    }
+    
     function updateTarifBasedOnSchool() {
         const selectedOption = schoolSelect.options[schoolSelect.selectedIndex];
         
@@ -164,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleFields(false);
             tarifBulananInput.readOnly = false;
             tarifBulananInput.classList.remove('bg-light');
+            calculateTarif(); // Hitung ulang tarif jika ada
         }
     }
     
@@ -172,6 +222,20 @@ document.addEventListener('DOMContentLoaded', function() {
     tipeLayananSelect.addEventListener('change', function() {
         if (schoolSelect.value) {
             updateTarifBasedOnSchool();
+        } else {
+            calculateTarif();
+        }
+    });
+    
+    jarakInput.addEventListener('input', function() {
+        if (!schoolSelect.value) {
+            calculateTarif();
+        }
+    });
+    
+    tarifSelect.addEventListener('change', function() {
+        if (!schoolSelect.value) {
+            calculateTarif();
         }
     });
     
