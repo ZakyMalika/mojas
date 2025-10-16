@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->string('booking_code')->unique();
-            $table->foreignId('orang_tua_id')->constrained('orang_tua');
-            $table->foreignId('school_id')->nullable()->constrained('schools');
-            $table->foreignId('rental_service_id')->nullable()->constrained('rental_services');
+            $table->foreignId('orang_tua_id')->constrained('orang_tua')->onDelete('cascade');
+            $table->foreignId('school_id')->nullable()->constrained('schools')->onDelete('cascade');
+            $table->foreignId('rental_service_id')->nullable()->constrained('rental_services')->onDelete('cascade');
             $table->enum('service_type', ['school_transport', 'rental', 'general']);
             $table->enum('trip_type', ['one_way', 'two_way'])->default('one_way');
             $table->json('children_ids')->nullable(); // array of anak IDs
