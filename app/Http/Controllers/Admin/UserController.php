@@ -10,7 +10,20 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::with(['driver', 'orangTua'])->paginate(15);
+        $query = User::with(['driver', 'orangTua']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('username', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('no_telp', 'like', "%{$search}%");
+            });
+        }
+        
+        $users = $query->latest()->paginate(15)->withQueryString();
         return view('admin.users.index', compact('users')); 
     }
     public function show(User $user)

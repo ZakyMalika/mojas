@@ -26,17 +26,31 @@
                     </div>
                 @endif
 
+                <!-- Search Form -->
+                <div class="mb-3">
+                    <form action="{{ route('admin.orang_tua.index') }}" method="GET" class="form-inline justify-content-end">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Cari orang tua..." value="{{ request('search') }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 @if($items->count() > 0)
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Email</th>
-                                    <th>No. Telepon</th>
-                                    <th>Alamat</th>
-                                    <th>Jumlah Anak</th>
+                                    <th style="width: 5%">No</th>
+                                    <th style="width: 20%">Nama</th>
+                                    <th style="width: 20%">Email</th>
+                                    <th style="width: 15%">No. Telepon</th>
+                                    <th style="width: 25%">Alamat</th>
+                                    <th style="width: 15%">Jumlah Anak</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,12 +76,12 @@
                     
                     <!-- Pagination -->
                     <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div>
+                        <div class="text-muted">
                             Menampilkan {{ $items->firstItem() }} sampai {{ $items->lastItem() }} 
                             dari {{ $items->total() }} total data
                         </div>
                         <div>
-                            {{ $items->links() }}
+                            {{ $items->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 @else

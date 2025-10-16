@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rental Car</title>
+        <link rel="icon" type="image/png" href="{{ asset('images/logomojas.jpg') }}">
+
      <style>
          /* === NAVBAR === */
         .navbar {
@@ -482,7 +484,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Ganti dengan nomor WhatsApp tujuan Anda (gunakan format internasional tanpa '+' atau '0')
     // Contoh: 6281234567890 untuk nomor Indonesia
-    const whatsAppNumber = '6282371562766'; 
+    const whatsAppNumber = '6281268712321';
 
     const bookingForm = document.getElementById('bookingForm');
 
