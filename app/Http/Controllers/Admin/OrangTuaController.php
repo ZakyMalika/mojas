@@ -11,8 +11,22 @@ class OrangTuaController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Orang_tua::with(['user', 'anak', 'pembayaran'])->paginate($perPage)->appends($request->query());
+        $query = Orang_tua::with(['user', 'anak', 'pembayaran']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->whereHas('user', function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('no_telp', 'like', "%{$search}%");
+            })->orWhere('alamat', 'like', "%{$search}%");
+        }
+
+        $perPage = 15; // Konsisten menggunakan 15 item per halaman
+        $items = $query->latest()
+                      ->paginate($perPage)
+                      ->withQueryString(); // Mempertahankan parameter URL saat paginasi
 
         return view('admin.orang_tua.index', compact('items'));
     }
