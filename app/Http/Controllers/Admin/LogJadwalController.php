@@ -10,8 +10,25 @@ class LogJadwalController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Log_Jadwal::with(['jadwal', 'driver'])->paginate($perPage)->appends($request->query());
+        $query = Log_Jadwal::with(['jadwal', 'driver']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('status_lama', 'like', "%{$search}%")
+                  ->orWhere('status_baru', 'like', "%{$search}%")
+                  ->orWhere('keterangan', 'like', "%{$search}%")
+                  ->orWhereHas('driver.user', function($subQuery) use ($search) {
+                      $subQuery->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('jadwal.anak', function($subQuery) use ($search) {
+                      $subQuery->where('nama', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
+        $items = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.log_jadwal.index', compact('items'));
     }

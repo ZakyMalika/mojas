@@ -12,8 +12,24 @@ class PembayaranController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Pembayaran::with(['pendaftaran_anak', 'orang_tua'])->paginate($perPage)->appends($request->query());
+        $query = Pembayaran::with(['pendaftaran_anak', 'orang_tua']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('status', 'like', "%{$search}%")
+                  ->orWhere('metode_pembayaran', 'like', "%{$search}%")
+                  ->orWhereHas('orang_tua.user', function($subQuery) use ($search) {
+                      $subQuery->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('pendaftaran_anak.anak', function($subQuery) use ($search) {
+                      $subQuery->where('nama', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
+        $items = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.pembayaran.index', compact('items'));
     }

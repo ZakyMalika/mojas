@@ -11,9 +11,22 @@ class AnakController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Anak::with(['orangTua', 'jadwal_antar_jemput', 'pendaftaran_anak'])
-            ->paginate($perPage)->appends($request->query());
+        $query = Anak::with(['orangTua', 'jadwal_antar_jemput', 'pendaftaran_anak']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('kelas', 'like', "%{$search}%")
+                  ->orWhere('sekolah', 'like', "%{$search}%")
+                  ->orWhereHas('orangTua.user', function($subQuery) use ($search) {
+                      $subQuery->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
+        $items = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.anak.index', compact('items'));
     }

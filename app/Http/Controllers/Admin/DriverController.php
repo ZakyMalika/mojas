@@ -11,9 +11,23 @@ class DriverController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Driver::with(['user', 'jadwal_antar_jemput', 'penghasilan_driver'])
-            ->paginate($perPage)->appends($request->query());
+        $query = Driver::with(['user', 'jadwal_antar_jemput', 'penghasilan_driver']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('nomor_plat', 'like', "%{$search}%")
+                  ->orWhere('jenis_kendaraan', 'like', "%{$search}%")
+                  ->orWhere('warna_kendaraan', 'like', "%{$search}%")
+                  ->orWhereHas('user', function($subQuery) use ($search) {
+                      $subQuery->where('name', 'like', "%{$search}%")
+                               ->orWhere('no_telp', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
+        $items = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.drivers.show', compact('items')); // Menggunakan show.blade.php untuk list
     }

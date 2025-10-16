@@ -13,8 +13,24 @@ class PendaftaranAnakController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Pendaftaran_anak::with(['anak', 'tarif_jarak', 'school'])->paginate($perPage)->appends($request->query());
+        $query = Pendaftaran_anak::with(['anak', 'tarif_jarak', 'school']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('status', 'like', "%{$search}%")
+                  ->orWhere('tipe_layanan', 'like', "%{$search}%")
+                  ->orWhereHas('anak', function($subQuery) use ($search) {
+                      $subQuery->where('nama', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('anak.orangTua.user', function($subQuery) use ($search) {
+                      $subQuery->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
+        $items = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.pendaftaran_anak.index', compact('items'));
     }

@@ -13,8 +13,23 @@ class PenghasilanDriverController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Penghasilan_driver::with(['driver', 'jadwal'])->paginate($perPage)->appends($request->query());
+        $query = Penghasilan_driver::with(['driver', 'jadwal']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('status', 'like', "%{$search}%")
+                  ->orWhereHas('driver.user', function($subQuery) use ($search) {
+                      $subQuery->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('jadwal.anak', function($subQuery) use ($search) {
+                      $subQuery->where('nama', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
+        $items = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.penghasilan.index', compact('items'));
     }

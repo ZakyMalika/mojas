@@ -26,28 +26,44 @@
                     </div>
                 @endif
 
-                <table id="pendaftaran-table" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Anak</th>
-                            <th>Kemitraan Sekolah</th>
-                            <th>Tipe Layanan</th>
-                            <th>Tarif Bulanan</th>
-                            <th>Periode</th>
-                            <th>Status</th>
-                            <th style="width: 20%;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($items as $item)
-                            <tr>
-                                <td>{{ $item->id }}</td>
-                                <td>{{ $item->anak->nama ?? 'N/A' }}</td>
-                                <td>
-                                    @if($item->school_id && $item->school)
-                                        <span class="badge bg-success">
-                                            <i class="fas fa-school"></i> {{ $item->school->name }}
+                <!-- Search Form -->
+                <div class="mb-3">
+                    <form action="{{ route('admin.pendaftaran-anak.index') }}" method="GET" class="form-inline justify-content-end">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Cari pendaftaran..." value="{{ request('search') }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                @if($items->count() > 0)
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Anak</th>
+                                    <th>Kemitraan Sekolah</th>
+                                    <th>Tipe Layanan</th>
+                                    <th>Tarif Bulanan</th>
+                                    <th>Periode</th>
+                                    <th>Status</th>
+                                    <th style="width: 20%;">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($items as $key => $item)
+                                    <tr>
+                                        <td>{{ $items->firstItem() + $key }}</td>
+                                        <td>{{ $item->anak->nama ?? 'N/A' }}</td>
+                                        <td>
+                                            @if($item->school_id && $item->school)
+                                                <span class="badge bg-success">
+                                                    <i class="fas fa-school"></i> {{ $item->school->name }}
                                         </span>
                                         <br><small class="text-muted">Rp{{ number_format($item->school->partnership_rate, 0, ',', '.') }}/hari</small>
                                     @else
@@ -86,11 +102,27 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr><td colspan="8" class="text-center">Belum ada data pendaftaran.</td></tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="text-muted">
+                            Menampilkan {{ $items->firstItem() }} sampai {{ $items->lastItem() }} 
+                            dari {{ $items->total() }} total data
+                        </div>
+                        <div>
+                            {{ $items->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
+                @else
+                    <div class="text-center py-4">
+                        <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Belum ada data pendaftaran.</h5>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

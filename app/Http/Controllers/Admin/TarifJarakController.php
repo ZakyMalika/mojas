@@ -10,8 +10,20 @@ class TarifJarakController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Tarif_jarak::with(['pendaftaran_anak'])->paginate($perPage)->appends($request->query());
+        $query = Tarif_jarak::with(['pendaftaran_anak']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('description', 'like', "%{$search}%")
+                  ->orWhere('rounding_rule', 'like', "%{$search}%")
+                  ->orWhere('min_distance_km', 'like', "%{$search}%")
+                  ->orWhere('max_distance_km', 'like', "%{$search}%");
+            });
+        }
+        
+        $items = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.tarif_jarak.index', compact('items'));
     }

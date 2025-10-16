@@ -10,8 +10,26 @@ class JadwalAntarJemputController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
-        $items = Jadwal_antar_jemput::with(['anak', 'driver'])->paginate($perPage)->appends($request->query());
+        $query = Jadwal_antar_jemput::with(['anak', 'driver']);
+        
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('hari', 'like', "%{$search}%")
+                  ->orWhere('status', 'like', "%{$search}%")
+                  ->orWhere('lokasi_jemput', 'like', "%{$search}%")
+                  ->orWhere('lokasi_antar', 'like', "%{$search}%")
+                  ->orWhereHas('anak', function($subQuery) use ($search) {
+                      $subQuery->where('nama', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('driver.user', function($subQuery) use ($search) {
+                      $subQuery->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+        
+        $items = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.jadwal.index', compact('items'));
     }
