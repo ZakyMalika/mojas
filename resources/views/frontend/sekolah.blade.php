@@ -1095,6 +1095,8 @@
         }
     </style>
     <title>Pelanggan Sekolah</title>
+        <link rel="icon" type="image/png" href="{{ asset('images/logomojas.jpg') }}">
+
 
 </head>
 

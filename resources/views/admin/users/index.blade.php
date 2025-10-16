@@ -23,6 +23,18 @@
                 </div>
             </div>
             <div class="card-body">
+                <div class="mb-3">
+                    <form action="{{ route('admin.users.index') }}" method="GET" class="form-inline justify-content-end">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Cari pengguna..." value="{{ request('search') }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped" id="users-table">
                         <thead>
@@ -38,7 +50,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
+                            @forelse($users as $user)
                                 <tr>
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
@@ -93,14 +105,25 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center">Tidak ada data pengguna</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
                 
-                <div class="d-flex justify-content-center mt-3">
-                    {{ $users->links() }}
-                </div>
+                @if($users->hasPages())
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="text-muted">
+                            Menampilkan {{ $users->firstItem() ?? 0 }} sampai {{ $users->lastItem() ?? 0 }} dari {{ $users->total() }} data
+                        </div>
+                        <div>
+                            {{ $users->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -116,12 +139,22 @@ $(document).ready(function() {
         "autoWidth": false,
         "paging": false,
         "info": false,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "language": {
-            "search": "Cari:",
-            "zeroRecords": "Tidak ada data yang ditemukan",
-            "emptyTable": "Tidak ada data dalam tabel"
+            "emptyTable": "Tidak ada data yang ditemukan"
+        },
+        "order": [[0, 'desc']] // Urutkan berdasarkan ID secara descending
+    });
+
+    // Tambahkan class untuk styling pagination
+    $('.pagination').addClass('mb-0');
+    
+    // Tambahkan class active ke tombol sortir yang aktif
+    $('.dataTable thead th').click(function() {
+        $('.dataTable thead th').removeClass('sorting-active');
+        if ($(this).hasClass('sorting_asc') || $(this).hasClass('sorting_desc')) {
+            $(this).addClass('sorting-active');
         }
     });
 });
