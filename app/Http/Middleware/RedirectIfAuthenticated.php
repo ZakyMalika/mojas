@@ -27,9 +27,9 @@ class RedirectIfAuthenticated
                     case 'admin':
                         return redirect('/admin');
                     case 'pengemudi':
-                        return redirect('/driver');
+                        return redirect('/pengemudi');
                     case 'orang_tua':
-                        return redirect('/parent');
+                        return redirect('/orang_tua');
                     default:
                         return redirect('/');
                 }

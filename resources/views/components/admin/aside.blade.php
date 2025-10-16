@@ -138,7 +138,7 @@
                 @elseif(Auth::user()->role == 'pengemudi')
                     <li class="nav-item">
                         {{-- Pastikan Anda menamai route '/driver' di web.php, contoh: ->name('driver.dashboard') --}}
-                        <a href="/pengemudiCan I be? Play Karna FM. OK. I. Or. Hello. I think. Kombke Ki kuliya kamai MMM. The Mao Mongayan. Hey, Cortana. Yeah. Chhattisgarh. Prokh Abdi ustas. The. " class="nav-link">
+                        <a href="/pengemudi" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>

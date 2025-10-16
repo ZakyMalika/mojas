@@ -46,9 +46,9 @@ class RoleMiddleware
             case 'admin':
                 return redirect('/admin')->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
             case 'pengemudi':
-                return redirect('/driver')->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
+                return redirect('/pengemudi')->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
             case 'orang_tua':
-                return redirect('/parent')->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
+                return redirect('/orang_tua')->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
             default:
                 return redirect('/')->with('error', 'Role tidak dikenali.');
         }
