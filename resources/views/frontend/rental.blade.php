@@ -8,6 +8,30 @@
         <link rel="icon" type="image/png" href="{{ asset('images/logomojas.jpg') }}">
 
      <style>
+         /* Responsive styles for grid */
+        @media screen and (max-width: 768px) {
+            .kegiatan-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .section-title p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            .kegiatan-section {
+                padding: 4rem 0;
+            }
+        }
+
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .kegiatan-grid {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 1.5rem;
+            }
+        }
          /* === NAVBAR === */
         .navbar {
             position: fixed;

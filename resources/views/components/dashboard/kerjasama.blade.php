@@ -16,7 +16,7 @@
                     </div>
                     <h3>Mitra Terpercaya</h3>
                 </div>
-                <p>Telah melayani ribuan siswa dengan tingkat kepuasan pelanggan 90%</p>
+                <p>Telah melayani banyak siswa dengan tingkat kepuasan pelanggan 90%</p>
             </div>
 
             <div class="benefit-stats">

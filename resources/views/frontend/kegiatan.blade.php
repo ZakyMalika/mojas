@@ -43,6 +43,31 @@
             gap: 2rem;
         }
 
+        /* Responsive styles for grid */
+        @media screen and (max-width: 768px) {
+            .kegiatan-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .section-title p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+            .kegiatan-section {
+                padding: 4rem 0;
+            }
+        }
+
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .kegiatan-grid {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 1.5rem;
+            }
+        }
+
         /* == STYLING KARTU KEGIATAN == */
         .activity-card {
             background: #fff;
@@ -120,7 +145,7 @@
             transform: scale(1.05); /* Efek zoom pada gambar saat di-hover */
         }
 
-         /* === NAVBAR === */
+        /* === NAVBAR === */
         .navbar {
             position: fixed;
             top: 0;
@@ -147,12 +172,14 @@
             font-weight: bold;
             color: #2c5530;
             text-decoration: none;
+            z-index: 1001;
         }
 
         .nav-menu {
             display: flex;
             list-style: none;
             gap: 2rem;
+            transition: all 0.3s ease-in-out;
         }
 
         .nav-menu a {
@@ -180,6 +207,75 @@
 
         .nav-menu a:hover::after {
             width: 100%;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background: #2c5530;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                flex-direction: column;
+                background: rgba(255, 255, 255, 0.98);
+                width: 100%;
+                height: 100vh;
+                padding-top: 80px;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 1.5rem 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        /* Tablet Styles */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .nav-container {
+                padding: 0 1.5rem;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+            }
         }
 
         /* === BUTTONS === */

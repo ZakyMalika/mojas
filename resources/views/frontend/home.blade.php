@@ -1915,7 +1915,7 @@
             <div class="hero-content" data-aos="fade-right">
                 <h1>Layanan Antar Jemput<br>Siswa Terpercaya</h1>
                 <p class="hero-subtitle">Solusi transportasi yang aman, nyaman, dan tepat waktu untuk putra-putri Anda
-                    di Area Batam. Dipercaya oleh ratusan keluarga sejak 2024.</p>
+                    di Area Batam. Dipercaya oleh puluhan keluarga sejak 2024.</p>
                 <div class="hero-features">
                     <div class="hero-feature-item">
                         <i class="fas fa-shield-alt"></i>

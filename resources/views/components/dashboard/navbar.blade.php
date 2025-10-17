@@ -35,41 +35,173 @@
             padding: 0 2rem;
         }
 
-        /* Styling dasar untuk navigasi agar terlihat rapi */
-        .nav-menu {
-            list-style: none;
+        /* === NAVBAR STYLES === */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
-            gap: 2rem;
-            /* Memberi jarak antar menu */
+            justify-content: space-between;
             align-items: center;
         }
 
-        /* Wajib: Mengatur posisi parent dropdown */
+        .logo {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu li a:hover {
+            color: #2c5530;
+        }
+
+        /* Dropdown styles */
         .dropdown {
             position: relative;
             padding-bottom: 1px;
-
         }
 
-        /* Styling untuk submenu yang tersembunyi */
+        .dropdown-toggle {
+            padding-right: 1.5rem;
+            cursor: pointer;
+        }
+
         .dropdown-menu {
             display: none;
-            /* 1. Sembunyikan menu secara default */
             position: absolute;
-            /* 2. Atur posisi agar "melayang" di bawah parent */
             top: 100%;
-            /* Posisikan persis di bawah menu "Kategori" */
             left: 0;
-            background-color: white;
-            list-style: none;
-            padding: 10px 0;
-            /* margin-top: 10px;  */
-            min-width: 180px;
-            /* Lebar minimum dropdown */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            background: #fff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             border-radius: 8px;
-            z-index: 100;
-            /* Pastikan menu muncul di atas konten lain */
+            padding: 1rem 0;
+            min-width: 200px;
+            z-index: 1000;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background: #fff;
+                width: 100%;
+                padding: 2rem 0;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 1rem 0;
+            }
+
+            .dropdown-menu {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                margin-top: 1rem;
+                display: none;
+            }
+
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-toggle {
+                padding-right: 0;
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+        }
+
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            .nav-container {
+                padding: 0 40px;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+            }
+        }
+
+        @media screen and (min-width: 1025px) {
+            .nav-container {
+                padding: 0 60px;
+            }
         }
 
         /* Tampilkan submenu ketika parent di-hover */
@@ -811,6 +943,11 @@
                     <span>MOJAS BATAM</span>
                 </div>
             </a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-menu">
                 <li><a href="/">Beranda</a></li>
                 <li><a href="#tarif">Tarif</a></li>
@@ -832,6 +969,26 @@
             </ul>
         </div>
     </nav>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    });
+    </script>
 </body>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
