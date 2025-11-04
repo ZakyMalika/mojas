@@ -69,9 +69,9 @@ class RegisterController extends Controller
             case 'admin': // Meskipun tidak bisa daftar sbg admin, ini sebagai fallback
                 return redirect('/admin')->with('success', 'Registrasi berhasil! Selamat datang Admin.');
             case 'pengemudi':
-                return redirect('/driver')->with('success', 'Registrasi berhasil! Selamat datang Pengemudi.');
+                return redirect('/pengemudi')->with('success', 'Registrasi berhasil! Selamat datang Pengemudi.');
             case 'orang_tua':
-                return redirect('/parent')->with('success', 'Registrasi berhasil! Selamat datang Orang Tua.');
+                return redirect('/orang_tua')->with('success', 'Registrasi berhasil! Selamat datang Orang Tua.');
             default:
                 return redirect('/')->with('success', 'Registrasi berhasil! Selamat datang.');
         }
