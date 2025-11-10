@@ -30,7 +30,7 @@
                         <label for="user_id">Akun Pengguna (User)</label>
                         {{-- PENTING: Anda perlu mengirimkan daftar user dari controller agar dropdown ini dinamis --}}
                         <select class="form-control @error('user_id') is-invalid @enderror" id="user_id" name="user_id">
-                            <option value="">Pilih Akun Pengguna</option>
+                            {{-- <option value="">Pilih Akun Pengguna</option> --}}
                             <option value="{{ $item->user_id }}" selected>{{ $item->user->name ?? 'User tidak ditemukan' }} ({{ $item->user->email }})</option>
                         </select>
                         @error('user_id')
