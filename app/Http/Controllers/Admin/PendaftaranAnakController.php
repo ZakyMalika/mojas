@@ -136,13 +136,10 @@ class PendaftaranAnakController extends Controller
         return redirect()->route('admin.pendaftaran-anak.show', $pendaftaran_anak);
     }
 
-   public function destroy(Pendaftaran_anak $pendaftaran_anak)
+    public function destroy(Pendaftaran_anak $pendaftaran_anak)
     {
-        $namaAnak = $pendaftaran_anak->anak->nama ?? 'Anak';
         $pendaftaran_anak->delete();
 
-        return redirect()->route('admin.pendaftaran-anak.index')
-            ->with('success', "Data pendaftaran untuk {$namaAnak} berhasil dihapus!");
+        return redirect()->route('admin.pendaftaran-anak.index');
     }
-
 }
