@@ -41,6 +41,13 @@
                                 <td>{{ $item->user->email ?? 'N/A' }}</td>
                                 <td><span class="badge bg-secondary">{{ $item->nomor_plat ?? 'N/A' }}</span></td>
                                 <td>{{ $item->warna_kendaraan ?? '-' }}</td>
+                                 <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ route('admin.drivers.edit', $item) }}" class="btn btn-warning btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
                             </tr>
                         @empty
                             <tr><td colspan="5" class="text-center">Tidak ada data pengemudi yang tersedia.</td></tr>
