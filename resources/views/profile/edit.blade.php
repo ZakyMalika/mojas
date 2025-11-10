@@ -156,7 +156,7 @@
                                            id="warna_kendaraan" 
                                            name="warna_kendaraan" 
                                            value="{{ old('warna_kendaraan', $user->driver->warna_kendaraan ?? '') }}" 
-                                           placeholder="Contoh: B 1234 ABC">
+                                           placeholder="Contoh: Merah">
                                     @error('warna_kendaraan')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
