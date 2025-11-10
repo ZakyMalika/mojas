@@ -28,7 +28,7 @@
                             <th>Nama Lengkap</th>
                             <th>Email</th>
                             <th>Nomor Plat</th>
-                            <th>Jenis Kendaraan</th>
+                            <th>Warna Kendaraan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +40,7 @@
                                 </td>
                                 <td>{{ $item->user->email ?? 'N/A' }}</td>
                                 <td><span class="badge bg-secondary">{{ $item->nomor_plat ?? 'N/A' }}</span></td>
-                                <td>{{ $item->jenis_kendaraan ?? '-' }}</td>
+                                <td>{{ $item->warna_kendaraan ?? '-' }}</td>
                             </tr>
                         @empty
                             <tr><td colspan="5" class="text-center">Tidak ada data pengemudi yang tersedia.</td></tr>
