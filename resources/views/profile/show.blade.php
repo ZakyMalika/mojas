@@ -61,6 +61,11 @@
                             {{ $user->driver->nomor_plat ?: 'Belum diisi' }}
                         </dd>
 
+                        <dt class="col-sm-4">Warna Kendaraan</dt>
+                        <dd class="col-sm-8">
+                            {{ $user->driver->warna_kendaraan ?: 'Belum diisi' }}
+                        </dd>
+
                         <dt class="col-sm-4">Status Driver</dt>
                         <dd class="col-sm-8">
                             <span class="badge bg-success">Aktif</span>
