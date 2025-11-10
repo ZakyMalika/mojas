@@ -28,7 +28,9 @@
                             <th>Nama Lengkap</th>
                             <th>Email</th>
                             <th>Nomor Plat</th>
+                            <th>Jenis Kendaraan</th>
                             <th>Warna Kendaraan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,6 +42,7 @@
                                 </td>
                                 <td>{{ $item->user->email ?? 'N/A' }}</td>
                                 <td><span class="badge bg-secondary">{{ $item->nomor_plat ?? 'N/A' }}</span></td>
+                                <td>{{ $item->jenis_kendaraan ?? '-' }}</td>
                                 <td>{{ $item->warna_kendaraan ?? '-' }}</td>
                                  <td>
                                         <div class="btn-group" role="group">
