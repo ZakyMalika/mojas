@@ -96,7 +96,7 @@
                     </tbody>
                 </table>
             </div>
-            @if($users->hasPages())
+            {{-- @if($users->hasPages())
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="text-muted">
                             Menampilkan {{ $users->firstItem() ?? 0 }} sampai {{ $users->lastItem() ?? 0 }} dari {{ $users->total() }} data
@@ -105,7 +105,7 @@
                             {{ $users->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
-                @endif
+                @endif --}}
         </div>
     </div>
 </div>
@@ -136,7 +136,7 @@
 </div>
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
 <script>
 $(function () {
     
@@ -148,6 +148,39 @@ $(function () {
         var modal = $(this);
         modal.find('#dataNameToDelete').text(name);
         modal.find('#deleteForm').attr('action', action);
+    });
+});
+</script>
+@endpush --}}
+
+
+@push('scripts')
+<script>
+$(function () {
+    $("#tarif-table").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": [ "excel", "pdf", "print"]
+    }).buttons().container().appendTo('#tarif-table_wrapper .col-md-6:eq(0)');
+
+    // LOGIKA HAPUS DENGAN MODAL (SOLUSI DEFINITIF)
+    let urlToDelete = null;
+    $('#tarif-table tbody').on('click', '.delete-btn', function (event) {
+        event.preventDefault();
+        urlToDelete = $(this).data('action');
+        let dataName = $(this).data('name');
+        $('#dataNameToDelete').text(dataName);
+    });
+    $('#confirmDeleteButton').on('click', function(e) {
+        e.preventDefault();
+        if (urlToDelete) {
+            let form = $('<form>', {
+                'method': 'POST', 'action': urlToDelete, 'style': 'display:none;'
+            });
+            form.append($('<input>', {'type': 'hidden', 'name': '_token', 'value': '{{ csrf_token() }}' }));
+            form.append($('<input>', {'type': 'hidden', 'name': '_method', 'value': 'DELETE'}));
+            $('body').append(form);
+            form.submit();
+        }
     });
 });
 </script>
