@@ -95,13 +95,13 @@
                         @endforelse
                     </tbody>
                 </table>
-                @if($users->hasPages())
+                @if($items->hasPages())
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <div class="text-muted">
-                                Menampilkan {{ $users->firstItem() ?? 0 }} sampai {{ $users->lastItem() ?? 0 }} dari {{ $users->total() }} data
+                                Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
                             </div>
                             <div>
-                                {{ $users->links('pagination::bootstrap-4') }}
+                                {{ $items->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     @endif
