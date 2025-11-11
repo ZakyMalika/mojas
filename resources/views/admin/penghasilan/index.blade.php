@@ -96,6 +96,16 @@
                     </tbody>
                 </table>
             </div>
+            @if($users->hasPages())
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="text-muted">
+                            Menampilkan {{ $users->firstItem() ?? 0 }} sampai {{ $users->lastItem() ?? 0 }} dari {{ $users->total() }} data
+                        </div>
+                        <div>
+                            {{ $users->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
+                @endif
         </div>
     </div>
 </div>
