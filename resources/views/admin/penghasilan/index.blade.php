@@ -136,7 +136,7 @@
 </div>
 @endsection
 
-{{-- @push('scripts')
+@push('scripts')
 <script>
 $(function () {
     
@@ -151,7 +151,7 @@ $(function () {
     });
 });
 </script>
-@endpush --}}
+@endpush
 
 
 @push('scripts')
