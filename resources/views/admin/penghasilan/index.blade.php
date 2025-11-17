@@ -30,7 +30,7 @@
                     </div>
                 @endif
 
-                <table id="penghasilan-table" class="table table-bordered table-striped">
+                <table id="tarif-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th><i class="fas fa-car-side mr-1"></i> Pengemudi</th>
