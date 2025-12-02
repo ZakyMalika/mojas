@@ -46,7 +46,7 @@
                                     @endphp
                                     <span class="badge bg-{{ $statusClass }}">{{ ucfirst($item->status) }}</span>
                                 </td>
-                                <td>{{ $item->tanggal_dibayar ? \Carbon\Carbon::parse($item->tanggal_dibayar)->format('d M Y') : 'Belum dibayar' }}</td>
+                                <td>{{ $item->tanggal_dibayar ? \Carbon\Carbon::parse($item->tanggal_dibayar)->format('d M Y') : 'Tanggal Belum dipilih' }}</td>
                                 <td>
                                     <a href="{{ route('driver.penghasilan.show', $item->id) }}" class="btn btn-info btn-sm btn-block" title="Lihat Detail">
                                         <i class="fas fa-eye"></i> Detail
