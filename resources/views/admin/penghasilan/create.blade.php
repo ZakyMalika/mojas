@@ -58,11 +58,22 @@
                                 @error('tarif_per_trip')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
-                         <div class="col-sm-6">
+                         {{-- <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="komisi_pengemudi">Komisi Pengemudi (Rp)</label>
                                 <input id="komisi_pengemudi" type="number" step="0.01" class="form-control @error('komisi_pengemudi') is-invalid @enderror" name="komisi_pengemudi" value="{{ old('komisi_pengemudi') }}" placeholder="Contoh: 20000">
                                 @error('komisi_pengemudi')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
+                            </div>
+                        </div> --}}
+                         <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="deduction_percentage">Potongan</label>
+                                <select id="deduction_percentage" name="deduction_percentage" class="form-control @error('deduction_percentage') is-invalid @enderror">
+                                    <option value="0" {{ old('deduction_percentage') == '0' ? 'selected' : '' }}>Tidak Ada</option>
+                                    <option value="5" {{ old('deduction_percentage') == '5' ? 'selected' : '' }}>5%</option>
+                                    <option value="10" {{ old('deduction_percentage') == '10' ? 'selected' : '' }}>10%</option>
+                                </select>
+                                @error('deduction_percentage')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
                     </div>
@@ -76,18 +87,8 @@
                                 @error('gross_amount')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="deduction_percentage">Potongan</label>
-                                <select id="deduction_percentage" name="deduction_percentage" class="form-control @error('deduction_percentage') is-invalid @enderror">
-                                    <option value="0" {{ old('deduction_percentage') == '0' ? 'selected' : '' }}>Tidak Ada</option>
-                                    <option value="5" {{ old('deduction_percentage') == '5' ? 'selected' : '' }}>5%</option>
-                                    <option value="10" {{ old('deduction_percentage') == '10' ? 'selected' : '' }}>10%</option>
-                                </select>
-                                @error('deduction_percentage')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
+                       
+                        <div class="col-sm-">
                             <div class="form-group">
                                 <label for="komisi_akhir_display">Hasil Setelah Potongan (Rp)</label>
                                 <input id="komisi_akhir_display" type="text" class="form-control" readonly value="{{ old('komisi_pengemudi') ? number_format(old('komisi_pengemudi'), 0, ',', '.') : '' }}">
