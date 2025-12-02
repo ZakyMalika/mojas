@@ -74,10 +74,30 @@ class PenghasilanDriverController extends Controller
             'driver_id' => ['required', 'integer', 'exists:drivers,id'],
             'jadwal_id' => ['required', 'integer', 'exists:jadwal_antar_jemput,id'],
             'tarif_per_trip' => ['required', 'numeric'],
-            'komisi_pengemudi' => ['required', 'numeric'],
+            // komisi_pengemudi may be computed from gross_amount + deduction
+            'komisi_pengemudi' => ['nullable', 'numeric'],
+            'gross_amount' => ['nullable', 'numeric'],
+            'deduction_percentage' => ['nullable', 'numeric', 'in:0,5,10'],
             'status' => ['required', 'in:pending,dibayar'],
             'tanggal_dibayar' => ['nullable', 'date'],
         ]);
+
+        // Jika gross_amount diberikan, hitung komisi_pengemudi berdasarkan potongan
+        if (isset($data['gross_amount'])) {
+            $gross = (float) $data['gross_amount'];
+            $deduction = isset($data['deduction_percentage']) ? (float) $data['deduction_percentage'] : 0;
+            $net = $gross - ($gross * ($deduction / 100));
+            $data['komisi_pengemudi'] = round($net, 2);
+        }
+
+        // Pastikan komisi_pengemudi ada (fallback)
+        if (! isset($data['komisi_pengemudi'])) {
+            $data['komisi_pengemudi'] = 0;
+        }
+
+        // Remove transient fields that are not columns in the table
+        unset($data['gross_amount'], $data['deduction_percentage']);
+
         $item = Penghasilan_driver::create($data);
 
         return redirect()->route('admin.penghasilan.show', $item);
@@ -105,15 +125,31 @@ class PenghasilanDriverController extends Controller
     public function update(Request $request, $id)
     {
         $penghasilan_driver = Penghasilan_driver::findOrFail($id);
-
         $data = $request->validate([
             'driver_id' => ['required', 'integer', 'exists:drivers,id'],
             'jadwal_id' => ['required', 'integer', 'exists:jadwal_antar_jemput,id'],
             'tarif_per_trip' => ['required', 'numeric'],
-            'komisi_pengemudi' => ['required', 'numeric'],
+            'komisi_pengemudi' => ['nullable', 'numeric'],
+            'gross_amount' => ['nullable', 'numeric'],
+            'deduction_percentage' => ['nullable', 'numeric', 'in:0,5,10'],
             'status' => ['required', 'in:pending,dibayar'],
             'tanggal_dibayar' => ['nullable', 'date'],
         ]);
+
+        if (isset($data['gross_amount'])) {
+            $gross = (float) $data['gross_amount'];
+            $deduction = isset($data['deduction_percentage']) ? (float) $data['deduction_percentage'] : 0;
+            $net = $gross - ($gross * ($deduction / 100));
+            $data['komisi_pengemudi'] = round($net, 2);
+        }
+
+        if (! isset($data['komisi_pengemudi'])) {
+            $data['komisi_pengemudi'] = $penghasilan_driver->komisi_pengemudi ?? 0;
+        }
+
+        // Remove transient fields before update
+        unset($data['gross_amount'], $data['deduction_percentage']);
+
         $penghasilan_driver->update($data);
 
         return redirect()->route('admin.penghasilan.show', $penghasilan_driver);
