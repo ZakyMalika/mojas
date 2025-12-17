@@ -86,6 +86,17 @@
                             @endforelse
                         </tbody>
                     </table>
+                    @if ($items->hasPages())
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="text-muted">
+                                Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari
+                                {{ $items->total() }} data
+                            </div>
+                            <div>
+                                {{ $items->links('pagination::bootstrap-4') }}
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
