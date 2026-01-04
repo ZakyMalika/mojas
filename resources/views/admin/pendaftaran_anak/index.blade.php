@@ -152,29 +152,39 @@
 
 @push('scripts')
 <script>
-$(function () {
-    $("#pendaftaran-table").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-               "buttons": [ "excel", "pdf", "print"]
-
-    }).buttons().container().appendTo('#pendaftaran-table_wrapper .col-md-6:eq(0)');
-
-    // LOGIKA HAPUS DENGAN MODAL (SOLUSI DEFINITIF)
+$(document).ready(function() {
+    // LOGIKA HAPUS DENGAN MODAL
     let urlToDelete = null;
-    $('#pendaftaran-table tbody').on('click', '.delete-btn', function (event) {
+    
+    // Event listener untuk tombol delete
+    $('.delete-btn').on('click', function (event) {
         event.preventDefault();
         urlToDelete = $(this).data('action');
         let dataName = $(this).data('name');
         $('#dataNameToDelete').text(dataName);
     });
+    
+    // Event listener untuk konfirmasi hapus
     $('#confirmDeleteButton').on('click', function(e) {
         e.preventDefault();
         if (urlToDelete) {
+            // Buat form untuk submit DELETE request
             let form = $('<form>', {
-                'method': 'POST', 'action': urlToDelete, 'style': 'display:none;'
+                'method': 'POST', 
+                'action': urlToDelete
             });
-            form.append($('<input>', {'type': 'hidden', 'name': '_token', 'value': '{{ csrf_token() }}' }));
-            form.append($('<input>', {'type': 'hidden', 'name': '_method', 'value': 'DELETE'}));
+            form.append($('<input>', {
+                'type': 'hidden', 
+                'name': '_token', 
+                'value': '{{ csrf_token() }}'
+            }));
+            form.append($('<input>', {
+                'type': 'hidden', 
+                'name': '_method', 
+                'value': 'DELETE'
+            }));
+            
+            // Append form ke body dan submit
             $('body').append(form);
             form.submit();
         }

@@ -10,6 +10,8 @@ use App\Models\Pembayaran;
 use App\Models\Pendaftaran_anak;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Penghasilan_driver; // Import Model
+
 class DashboardController extends Controller
 {
     public function index()
@@ -18,10 +20,24 @@ class DashboardController extends Controller
         $totalParents = Orang_tua::count();
         $totalDrivers = Driver::count();
         $totalAnaks = Anak::count();
+        
+        // Data Pembayaran Driver Pending
+        $unpaidDriversData = Penghasilan_driver::where('status', 'pending')
+            ->selectRaw('driver_id, sum(komisi_pengemudi) as total_pending, count(id) as pending_count')
+            ->groupBy('driver_id')
+            ->with('driver.user')
+            ->get();
+        
+        $totalUnpaidDrivers = $unpaidDriversData->count();
+
         $pendaftaran7Hari = Pendaftaran_anak::where('created_at', '>=', now()->subDays(7))->count();
         $pendaftaranTerbaru = Pendaftaran_anak::with('anak')->latest()->limit(5)->get();
         $pembayaranTerbaru = Pembayaran::with('pendaftaran_anak.anak')->latest()->limit(5)->get();
 
-        return view('admin.admin', compact('totalParents', 'totalDrivers', 'totalAnaks', 'pendaftaran7Hari', 'pendaftaranTerbaru', 'pembayaranTerbaru', 'userRoleData'));
+        return view('admin.admin', compact(
+            'totalParents', 'totalDrivers', 'totalAnaks', 
+            'pendaftaran7Hari', 'pendaftaranTerbaru', 'pembayaranTerbaru', 'userRoleData',
+            'totalUnpaidDrivers', 'unpaidDriversData'
+        ));
     }
 }

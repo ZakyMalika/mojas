@@ -9,6 +9,11 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Tugas Antar Jemput Anda</h3>
+                <div class="card-tools">
+                    <a href="{{ route('driver.jadwal.create') }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> Buat Jadwal
+                    </a>
+                </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -24,6 +29,7 @@
                 <table id="jadwal-driver-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>Hari/Tanggal</th>
                             <th>Waktu Jemput</th>
                             <th>Anak</th>
                             <th>Lokasi Jemput</th>
@@ -35,6 +41,7 @@
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
+                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                                 <td><strong>{{ \Carbon\Carbon::parse($item->jam_jemput)->format('H:i') }}</strong></td>
                                 <td>{{ $item->anak->nama ?? 'N/A' }}</td>
                                 <td>{{ $item->lokasi_jemput ?? $item->anak->sekolah ?? 'N/A' }}</td>
@@ -54,9 +61,16 @@
                                 </td>
                                 <td>
                                     {{-- Tombol ini akan mengarahkan ke halaman edit --}}
-                                    <a href="{{ route('driver.jadwal.edit', $item->id) }}" class="btn btn-warning btn-sm btn-block" {{ $item->status == 'selesai' || $item->status == 'dibatalkan' ? 'disabled' : '' }}>
-                                        <i class="fas fa-edit"></i> Update Status
+                                    <a href="{{ route('driver.jadwal.edit', $item->id) }}" class="btn btn-warning btn-sm" {{ $item->status == 'selesai' || $item->status == 'dibatalkan' ? 'disabled' : '' }} title="Update Status">
+                                        <i class="fas fa-edit"></i> Ubah
                                     </a>
+                                    <form action="{{ route('driver.jadwal.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty

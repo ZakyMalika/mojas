@@ -7,7 +7,7 @@
     <div class="col-md-8 mx-auto">
         <div class="card card-warning">
             <div class="card-header"><h3 class="card-title">Edit Penghasilan</h3></div>
-            <form action="{{ route('admin.penghasilan.update', $item->id) }}" method="POST">
+            <form action="{{ route('driver.penghasilan.update', $item->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
@@ -18,18 +18,7 @@
                         </div>
                     @endif
 
-                    <div class="form-group">
-                        <label for="driver_id">Pengemudi</label>
-                        <select class="form-control @error('driver_id') is-invalid @enderror" name="driver_id">
-                            <option value="">Pilih Pengemudi</option>
-                            @foreach($drivers as $driver) 
-                                <option value="{{ $driver->id }}" {{ $item->driver_id == $driver->id ? 'selected' : '' }}>{{ $driver->user->name }}</option> 
-                            @endforeach
-                        </select>
-                        @error('driver_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
-                    </div>
-                    
-                    {{-- Pre-selection logic for Anak and Jadwal --}}
+                    {{-- Pre-selection logic --}}
                     @php
                         $selectedAnakId = old('anak_id', $item->jadwal->anak_id ?? '');
                         $selectedJadwalId = old('jadwal_id', $item->jadwal_id);
@@ -49,7 +38,7 @@
                         <label for="jadwal_id">Jadwal Terkait</label>
                         <select class="form-control @error('jadwal_id') is-invalid @enderror" name="jadwal_id" id="jadwal_id" data-selected="{{ $selectedJadwalId }}">
                             <option value="">Pilih Anak Terlebih Dahulu</option>
-                            {{-- Options will be loaded via AJAX, but we can pre-populate if needed or let JS handle it --}}
+                            {{-- Options will be loaded via AJAX --}}
                         </select>
                         @error('jadwal_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                     </div>
@@ -117,7 +106,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-warning">Update</button>
-                    <a href="{{ route('admin.penghasilan.index') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ route('driver.penghasilan.index') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>
@@ -131,30 +120,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const jadwalSelect = document.getElementById('jadwal_id');
     const selectedJadwalId = jadwalSelect.getAttribute('data-selected');
     
-    // Function untuk load jadwal berdasarkan anak
     function loadJadwalByAnak(anakId, preselectId = null) {
-        
-        // Reset jadwal select
         jadwalSelect.innerHTML = '<option value="">Loading...</option>';
-        
         if (!anakId) {
             jadwalSelect.innerHTML = '<option value="">Pilih Anak Terlebih Dahulu</option>';
             return;
         }
         
-        // AJAX call untuk mendapatkan jadwal
-        const url = `{{ url('admin/penghasilan/jadwal-by-anak') }}/${anakId}`;
+        const url = `{{ url('driver/penghasilan/jadwal-by-anak') }}/${anakId}`;
         
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
+        // Helper to safely get CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+        fetch(url, {
+            headers: {
+                 'Success': 'true', // dummy header
+                 'X-Requested-With': 'XMLHttpRequest',
+                 'X-CSRF-TOKEN': csrfToken || ''
+            }
+        })
+            .then(response => response.json())
             .then(data => {
                 jadwalSelect.innerHTML = '<option value="">Pilih Jadwal</option>';
-                
                 if (data.jadwals && data.jadwals.length > 0) {
                     data.jadwals.forEach(jadwal => {
                         const option = document.createElement('option');
@@ -170,22 +157,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                console.error('Error loading jadwal:', error);
-                jadwalSelect.innerHTML = '<option value="">Error loading jadwal</option>';
+                console.error('Error:', error);
+                jadwalSelect.innerHTML = '<option value="">Gagal/Izin Ditolak</option>';
             });
     }
     
-    // Event listener untuk perubahan anak
     anakSelect.addEventListener('change', function() {
         loadJadwalByAnak(this.value);
     });
     
-    // Load jadwal untuk anak yang sudah dipilih (jika ada old input atau data edit)
     if (anakSelect.value) {
         loadJadwalByAnak(anakSelect.value, selectedJadwalId);
     }
     
-    // --- Komputasi otomatis komisi berdasarkan gross dan potongan ---
+    // --- Komputasi otomatis ---
     const grossInput = document.getElementById('gross_amount');
     const deductionSelect = document.getElementById('deduction_percentage');
     const komisiDisplay = document.getElementById('komisi_akhir_display');
@@ -200,16 +185,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const gross = parseFloat(grossInput.value) || 0;
         const deduction = parseFloat(deductionSelect.value) || 0;
         const net = gross - (gross * (deduction / 100));
-        // Update readonly display and hidden/input komisi
         komisiDisplay.value = net > 0 ? formatRupiah(net) : '';
-        // Set raw numeric value to komisi_pengemudi so it's submitted
         if (komisiInput) komisiInput.value = net.toFixed(2);
     }
 
     if (grossInput) grossInput.addEventListener('input', computeKomisi);
     if (deductionSelect) deductionSelect.addEventListener('change', computeKomisi);
 
-    // compute on load if values exist
     computeKomisi();
 });
 </script>

@@ -96,7 +96,7 @@
         </div>
         {{-- Penambahan Role Selector --}}
         <div class="input-group mb-3">
-            <select name="role" class="form-control" required>
+            <select name="role" id="role" class="form-control" required>
                 <option value="">Daftar sebagai...</option>
                 <option value="orang_tua" {{ old('role') == 'orang_tua' ? 'selected' : '' }}>Orang Tua</option>
                 <option value="pengemudi" {{ old('role') == 'pengemudi' ? 'selected' : '' }}>Pengemudi</option>
@@ -107,6 +107,35 @@
                 </div>
             </div>
         </div>
+        
+        {{-- Field Tambahan untuk Pengemudi --}}
+        <div id="driver-fields" style="display: none;">
+            <div class="input-group mb-3">
+                <input type="text" name="nomor_plat" id="nomor_plat" class="form-control" placeholder="Nomor Plat Kendaraan (contoh: B 1234 XYZ)" value="{{ old('nomor_plat') }}">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-car"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" name="jenis_kendaraan" id="jenis_kendaraan" class="form-control" placeholder="Jenis Kendaraan (contoh: Toyota Avanza)" value="{{ old('jenis_kendaraan') }}">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-shuttle-van"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" name="warna_kendaraan" id="warna_kendaraan" class="form-control" placeholder="Warna Kendaraan (contoh: Putih)" value="{{ old('warna_kendaraan') }}">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-palette"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="input-group mb-3">
           <input type="password" name="password" class="form-control" placeholder="Password" required>
           <div class="input-group-append">
@@ -148,6 +177,36 @@
 <script src="{{ asset('adminlte') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte') }}/dist/js/adminlte.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Function untuk toggle driver fields
+    function toggleDriverFields() {
+        var role = $('#role').val();
+        if (role === 'pengemudi') {
+            $('#driver-fields').slideDown();
+            // Set required untuk field driver
+            $('#nomor_plat').attr('required', true);
+            $('#jenis_kendaraan').attr('required', true);
+            $('#warna_kendaraan').attr('required', true);
+        } else {
+            $('#driver-fields').slideUp();
+            // Remove required untuk field driver
+            $('#nomor_plat').removeAttr('required');
+            $('#jenis_kendaraan').removeAttr('required');
+            $('#warna_kendaraan').removeAttr('required');
+        }
+    }
+    
+    // Trigger saat halaman dimuat (untuk handle old() values)
+    toggleDriverFields();
+    
+    // Trigger saat role berubah
+    $('#role').on('change', function() {
+        toggleDriverFields();
+    });
+});
+</script>
 </body>
 </html>
 

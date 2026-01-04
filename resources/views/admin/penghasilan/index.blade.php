@@ -6,8 +6,6 @@
 @section('content')
 {{-- Kartu Ringkasan Data --}}
 
-
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -30,7 +28,7 @@
                     </div>
                 @endif
 
-                <table id="penghasilan-table" class="table table-bordered table-striped">
+                <table id="tarif-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th><i class="fas fa-car-side mr-1"></i> Pengemudi</th>
@@ -95,6 +93,16 @@
                         @endforelse
                     </tbody>
                 </table>
+                @if($items->hasPages())
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="text-muted">
+                                Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
+                            </div>
+                            <div>
+                                {{ $items->links('pagination::bootstrap-4') }}
+                            </div>
+                        </div>
+                    @endif
             </div>
         </div>
     </div>
@@ -129,15 +137,25 @@
 @push('scripts')
 <script>
 $(function () {
-    
+    // DataTables Config: Disable paging and info to avoid conflict with Laravel Pagination
+    $("#tarif-table").DataTable({
+        "responsive": true, 
+        "lengthChange": false, 
+        "autoWidth": false,
+        "paging": false,
+        "info": false,
+        "searching": false, // Disable client-side search as we use server-side pagination (unless you implement server-side search input manually)
+        "buttons": [ "excel", "pdf", "print"]
+    }).buttons().container().appendTo('#tarif-table_wrapper .col-md-6:eq(0)');
 
-    $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var action = button.data('action');
-        var name = button.data('name');
-        var modal = $(this);
-        modal.find('#dataNameToDelete').text(name);
-        modal.find('#deleteForm').attr('action', action);
+    // LOGIKA HAPUS DENGAN MODAL
+    let urlToDelete = null;
+    $('.delete-btn').on('click', function (event) {
+        event.preventDefault();
+        urlToDelete = $(this).data('action');
+        let dataName = $(this).data('name');
+        $('#dataNameToDelete').text(dataName);
+        $('#deleteForm').attr('action', urlToDelete);
     });
 });
 </script>

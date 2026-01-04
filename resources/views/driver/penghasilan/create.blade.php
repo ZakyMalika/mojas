@@ -1,15 +1,14 @@
 @extends('layouts.app')
 
-@section('content-title', 'Edit Catatan Penghasilan')
+@section('content-title', 'Buat Catatan Penghasilan')
 
 @section('content')
 <div class="row">
     <div class="col-md-8 mx-auto">
-        <div class="card card-warning">
-            <div class="card-header"><h3 class="card-title">Edit Penghasilan</h3></div>
-            <form action="{{ route('admin.penghasilan.update', $item->id) }}" method="POST">
+        <div class="card card-primary">
+            <div class="card-header"><h3 class="card-title">Formulir Penghasilan Baru</h3></div>
+            <form action="{{ route('driver.penghasilan.store') }}" method="POST">
                 @csrf
-                @method('PUT')
                 <div class="card-body">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -18,47 +17,34 @@
                         </div>
                     @endif
 
-                    <div class="form-group">
-                        <label for="driver_id">Pengemudi</label>
-                        <select class="form-control @error('driver_id') is-invalid @enderror" name="driver_id">
-                            <option value="">Pilih Pengemudi</option>
-                            @foreach($drivers as $driver) 
-                                <option value="{{ $driver->id }}" {{ $item->driver_id == $driver->id ? 'selected' : '' }}>{{ $driver->user->name }}</option> 
-                            @endforeach
-                        </select>
-                        @error('driver_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
-                    </div>
-                    
-                    {{-- Pre-selection logic for Anak and Jadwal --}}
-                    @php
-                        $selectedAnakId = old('anak_id', $item->jadwal->anak_id ?? '');
-                        $selectedJadwalId = old('jadwal_id', $item->jadwal_id);
-                    @endphp
+                    {{-- Driver ID is handled by Auth in Controller --}}
 
                     <div class="form-group">
                         <label for="anak_id">Anak</label>
                         <select class="form-control @error('anak_id') is-invalid @enderror" name="anak_id" id="anak_id">
                             <option value="">Pilih Anak</option>
-                            @foreach($anaks as $anak) 
-                                <option value="{{ $anak->id }}" {{ $selectedAnakId == $anak->id ? 'selected' : '' }}>{{ $anak->nama }}</option> 
-                            @endforeach
+                            @foreach($anaks as $anak) <option value="{{ $anak->id }}">{{ $anak->nama }}</option> @endforeach
                         </select>
-                        @error('anak_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
+                        {{-- Note: we need to handle validation error helper for anak_id if it's not in the request validation rules, 
+                             though we use it to load jadwals. Controller validation focuses on scheduling ID. --}}
                     </div>
                      <div class="form-group">
                         <label for="jadwal_id">Jadwal Terkait</label>
-                        <select class="form-control @error('jadwal_id') is-invalid @enderror" name="jadwal_id" id="jadwal_id" data-selected="{{ $selectedJadwalId }}">
+                        <select class="form-control @error('jadwal_id') is-invalid @enderror" name="jadwal_id" id="jadwal_id">
                             <option value="">Pilih Anak Terlebih Dahulu</option>
-                            {{-- Options will be loaded via AJAX, but we can pre-populate if needed or let JS handle it --}}
                         </select>
                         @error('jadwal_id')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
+                        
+                        <small class="text-muted">
+                            Jadwal akan dimuat berdasarkan anak yang dipilih.
+                        </small>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="tarif_per_trip">Tarif per Trip (Rp)</label>
-                                <input type="number" class="form-control @error('tarif_per_trip') is-invalid @enderror" name="tarif_per_trip" value="{{ old('tarif_per_trip', $item->tarif_per_trip) }}" placeholder="Contoh: 25000">
+                                <input type="number" class="form-control @error('tarif_per_trip') is-invalid @enderror" name="tarif_per_trip" value="{{ old('tarif_per_trip') }}" placeholder="Contoh: 25000">
                                 @error('tarif_per_trip')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
@@ -66,9 +52,9 @@
                             <div class="form-group">
                                 <label for="deduction_percentage">Potongan</label>
                                 <select id="deduction_percentage" name="deduction_percentage" class="form-control @error('deduction_percentage') is-invalid @enderror">
-                                    <option value="0" {{ old('deduction_percentage', $item->deduction_percentage) == '0' ? 'selected' : '' }}>Tidak Ada</option>
-                                    <option value="5" {{ old('deduction_percentage', $item->deduction_percentage) == '5' ? 'selected' : '' }}>5%</option>
-                                    <option value="10" {{ old('deduction_percentage', $item->deduction_percentage) == '10' ? 'selected' : '' }}>10%</option>
+                                    <option value="0" {{ old('deduction_percentage') == '0' ? 'selected' : '' }}>Tidak Ada</option>
+                                    <option value="5" {{ old('deduction_percentage') == '5' ? 'selected' : '' }}>5%</option>
+                                    <option value="10" {{ old('deduction_percentage') == '10' ? 'selected' : '' }}>10%</option>
                                 </select>
                                 @error('deduction_percentage')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
@@ -79,7 +65,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="gross_amount">Angka Penghasilan (Rp)</label>
-                                <input id="gross_amount" type="number" step="0.01" class="form-control @error('gross_amount') is-invalid @enderror" name="gross_amount" value="{{ old('gross_amount', $item->gross_amount) }}" placeholder="Contoh: 25000">
+                                <input id="gross_amount" type="number" step="0.01" class="form-control @error('gross_amount') is-invalid @enderror" name="gross_amount" value="{{ old('gross_amount') }}" placeholder="Contoh: 25000">
                                 @error('gross_amount')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
@@ -87,8 +73,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="komisi_akhir_display">Hasil Setelah Potongan (Rp)</label>
-                                <input id="komisi_akhir_display" type="text" class="form-control" readonly value="{{ old('komisi_pengemudi', $item->komisi_pengemudi) }}">
-                                <input id="komisi_pengemudi" type="hidden" name="komisi_pengemudi" value="{{ old('komisi_pengemudi', $item->komisi_pengemudi) }}">
+                                <input id="komisi_akhir_display" type="text" class="form-control" readonly value="{{ old('komisi_pengemudi') ? number_format(old('komisi_pengemudi'), 0, ',', '.') : '' }}">
+                                <input id="komisi_pengemudi" type="hidden" name="komisi_pengemudi" value="{{ old('komisi_pengemudi') }}">
                                 <small class="text-muted">Nilai otomatis terisi berdasarkan angka penghasilan dan potongan.</small>
                             </div>
                         </div>
@@ -99,8 +85,8 @@
                              <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="form-control @error('status') is-invalid @enderror" name="status">
-                                    <option value="pending" {{ old('status', $item->status) == 'pending' ? 'selected' : '' }}>Pending</option>
-                                    <option value="dibayar" {{ old('status', $item->status) == 'dibayar' ? 'selected' : '' }}>Dibayar</option>
+                                    <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="dibayar" {{ old('status') == 'dibayar' ? 'selected' : '' }}>Dibayar</option>
                                 </select>
                                 @error('status')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
@@ -108,7 +94,7 @@
                         <div class="col-sm-6">
                              <div class="form-group">
                                 <label for="tanggal_dibayar">Tanggal Dibayar (Opsional)</label>
-                                <input type="date" class="form-control @error('tanggal_dibayar') is-invalid @enderror" name="tanggal_dibayar" value="{{ old('tanggal_dibayar', $item->tanggal_dibayar) }}">
+                                <input type="date" class="form-control @error('tanggal_dibayar') is-invalid @enderror" name="tanggal_dibayar" value="{{ old('tanggal_dibayar') }}">
                                 @error('tanggal_dibayar')<span class="invalid-feedback"><strong>{{ $message }}</strong></span>@enderror
                             </div>
                         </div>
@@ -116,8 +102,8 @@
 
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-warning">Update</button>
-                    <a href="{{ route('admin.penghasilan.index') }}" class="btn btn-secondary">Batal</a>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="{{ route('driver.penghasilan.index') }}" class="btn btn-secondary">Batal</a>
                 </div>
             </form>
         </div>
@@ -129,40 +115,44 @@
 document.addEventListener('DOMContentLoaded', function() {
     const anakSelect = document.getElementById('anak_id');
     const jadwalSelect = document.getElementById('jadwal_id');
-    const selectedJadwalId = jadwalSelect.getAttribute('data-selected');
     
-    // Function untuk load jadwal berdasarkan anak
-    function loadJadwalByAnak(anakId, preselectId = null) {
-        
-        // Reset jadwal select
+   
+    // I will blindly use the AJAX for now but pointing to `{{ url('admin/penghasilan/jadwal-by-anak') }}` might be 403.
+    // **Correction**: I see `Route::get('penghasilan/jadwal-by-anak/{anak}', ...)` inside Admin group.
+    
+    function loadJadwalByAnak(anakId) {
         jadwalSelect.innerHTML = '<option value="">Loading...</option>';
-        
         if (!anakId) {
             jadwalSelect.innerHTML = '<option value="">Pilih Anak Terlebih Dahulu</option>';
             return;
         }
         
-        // AJAX call untuk mendapatkan jadwal
-        const url = `{{ url('admin/penghasilan/jadwal-by-anak') }}/${anakId}`;
+        // Use the Driver endpoint
+        const url = `{{ url('driver/penghasilan/jadwal-by-anak') }}/${anakId}`;
         
-        fetch(url)
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken || ''
+            }
+        })
             .then(response => {
                 if (!response.ok) {
+                     // Fallback/Silent fail -> just clear
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(data => {
                 jadwalSelect.innerHTML = '<option value="">Pilih Jadwal</option>';
-                
                 if (data.jadwals && data.jadwals.length > 0) {
                     data.jadwals.forEach(jadwal => {
                         const option = document.createElement('option');
                         option.value = jadwal.id;
                         option.textContent = `${jadwal.tanggal} - ${jadwal.jam_jemput} (${jadwal.status})`;
-                        if (preselectId && preselectId == jadwal.id) {
-                            option.selected = true;
-                        }
                         jadwalSelect.appendChild(option);
                     });
                 } else {
@@ -171,21 +161,20 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => {
                 console.error('Error loading jadwal:', error);
-                jadwalSelect.innerHTML = '<option value="">Error loading jadwal</option>';
+                // Try simpler message
+                jadwalSelect.innerHTML = '<option value="">Gagal memuat jadwal (Cek Izin)</option>';
             });
     }
     
-    // Event listener untuk perubahan anak
     anakSelect.addEventListener('change', function() {
         loadJadwalByAnak(this.value);
     });
     
-    // Load jadwal untuk anak yang sudah dipilih (jika ada old input atau data edit)
     if (anakSelect.value) {
-        loadJadwalByAnak(anakSelect.value, selectedJadwalId);
+        loadJadwalByAnak(anakSelect.value);
     }
     
-    // --- Komputasi otomatis komisi berdasarkan gross dan potongan ---
+    // --- Komputasi otomatis ---
     const grossInput = document.getElementById('gross_amount');
     const deductionSelect = document.getElementById('deduction_percentage');
     const komisiDisplay = document.getElementById('komisi_akhir_display');
@@ -200,16 +189,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const gross = parseFloat(grossInput.value) || 0;
         const deduction = parseFloat(deductionSelect.value) || 0;
         const net = gross - (gross * (deduction / 100));
-        // Update readonly display and hidden/input komisi
         komisiDisplay.value = net > 0 ? formatRupiah(net) : '';
-        // Set raw numeric value to komisi_pengemudi so it's submitted
         if (komisiInput) komisiInput.value = net.toFixed(2);
     }
 
     if (grossInput) grossInput.addEventListener('input', computeKomisi);
     if (deductionSelect) deductionSelect.addEventListener('change', computeKomisi);
 
-    // compute on load if values exist
     computeKomisi();
 });
 </script>

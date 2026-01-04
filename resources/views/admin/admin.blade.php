@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
                     <h3>{{ $totalParents ?? 0 }}</h3>
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3>{{ $totalDrivers ?? 0 }}</h3>
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-6">
+        <div class="col-lg-3 col-6">
             <div class="small-box bg-secondary">
                 <div class="inner">
                     <h3>{{ $totalAnaks ?? 0 }}</h3>
@@ -40,41 +40,62 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ $totalUnpaidDrivers ?? 0 }}</h3>
+                    <p>Driver Belum Dibayar</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+            </div>
+        </div>
     </div>
     
     <!-- /.row -->
 
     <!-- Grafik -->
+    
+    
+    <!-- Table Unpaid Drivers -->
     <div class="row">
-        <!-- Grafik Komposisi Pengguna -->
-        <div class="col-lg-6">
+        <div class="col-12">
             <div class="card card-danger">
                 <div class="card-header">
-                    <h3 class="card-title">Komposisi Pengguna</h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+                    <h3 class="card-title">Driver Belum Dibayar</h3>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped m-0">
+                            <thead>
+                                <tr>
+                                    <th>Driver</th>
+                                    <th>Total Tagihan</th>
+                                    <th>Jumlah Trip Pending</th>
+                                    <th style="width: 15%">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($unpaidDriversData as $unpaid)
+                                    <tr>
+                                        <td>{{ $unpaid->driver->user->name ?? 'N/A' }}</td>
+                                        <td><strong>Rp{{ number_format($unpaid->total_pending, 0, ',', '.') }}</strong></td>
+                                        <td>{{ $unpaid->pending_count }} Trip</td>
+                                        <td>
+                                            <a href="{{ route('admin.penghasilan.index', ['driver_id' => $unpaid->driver_id, 'status' => 'pending']) }}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-search"></i> Lihat Detail
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">Semua driver sudah dibayar.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-                <div class="card-body">
-                    <canvas id="userRoleChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-            </div>
-        </div>
-        <!-- Grafik Pendaftaran Terbaru -->
-        <div class="col-lg-6">
-            <div class="card card-success">
-                <div class="card-header">
-                    <h3 class="card-title">Pendaftaran Baru (7 Hari Terakhir)</h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                     <canvas id="pendaftaranChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
             </div>
         </div>
