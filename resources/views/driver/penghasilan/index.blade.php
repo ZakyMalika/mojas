@@ -9,6 +9,11 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Daftar Semua Penghasilan yang Tercatat</h3>
+                <div class="card-tools">
+                    <a href="{{ route('driver.penghasilan.create') }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> Catat Penghasilan
+                    </a>
+                </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -46,11 +51,21 @@
                                     @endphp
                                     <span class="badge bg-{{ $statusClass }}">{{ ucfirst($item->status) }}</span>
                                 </td>
-                                <td>{{ $item->tanggal_dibayar ? \Carbon\Carbon::parse($item->tanggal_dibayar)->format('d M Y') : 'Tanggal Belum dipilih' }}</td>
+                                <td>{{ $item->tanggal_dibayar ? \Carbon\Carbon::parse($item->tanggal_dibayar)->format('d M Y') : 'Belum dibayar' }}</td>
                                 <td>
-                                    <a href="{{ route('driver.penghasilan.show', $item->id) }}" class="btn btn-info btn-sm btn-block" title="Lihat Detail">
-                                        <i class="fas fa-eye"></i> Detail
+                                    <a href="{{ route('driver.penghasilan.show', $item->id) }}" class="btn btn-info btn-xs" title="Lihat Detail">
+                                        <i class="fas fa-eye"></i>
                                     </a>
+                                    <a href="{{ route('driver.penghasilan.edit', $item->id) }}" class="btn btn-warning btn-xs" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('driver.penghasilan.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-xs" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty

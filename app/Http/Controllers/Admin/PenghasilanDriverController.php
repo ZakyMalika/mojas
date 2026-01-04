@@ -29,7 +29,7 @@ class PenghasilanDriverController extends Controller
             });
         }
         
-        $items = $query->latest()->paginate(15)->withQueryString();
+        $items = $query->latest()->paginate(10)->withQueryString();
 
         return view('admin.penghasilan.index', compact('items'));
     }

@@ -145,6 +145,7 @@ Route::middleware(['auth', 'role:pengemudi'])->prefix('driver')->as('driver.')->
     Route::resource('jadwal', DriverJadwalAntarJemputController::class);
     Route::resource('log-jadwal', DriverLogJadwalController::class);
     Route::resource('penghasilan', DriverPenghasilanController::class);
+    Route::get('penghasilan/jadwal-by-anak/{anak}', [DriverPenghasilanController::class, 'getJadwalByAnak'])->name('penghasilan.getJadwalByAnak');
 });
 
 Route::get('/driver-profile', function () {

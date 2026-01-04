@@ -6,8 +6,6 @@
 @section('content')
 {{-- Kartu Ringkasan Data --}}
 
-
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -139,48 +137,25 @@
 @push('scripts')
 <script>
 $(function () {
-    
-
-    $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var action = button.data('action');
-        var name = button.data('name');
-        var modal = $(this);
-        modal.find('#dataNameToDelete').text(name);
-        modal.find('#deleteForm').attr('action', action);
-    });
-});
-</script>
-@endpush
-
-
-@push('scripts')
-<script>
-$(function () {
+    // DataTables Config: Disable paging and info to avoid conflict with Laravel Pagination
     $("#tarif-table").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "responsive": true, 
+        "lengthChange": false, 
+        "autoWidth": false,
+        "paging": false,
+        "info": false,
+        "searching": true, // Disable client-side search as we use server-side pagination (unless you implement server-side search input manually)
         "buttons": [ "excel", "pdf", "print"]
     }).buttons().container().appendTo('#tarif-table_wrapper .col-md-6:eq(0)');
 
-    // LOGIKA HAPUS DENGAN MODAL (SOLUSI DEFINITIF)
+    // LOGIKA HAPUS DENGAN MODAL
     let urlToDelete = null;
-    $('#tarif-table tbody').on('click', '.delete-btn', function (event) {
+    $('.delete-btn').on('click', function (event) {
         event.preventDefault();
         urlToDelete = $(this).data('action');
         let dataName = $(this).data('name');
         $('#dataNameToDelete').text(dataName);
-    });
-    $('#confirmDeleteButton').on('click', function(e) {
-        e.preventDefault();
-        if (urlToDelete) {
-            let form = $('<form>', {
-                'method': 'POST', 'action': urlToDelete, 'style': 'display:none;'
-            });
-            form.append($('<input>', {'type': 'hidden', 'name': '_token', 'value': '{{ csrf_token() }}' }));
-            form.append($('<input>', {'type': 'hidden', 'name': '_method', 'value': 'DELETE'}));
-            $('body').append(form);
-            form.submit();
-        }
+        $('#deleteForm').attr('action', urlToDelete);
     });
 });
 </script>

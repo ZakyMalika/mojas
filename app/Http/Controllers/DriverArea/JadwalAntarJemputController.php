@@ -7,6 +7,8 @@ use App\Models\Jadwal_antar_jemput;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Anak;
+
 class JadwalAntarJemputController extends Controller
 {
     public function index(Request $request)
@@ -23,7 +25,8 @@ class JadwalAntarJemputController extends Controller
 
     public function create()
     {
-        return view('driver.jadwal.create');
+        $anaks = Anak::all();
+        return view('driver.jadwal.create', compact('anaks'));
     }
 
     public function store(Request $request)
@@ -34,8 +37,8 @@ class JadwalAntarJemputController extends Controller
             'anak_id' => ['required', 'integer', 'exists:anak,id'],
             'tanggal' => ['required', 'date'],
             'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
-            'jam_jemput' => ['required', 'date_format:H:i:s'],
-            'jam_antar' => ['required', 'date_format:H:i:s'],
+            'jam_jemput' => ['required', 'date_format:H:i'],
+            'jam_antar' => ['required', 'date_format:H:i'],
             'lokasi_jemput' => ['nullable', 'string'],
             'lokasi_antar' => ['nullable', 'string'],
             'status' => ['required', 'in:menunggu,dijemput,perjalanan,selesai,dibatalkan'],
@@ -64,8 +67,9 @@ class JadwalAntarJemputController extends Controller
         abort_if(! $driver, 403);
         abort_if($jadwal->drivers_id !== $driver->id, 403);
         $jadwal->load(['anak', 'driver']);
+        $anaks = Anak::all();
 
-        return view('driver.jadwal.edit', ['item' => $jadwal]);
+        return view('driver.jadwal.edit', ['item' => $jadwal, 'anaks' => $anaks]);
     }
 
     public function update(Request $request, Jadwal_antar_jemput $jadwal)
@@ -74,13 +78,13 @@ class JadwalAntarJemputController extends Controller
         abort_if(! $driver, 403);
         abort_if($jadwal->drivers_id !== $driver->id, 403);
         $data = $request->validate([
-            // 'anak_id' => ['required', 'integer', 'exists:anak,id'],
-            // 'tanggal' => ['required', 'date'],
-            // 'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
-            // 'jam_jemput' => ['required', 'date_format:H:i:s'],
-            // 'jam_antar' => ['required', 'date_format:H:i:s'],
-            // 'lokasi_jemput' => ['nullable', 'string'],
-            // 'lokasi_antar' => ['nullable', 'string'],
+            'anak_id' => ['required', 'integer', 'exists:anak,id'],
+            'tanggal' => ['required', 'date'],
+            'hari' => ['required', 'in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu'],
+            'jam_jemput' => ['required', 'date_format:H:i'],
+            'jam_antar' => ['required', 'date_format:H:i'],
+            'lokasi_jemput' => ['nullable', 'string'],
+            'lokasi_antar' => ['nullable', 'string'],
             'status' => ['required', 'in:menunggu,dijemput,perjalanan,selesai,dibatalkan'],
             'catatan' => ['nullable', 'string'],
             'diambil_pengemudi' => ['nullable', 'date'],

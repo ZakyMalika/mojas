@@ -7,6 +7,9 @@ use App\Models\Penghasilan_driver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Jadwal_antar_jemput;
+use App\Models\Anak;
+
 class PenghasilanController extends Controller
 {
     public function index(Request $request)
@@ -23,7 +26,11 @@ class PenghasilanController extends Controller
 
     public function create()
     {
-        return view('driver.penghasilan.create');
+        $driver = Auth::user()->driver;
+        // Kita tidak butuh jadwals langsung disini karena akan diload via AJAX berdasarkan Anak
+        $anaks = Anak::all();
+        // Namun kita kirim jadwals kosong atau null, view akan handle ajax
+        return view('driver.penghasilan.create', compact('anaks')); 
     }
 
     public function store(Request $request)
@@ -39,8 +46,8 @@ class PenghasilanController extends Controller
             'status' => ['required', 'in:pending,dibayar'],
             'tanggal_dibayar' => ['nullable', 'date'],
         ]);
-        $data['driver_id'] = $driver->id;
-
+        
+        // Jika gross_amount diberikan, hitung komisi_pengemudi berdasarkan potongan
         if (isset($data['gross_amount'])) {
             $gross = (float) $data['gross_amount'];
             $deduction = isset($data['deduction_percentage']) ? (float) $data['deduction_percentage'] : 0;
@@ -52,9 +59,7 @@ class PenghasilanController extends Controller
             $data['komisi_pengemudi'] = 0;
         }
 
-        // Remove transient fields that are not stored in the table
-        unset($data['gross_amount'], $data['deduction_percentage']);
-
+        $data['driver_id'] = $driver->id;
         $item = Penghasilan_driver::create($data);
 
         return redirect()->route('driver.penghasilan.show', $item);
@@ -65,7 +70,7 @@ class PenghasilanController extends Controller
         $driver = Auth::user()->driver;
         abort_if(! $driver, 403);
         abort_if($penghasilan->driver_id !== $driver->id, 403);
-        $penghasilan->load(['driver', 'jadwal']);
+        $penghasilan->load(['driver', 'jadwal.anak']); // Load anak for display
 
         return view('driver.penghasilan.show', ['item' => $penghasilan]);
     }
@@ -75,9 +80,11 @@ class PenghasilanController extends Controller
         $driver = Auth::user()->driver;
         abort_if(! $driver, 403);
         abort_if($penghasilan->driver_id !== $driver->id, 403);
-        $penghasilan->load(['driver', 'jadwal']);
+        
+        $penghasilan->load(['driver', 'jadwal.anak']);
+        $anaks = Anak::all();
 
-        return view('driver.penghasilan.edit', ['item' => $penghasilan]);
+        return view('driver.penghasilan.edit', ['item' => $penghasilan, 'anaks' => $anaks]);
     }
 
     public function update(Request $request, Penghasilan_driver $penghasilan)
@@ -94,8 +101,7 @@ class PenghasilanController extends Controller
             'status' => ['required', 'in:pending,dibayar'],
             'tanggal_dibayar' => ['nullable', 'date'],
         ]);
-        $data['driver_id'] = $driver->id;
-
+        
         if (isset($data['gross_amount'])) {
             $gross = (float) $data['gross_amount'];
             $deduction = isset($data['deduction_percentage']) ? (float) $data['deduction_percentage'] : 0;
@@ -107,9 +113,7 @@ class PenghasilanController extends Controller
             $data['komisi_pengemudi'] = $penghasilan->komisi_pengemudi ?? 0;
         }
 
-        // Remove transient fields before update
-        unset($data['gross_amount'], $data['deduction_percentage']);
-
+        $data['driver_id'] = $driver->id;
         $penghasilan->update($data);
 
         return redirect()->route('driver.penghasilan.show', $penghasilan);
@@ -123,5 +127,34 @@ class PenghasilanController extends Controller
         $penghasilan->delete();
 
         return redirect()->route('driver.penghasilan.index');
+    }
+
+    /**
+     * Get jadwal by anak (AJAX) for Driver
+     */
+    public function getJadwalByAnak(Anak $anak)
+    {
+        $driver = Auth::user()->driver;
+        abort_if(! $driver, 403);
+
+        $jadwals = Jadwal_antar_jemput::where('anak_id', $anak->id)
+            ->where('drivers_id', $driver->id) // Security: Only show schedules assigned to this driver
+            ->with(['anak'])
+            ->get()
+            ->map(function ($jadwal) {
+                return [
+                    'id' => $jadwal->id,
+                    'tanggal' => $jadwal->tanggal,
+                    'jam_jemput' => $jadwal->jam_jemput,
+                    'status' => $jadwal->status,
+                    'anak_nama' => $jadwal->anak->nama ?? 'Unknown',
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'jadwals' => $jadwals,
+            'count' => $jadwals->count(),
+        ]);
     }
 }
