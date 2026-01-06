@@ -102,6 +102,18 @@ class JadwalAntarJemputController extends Controller
     {
         $jadwal->delete();
 
-        return redirect()->route('admin.jadwal.index');
+        return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil dihapus');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:jadwal_antar_jemput,id',
+        ]);
+
+        Jadwal_antar_jemput::whereIn('id', $request->ids)->delete();
+
+        return redirect()->route('admin.jadwal.index')->with('success', count($request->ids) . ' Jadwal berhasil dihapus');
     }
 }

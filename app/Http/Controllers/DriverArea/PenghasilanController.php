@@ -126,7 +126,25 @@ class PenghasilanController extends Controller
         abort_if($penghasilan->driver_id !== $driver->id, 403);
         $penghasilan->delete();
 
-        return redirect()->route('driver.penghasilan.index');
+        return redirect()->route('driver.penghasilan.index')->with('success', 'Data penghasilan berhasil dihapus');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $driver = Auth::user()->driver;
+        abort_if(! $driver, 403);
+
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:penghasilan_driver,id',
+        ]);
+
+        // Security: Ensure all deleted IDs belong to this driver
+        Penghasilan_driver::whereIn('id', $request->ids)
+            ->where('driver_id', $driver->id)
+            ->delete();
+
+        return redirect()->route('driver.penghasilan.index')->with('success', count($request->ids) . ' Data penghasilan berhasil dihapus');
     }
 
     /**

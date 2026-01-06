@@ -156,11 +156,22 @@ class PenghasilanDriverController extends Controller
         return redirect()->route('admin.penghasilan.show', $penghasilan_driver);
     }
 
-    public function destroy($id)
+    public function destroy(Penghasilan_driver $penghasilan)
     {
-        $penghasilan_driver = Penghasilan_driver::findOrFail($id);
-        $penghasilan_driver->delete();
+        $penghasilan->delete();
 
-        return redirect()->route('admin.penghasilan.index');
+        return redirect()->route('admin.penghasilan.index')->with('success', 'Data penghasilan berhasil dihapus');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:penghasilan_driver,id',
+        ]);
+
+        Penghasilan_driver::whereIn('id', $request->ids)->delete();
+
+        return redirect()->route('admin.penghasilan.index')->with('success', count($request->ids) . ' Data penghasilan berhasil dihapus');
     }
 }
