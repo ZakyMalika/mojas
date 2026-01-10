@@ -119,15 +119,18 @@
                             @endforelse
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="text-muted">
-                            Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari
-                            {{ $items->total() }} data
+
+                    @if($items instanceof \Illuminate\Pagination\LengthAwarePaginator && $items->hasPages())
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="text-muted">
+                                Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
+                            </div>
+                            <div>
+                                {{ $items->links('pagination::bootstrap-4') }}
+                            </div>
                         </div>
-                        <div>
-                            {{ $items->links('pagination::bootstrap-4') }}
-                        </div>
-                    </div>
+                    @endif
+
                 </div>
 
                 <!-- Modal Konfirmasi Bulk Hapus -->
@@ -165,9 +168,12 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
+                "paging": false,
+                "info": false,
+                "searching": false,
                 "order": [
-                    [0, "desc"]
-                ] // Urutkan berdasarkan ID terbaru
+                    [1, "desc"]
+                ] // Urutkan berdasarkan ID terbaru (kolom ID di index 1 karena index 0 adalah checkbox)
             });
 
             // LOGIKA SELECT ALL
