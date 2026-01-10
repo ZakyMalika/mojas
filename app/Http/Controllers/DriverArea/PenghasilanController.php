@@ -14,14 +14,31 @@ class PenghasilanController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = max(1, min((int) $request->query('per_page', 15), 100));
+        // Allow 'per_page' to be numeric or the special value 'all'
+        $perPageRaw = $request->query('per_page', '15'); // may be 'all' or numeric
+        if (is_string($perPageRaw) && strtolower($perPageRaw) === 'all') {
+            $perPage = 'all';
+        } elseif (is_numeric($perPageRaw) && (int)$perPageRaw <= 0) {
+            $perPage = 'all';
+        } else {
+            $perPage = max(1, min((int) $perPageRaw, 100));
+        }
+
         $driver = Auth::user()->driver;
         abort_if(! $driver, 403);
-        $items = Penghasilan_driver::with(['driver', 'jadwal'])
-            ->where('driver_id', $driver->id)
-            ->paginate($perPage)->appends($request->query());
 
-        return view('driver.penghasilan.index', compact('items'));
+        $query = Penghasilan_driver::with(['driver', 'jadwal'])
+            ->where('driver_id', $driver->id)
+            ->orderByDesc('id');
+
+        if ($perPage === 'all') {
+            // retrieve all items, DataTables will handle client-side pagination
+            $items = $query->get();
+        } else {
+            $items = $query->paginate($perPage)->appends($request->query());
+        }
+
+        return view('driver.penghasilan.index', compact('items', 'perPage'));
     }
 
     public function create()

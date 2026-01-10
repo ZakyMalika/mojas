@@ -26,10 +26,26 @@
                     </div>
                 @endif
                 
-                <div class="mb-2">
-                    <button id="bulkDeleteBtn" class="btn btn-danger btn-sm" style="display: none;">
-                        <i class="fas fa-trash"></i> Hapus Terpilih (<span id="selectedCount">0</span>)
-                    </button>
+                <div class="mb-2 d-flex align-items-center justify-content-between">
+                    <div>
+                        <form method="GET" id="perPageForm" class="form-inline">
+                            <label for="per_page" class="mr-2">Tampilkan</label>
+                            <select name="per_page" id="per_page" class="form-control form-control-sm mr-2" onchange="document.getElementById('perPageForm').submit()">
+                                <option value="10" {{ (request('per_page') == '10') ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ (request('per_page') == '25') ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ (request('per_page') == '50') ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ (request('per_page') == '100') ? 'selected' : '' }}>100</option>
+                                <option value="all" {{ (request('per_page') == 'all') ? 'selected' : '' }}>Semua</option>
+                            </select>
+                            <small class="text-muted">data</small>
+                        </form>
+                    </div>
+
+                    <div>
+                        <button id="bulkDeleteBtn" class="btn btn-danger btn-sm" style="display: none;">
+                            <i class="fas fa-trash"></i> Hapus Terpilih (<span id="selectedCount">0</span>)
+                        </button>
+                    </div>
                 </div>
 
                 <table id="penghasilan-driver-table" class="table table-bordered table-striped">
@@ -122,8 +138,13 @@
 <script>
 $(function () {
     $("#penghasilan-driver-table").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "order": [[ 0, "desc" ]] // Urutkan berdasarkan ID terbaru
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        // Put order on the ID column (index 1 because index 0 is the checkbox column)
+        "order": [[ 1, "desc" ]],
+        "pageLength": {{ is_numeric($perPage) ? $perPage : 10 }},
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Semua"]]
     });
 
     // LOGIKA SELECT ALL
