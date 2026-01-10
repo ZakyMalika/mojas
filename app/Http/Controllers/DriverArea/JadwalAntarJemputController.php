@@ -105,4 +105,22 @@ class JadwalAntarJemputController extends Controller
 
         return redirect()->route('driver.jadwal.index');
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $driver = Auth::user()->driver;
+        abort_if(! $driver, 403);
+
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:jadwal_antar_jemput,id',
+        ]);
+
+        // Security: Ensure all deleted IDs belong to this driver
+        Jadwal_antar_jemput::whereIn('id', $request->ids)
+            ->where('drivers_id', $driver->id)
+            ->delete();
+
+        return redirect()->route('driver.jadwal.index')->with('success', count($request->ids) . ' Jadwal berhasil dihapus');
+    }
 }

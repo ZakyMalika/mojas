@@ -25,10 +25,22 @@
                         </button>
                     </div>
                 @endif
+                
+                <div class="mb-2">
+                    <button id="bulkDeleteBtn" class="btn btn-danger btn-sm" style="display: none;">
+                        <i class="fas fa-trash"></i> Hapus Terpilih (<span id="selectedCount">0</span>)
+                    </button>
+                </div>
 
                 <table id="jadwal-driver-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th style="width: 10px;">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="selectAll">
+                                    <label class="custom-control-label" for="selectAll"></label>
+                                </div>
+                            </th>
                             <th>Hari/Tanggal</th>
                             <th>Waktu Jemput</th>
                             <th>Anak</th>
@@ -41,7 +53,13 @@
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input select-item" id="check_{{ $item->id }}" value="{{ $item->id }}">
+                                        <label class="custom-control-label" for="check_{{ $item->id }}"></label>
+                                    </div>
+                                </td>
+                                <td data-order="{{ $item->tanggal }}">{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
                                 <td><strong>{{ \Carbon\Carbon::parse($item->jam_jemput)->format('H:i') }}</strong></td>
                                 <td>{{ $item->anak->nama ?? 'N/A' }}</td>
                                 <td>{{ $item->lokasi_jemput ?? $item->anak->sekolah ?? 'N/A' }}</td>
@@ -74,11 +92,40 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="text-center">Tidak ada jadwal untuk hari ini.</td></tr>
+                            <tr><td colspan="8" class="text-center">Tidak ada jadwal untuk hari ini.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
+                 <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="text-muted">
+                        Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
+                    </div>
+                    <div>
+                        {{ $items->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>
             </div>
+
+<!-- Modal Konfirmasi Bulk Hapus -->
+<div class="modal fade" id="bulkConfirmModal" tabindex="-1" role="dialog" aria-labelledby="bulkConfirmLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bulkConfirmLabel">Konfirmasi Hapus Massal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus <strong id="bulkConfirmCount"></strong> jadwal yang dipilih? Tindakan ini tidak dapat dibatalkan.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-danger" id="confirmBulkDelete">Ya, Hapus Semua</button>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>
@@ -88,8 +135,80 @@
 <script>
 $(function () {
     $("#jadwal-driver-table").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "order": [[ 0, "asc" ]] // Urutkan berdasarkan jam jemput
+        "responsive": true, "lengthChange": false, "autoWidth": false,"paging": false,
+        "order": [[ 0, "desc" ]] // Urutkan dari yang terbaru
+    });
+
+    // LOGIKA SELECT ALL
+    $('#selectAll').click(function() {
+        $('.select-item').prop('checked', this.checked);
+        toggleBulkDeleteButton();
+    });
+
+    // Check individual item
+    $(document).on('change', '.select-item', function() {
+        toggleBulkDeleteButton();
+         // Uncheck "select all" if one is unchecked
+        if(false == $(this).prop("checked")){ 
+            $("#selectAll").prop('checked', false); 
+        }
+        // Check "select all" if all are checked
+        if ($('.select-item:checked').length == $('.select-item').length ){
+            $("#selectAll").prop('checked', true);
+        }
+    });
+
+    function toggleBulkDeleteButton() {
+        var count = $('.select-item:checked').length;
+        if (count > 0) {
+            $('#bulkDeleteBtn').show();
+            $('#selectedCount').text(count);
+        } else {
+            $('#bulkDeleteBtn').hide();
+        }
+    }
+
+    // BULK DELETE
+    $('#bulkDeleteBtn').click(function() {
+        var ids = [];
+        $('.select-item:checked').each(function() {
+            ids.push($(this).val());
+        });
+
+        if (ids.length > 0) {
+            $('#bulkConfirmModal').modal('show');
+            $('#bulkConfirmCount').text(ids.length);
+        }
+    });
+
+    $('#confirmBulkDelete').click(function() {
+        var ids = [];
+        $('.select-item:checked').each(function() {
+            ids.push($(this).val());
+        });
+
+        if(ids.length > 0) {
+             // Safe CSRF check
+            const metaCsrf = document.querySelector('meta[name="csrf-token"]');
+            const csrfToken = metaCsrf ? metaCsrf.getAttribute('content') : "{{ csrf_token() }}";
+
+            $.ajax({
+                url: "{{ route('driver.jadwal.bulkDestroy') }}",
+                type: 'POST',
+                data: {
+                    _token: csrfToken,
+                    _method: 'DELETE',
+                    ids: ids
+                },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan saat menghapus data.');
+                    console.error(xhr);
+                }
+            });
+        }
     });
 });
 </script>

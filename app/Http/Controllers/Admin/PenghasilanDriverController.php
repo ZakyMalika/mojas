@@ -74,7 +74,6 @@ class PenghasilanDriverController extends Controller
             'driver_id' => ['required', 'integer', 'exists:drivers,id'],
             'jadwal_id' => ['required', 'integer', 'exists:jadwal_antar_jemput,id'],
             'tarif_per_trip' => ['required', 'numeric'],
-            // komisi_pengemudi may be computed from gross_amount + deduction
             'komisi_pengemudi' => ['nullable', 'numeric'],
             'gross_amount' => ['nullable', 'numeric'],
             'deduction_percentage' => ['nullable', 'numeric', 'in:0,5,10'],
@@ -95,8 +94,8 @@ class PenghasilanDriverController extends Controller
             $data['komisi_pengemudi'] = 0;
         }
 
-        // Remove transient fields that are not columns in the table
-        unset($data['gross_amount'], $data['deduction_percentage']);
+        // Note: User stated columns exist in DB, so we keep gross_amount and deduction_percentage in $data
+        // unset($data['gross_amount'], $data['deduction_percentage']);
 
         $item = Penghasilan_driver::create($data);
 
@@ -118,8 +117,10 @@ class PenghasilanDriverController extends Controller
     public function edit($id)
     {
         $penghasilan_driver = Penghasilan_driver::with(['driver.user', 'jadwal.anak'])->findOrFail($id);
+        $drivers = Driver::with('user')->get();
+        $anaks = Anak::all();
 
-        return view('admin.penghasilan.edit', ['item' => $penghasilan_driver]);
+        return view('admin.penghasilan.edit', ['item' => $penghasilan_driver, 'drivers' => $drivers, 'anaks' => $anaks]);
     }
 
     public function update(Request $request, $id)
@@ -147,19 +148,30 @@ class PenghasilanDriverController extends Controller
             $data['komisi_pengemudi'] = $penghasilan_driver->komisi_pengemudi ?? 0;
         }
 
-        // Remove transient fields before update
-        unset($data['gross_amount'], $data['deduction_percentage']);
+        // Note: User stated columns exist in DB, so we keep gross_amount and deduction_percentage in $data
+        // unset($data['gross_amount'], $data['deduction_percentage']);
 
         $penghasilan_driver->update($data);
 
         return redirect()->route('admin.penghasilan.show', $penghasilan_driver);
     }
 
-    public function destroy($id)
+    public function destroy(Penghasilan_driver $penghasilan)
     {
-        $penghasilan_driver = Penghasilan_driver::findOrFail($id);
-        $penghasilan_driver->delete();
+        $penghasilan->delete();
 
-        return redirect()->route('admin.penghasilan.index');
+        return redirect()->route('admin.penghasilan.index')->with('success', 'Data penghasilan berhasil dihapus');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:penghasilan_driver,id',
+        ]);
+
+        Penghasilan_driver::whereIn('id', $request->ids)->delete();
+
+        return redirect()->route('admin.penghasilan.index')->with('success', count($request->ids) . ' Data penghasilan berhasil dihapus');
     }
 }

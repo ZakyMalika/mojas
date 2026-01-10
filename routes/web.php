@@ -90,8 +90,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::resource('tarif-jarak', AdminTarifJarakController::class);
     Route::resource('pendaftaran-anak', AdminPendaftaranAnakController::class);
     Route::resource('pembayaran', AdminPembayaranController::class);
+    Route::delete('jadwal/bulk-destroy', [AdminJadwalAntarJemputController::class, 'bulkDestroy'])->name('jadwal.bulkDestroy');
     Route::resource('jadwal', AdminJadwalAntarJemputController::class);
     Route::resource('log-jadwal', AdminLogJadwalController::class);
+    Route::delete('penghasilan/bulk-destroy', [AdminPenghasilanDriverController::class, 'bulkDestroy'])->name('penghasilan.bulkDestroy');
     Route::resource('penghasilan', AdminPenghasilanDriverController::class);
     Route::resource('users', UserController::class);
 
@@ -142,8 +144,10 @@ Route::middleware(['auth', 'role:orang_tua'])->prefix('parent')->as('parent.')->
 
 // DRIVER (pengemudi)
 Route::middleware(['auth', 'role:pengemudi'])->prefix('driver')->as('driver.')->group(function () {
+    Route::delete('jadwal/bulk-destroy', [DriverJadwalAntarJemputController::class, 'bulkDestroy'])->name('jadwal.bulkDestroy');
     Route::resource('jadwal', DriverJadwalAntarJemputController::class);
     Route::resource('log-jadwal', DriverLogJadwalController::class);
+    Route::delete('penghasilan/bulk-destroy', [DriverPenghasilanController::class, 'bulkDestroy'])->name('penghasilan.bulkDestroy');
     Route::resource('penghasilan', DriverPenghasilanController::class);
     Route::get('penghasilan/jadwal-by-anak/{anak}', [DriverPenghasilanController::class, 'getJadwalByAnak'])->name('penghasilan.getJadwalByAnak');
 });
