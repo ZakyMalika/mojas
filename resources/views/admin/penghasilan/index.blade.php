@@ -4,8 +4,6 @@
 @section('content-title', 'Manajemen Penghasilan Pengemudi')
 
 @section('content')
-{{-- Kartu Ringkasan Data --}}
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -28,21 +26,43 @@
                     </div>
                 @endif
 
-                <div class="mb-2">
-                    <button id="bulkDeleteBtn" class="btn btn-danger btn-sm" style="display: none;">
-                        <i class="fas fa-trash"></i> Hapus Terpilih (<span id="selectedCount">0</span>)
-                    </button>
+                <!-- Search Form -->
+                <div class="mb-3">
+                    <form action="{{ route('admin.penghasilan.index') }}" method="GET" class="form-inline justify-content-end">
+                        <div class="input-group">
+                            {{-- <input type="text" name="search" class="form-control" placeholder="Cari penghasilan..." value="{{ request('search') }}"> --}}
+                            {{-- <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div> --}}
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Export Buttons -->
+                <div class="mb-3">
+                    <div class="btn-group mr-2" role="group">
+                        <a href="{{ route('admin.penghasilan.export-excel', ['search' => request('search')]) }}" class="btn btn-success btn-sm" title="Download SEMUA data dalam Excel">
+                            <i class="fas fa-file-excel"></i> Download Excel Semua
+                        </a>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <a href="{{ route('admin.penghasilan.export-pdf-all', ['search' => request('search')]) }}" class="btn btn-danger btn-sm" title="Download SEMUA data dalam PDF">
+                            <i class="fas fa-file-pdf"></i> Download PDF Semua
+                        </a>
+                        @if(request('per_page') != 'all')
+                            <a href="{{ route('admin.penghasilan.export-pdf-current', ['search' => request('search'), 'per_page' => request('per_page', 15)]) }}" class="btn btn-outline-danger btn-sm" title="Download hanya halaman saat ini dalam PDF">
+                                <i class="fas fa-file-pdf"></i> Download PDF Halaman Ini
+                            </a>
+                        @endif
+                    </div>
                 </div>
 
                 <table id="tarif-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th style="width: 10px;">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="selectAll">
-                                    <label class="custom-control-label" for="selectAll"></label>
-                                </div>
-                            </th>
+                            <th>No</th>
                             <th><i class="fas fa-car-side mr-1"></i> Pengemudi</th>
                             <th><i class="fas fa-child mr-1"></i> Anak</th>
                             <th><i class="fas fa-calendar-alt mr-1"></i> Jadwal</th>
@@ -55,12 +75,7 @@
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input select-item" id="check_{{ $item->id }}" value="{{ $item->id }}">
-                                        <label class="custom-control-label" for="check_{{ $item->id }}"></label>
-                                    </div>
-                                </td>
+                                <td>{{ $items->firstItem() + $loop->index }}</td>
                                 <td>{{ $item->driver->user->name ?? 'N/A' }}</td>
                                 <td>{{ $item->jadwal->anak->nama ?? 'N/A' }}</td>
                                 <td>{{ $item->jadwal ? \Carbon\Carbon::parse($item->jadwal->tanggal)->format('d M Y') : 'N/A' }}</td>
@@ -111,7 +126,30 @@
                         @endforelse
                     </tbody>
                 </table>
-                @if($items->hasPages())
+
+                {{-- <div class="mb-2 d-flex align-items-center justify-content-between">
+                    <div>
+                        <form method="GET" id="perPageForm" class="form-inline">
+                            @if(request('search'))
+                                <input type="hidden" name="search" value="{{ request('search') }}">
+                            @endif
+                            <label for="per_page" class="mr-2">Tampilkan</label>
+                            <select name="per_page" id="per_page" class="form-control form-control-sm mr-2"
+                                onchange="document.getElementById('perPageForm').submit()">
+                                <option value="10" {{ request('per_page') == '10' ? 'selected' : '' }}>10</option>
+                                <option value="15" {{ request('per_page') == '15' || !request('per_page') ? 'selected' : '' }}>15</option>
+                                <option value="25" {{ request('per_page') == '25' ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page') == '50' ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ request('per_page') == '100' ? 'selected' : '' }}>100</option>
+                                <option value="all" {{ request('per_page') == 'all' ? 'selected' : '' }}>Semua</option>
+                            </select>
+                            <small class="text-muted">data</small>
+                        </form>
+                    </div>
+                </div> --}}
+
+                @if(request('per_page') != 'all')
+                    @if($items instanceof \Illuminate\Pagination\Paginator && $items->hasPages())
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <div class="text-muted">
                                 Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
@@ -121,6 +159,12 @@
                             </div>
                         </div>
                     @endif
+                @else
+                    <div class="text-muted mt-3" style="padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
+                        <i class="fas fa-check-circle" style="color: #27ae60;"></i> 
+                        <strong>Menampilkan {{ is_iterable($items) ? count($items) : $items->count() }} data (SEMUA DATA)</strong>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -150,119 +194,53 @@
         </div>
     </div>
 </div>
-
-<!-- Modal Konfirmasi Bulk Hapus -->
-<div class="modal fade" id="bulkConfirmModal" tabindex="-1" role="dialog" aria-labelledby="bulkConfirmLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="bulkConfirmLabel">Konfirmasi Hapus Massal</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Apakah Anda yakin ingin menghapus <strong id="bulkConfirmCount"></strong> data penghasilan yang dipilih? Tindakan ini tidak dapat dibatalkan.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger" id="confirmBulkDelete">Ya, Hapus Semua</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @push('scripts')
 <script>
 $(function () {
-    // DataTables Config: Disable paging and info to avoid conflict with Laravel Pagination
-    $("#tarif-table").DataTable({
-        "responsive": true, 
-        "lengthChange": false, 
-        "autoWidth": false,
-        "paging": false,
-        "info": false,
-        "searching": false, // Disable client-side search as we use server-side pagination (unless you implement server-side search input manually)
-        "buttons": [ "excel", "pdf", "print"]
-    }).buttons().container().appendTo('#tarif-table_wrapper .col-md-6:eq(0)');
+    
 
-    // LOGIKA SELECT ALL
-    $('#selectAll').click(function() {
-        $('.select-item').prop('checked', this.checked);
-        toggleBulkDeleteButton();
+    $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var action = button.data('action');
+        var name = button.data('name');
+        var modal = $(this);
+        modal.find('#dataNameToDelete').text(name);
+        modal.find('#deleteForm').attr('action', action);
     });
+});
+</script>
+@endpush
 
-    // Check individual item
-    $(document).on('change', '.select-item', function() {
-        toggleBulkDeleteButton();
-         // Uncheck "select all" if one is unchecked
-        if(false == $(this).prop("checked")){ 
-            $("#selectAll").prop('checked', false); 
-        }
-        // Check "select all" if all are checked
-        if ($('.select-item:checked').length == $('.select-item').length ){
-            $("#selectAll").prop('checked', true);
-        }
-    });
 
-    function toggleBulkDeleteButton() {
-        var count = $('.select-item:checked').length;
-        if (count > 0) {
-            $('#bulkDeleteBtn').show();
-            $('#selectedCount').text(count);
-        } else {
-            $('#bulkDeleteBtn').hide();
-        }
-    }
+@push('scripts')
+<script>
+$(function () {
+    // $("#tarif-table").DataTable({
+    //     "responsive": true, "lengthChange": false, "autoWidth": false,
+    //     "buttons": [ "excel", "pdf", "print"]
+    // }).buttons().container().appendTo('#tarif-table_wrapper .col-md-6:eq(0)');
 
-    // BULK DELETE
-    $('#bulkDeleteBtn').click(function() {
-        var ids = [];
-        $('.select-item:checked').each(function() {
-            ids.push($(this).val());
-        });
-
-        if (ids.length > 0) {
-            $('#bulkConfirmModal').modal('show');
-            $('#bulkConfirmCount').text(ids.length);
-        }
-    });
-
-    $('#confirmBulkDelete').click(function() {
-        var ids = [];
-        $('.select-item:checked').each(function() {
-            ids.push($(this).val());
-        });
-
-        if(ids.length > 0) {
-            $.ajax({
-                url: "{{ route('admin.penghasilan.bulkDestroy') }}",
-                type: 'POST',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    _method: 'DELETE',
-                    ids: ids
-                },
-                success: function(response) {
-                    location.reload();
-                },
-                error: function(xhr) {
-                    alert('Terjadi kesalahan saat menghapus data.');
-                    console.error(xhr);
-                }
-            });
-        }
-    });
-
-    // LOGIKA HAPUS DENGAN MODAL
+    // LOGIKA HAPUS DENGAN MODAL (SOLUSI DEFINITIF)
     let urlToDelete = null;
-    $('.delete-btn').on('click', function (event) {
+    $('#tarif-table tbody').on('click', '.delete-btn', function (event) {
         event.preventDefault();
         urlToDelete = $(this).data('action');
         let dataName = $(this).data('name');
         $('#dataNameToDelete').text(dataName);
-        $('#deleteForm').attr('action', urlToDelete);
+    });
+    $('#confirmDeleteButton').on('click', function(e) {
+        e.preventDefault();
+        if (urlToDelete) {
+            let form = $('<form>', {
+                'method': 'POST', 'action': urlToDelete, 'style': 'display:none;'
+            });
+            form.append($('<input>', {'type': 'hidden', 'name': '_token', 'value': '{{ csrf_token() }}' }));
+            form.append($('<input>', {'type': 'hidden', 'name': '_method', 'value': 'DELETE'}));
+            $('body').append(form);
+            form.submit();
+        }
     });
 });
 </script>

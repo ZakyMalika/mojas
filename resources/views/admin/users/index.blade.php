@@ -22,7 +22,13 @@
                     </a>
                 </div>
             </div>
+
+
+
+
+            
             <div class="card-body">
+                
                 <div class="mb-3">
                     <form action="{{ route('admin.users.index') }}" method="GET" class="form-inline justify-content-end">
                         <div class="input-group">
@@ -36,7 +42,12 @@
                     </form>
                 </div>
                 <div class="table-responsive">
+
+
+
+                    
                     <table class="table table-bordered table-striped" id="users-table">
+                        
                         <thead>
                             <tr>
                                 <th>ID</th>

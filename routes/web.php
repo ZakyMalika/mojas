@@ -90,12 +90,28 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::resource('tarif-jarak', AdminTarifJarakController::class);
     Route::resource('pendaftaran-anak', AdminPendaftaranAnakController::class);
     Route::resource('pembayaran', AdminPembayaranController::class);
-    Route::delete('jadwal/bulk-destroy', [AdminJadwalAntarJemputController::class, 'bulkDestroy'])->name('jadwal.bulkDestroy');
-    Route::resource('jadwal', AdminJadwalAntarJemputController::class);
     Route::resource('log-jadwal', AdminLogJadwalController::class);
-    Route::delete('penghasilan/bulk-destroy', [AdminPenghasilanDriverController::class, 'bulkDestroy'])->name('penghasilan.bulkDestroy');
+    
+    // Penghasilan export routes
+    Route::get('penghasilan/export/excel', [AdminPenghasilanDriverController::class, 'exportExcel'])->name('penghasilan.export-excel');
+    Route::get('penghasilan/export/pdf-all', [AdminPenghasilanDriverController::class, 'exportPdfAll'])->name('penghasilan.export-pdf-all');
+    Route::get('penghasilan/export/pdf-current', [AdminPenghasilanDriverController::class, 'exportPdfCurrent'])->name('penghasilan.export-pdf-current');
+    
     Route::resource('penghasilan', AdminPenghasilanDriverController::class);
+    
+    // Export routes HARUS sebelum resource route agar tidak conflict
+    Route::get('users/export/excel', [UserController::class, 'exportExcel'])->name('export-excel');
+    Route::get('users/export/pdf-all', [UserController::class, 'exportPdfAll'])->name('export-pdf-all');
+    Route::get('users/export/pdf-current', [UserController::class, 'exportPdfCurrent'])->name('export-pdf-current');
+    
     Route::resource('users', UserController::class);
+    
+    // Jadwal export routes
+    Route::get('jadwal/export/excel', [AdminJadwalAntarJemputController::class, 'exportExcel'])->name('jadwal.export-excel');
+    Route::get('jadwal/export/pdf-all', [AdminJadwalAntarJemputController::class, 'exportPdfAll'])->name('jadwal.export-pdf-all');
+    Route::get('jadwal/export/pdf-current', [AdminJadwalAntarJemputController::class, 'exportPdfCurrent'])->name('jadwal.export-pdf-current');
+    
+    Route::resource('jadwal', AdminJadwalAntarJemputController::class);
 
     // New Resources for Transportation Management
     Route::resource('schools', SchoolController::class);
@@ -144,12 +160,9 @@ Route::middleware(['auth', 'role:orang_tua'])->prefix('parent')->as('parent.')->
 
 // DRIVER (pengemudi)
 Route::middleware(['auth', 'role:pengemudi'])->prefix('driver')->as('driver.')->group(function () {
-    Route::delete('jadwal/bulk-destroy', [DriverJadwalAntarJemputController::class, 'bulkDestroy'])->name('jadwal.bulkDestroy');
     Route::resource('jadwal', DriverJadwalAntarJemputController::class);
     Route::resource('log-jadwal', DriverLogJadwalController::class);
-    Route::delete('penghasilan/bulk-destroy', [DriverPenghasilanController::class, 'bulkDestroy'])->name('penghasilan.bulkDestroy');
     Route::resource('penghasilan', DriverPenghasilanController::class);
-    Route::get('penghasilan/jadwal-by-anak/{anak}', [DriverPenghasilanController::class, 'getJadwalByAnak'])->name('penghasilan.getJadwalByAnak');
 });
 
 Route::get('/driver-profile', function () {
