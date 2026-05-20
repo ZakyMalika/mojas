@@ -28,31 +28,78 @@
 
                 <!-- Search Form -->
                 <div class="mb-3">
-                    <form action="{{ route('admin.penghasilan.index') }}" method="GET" class="form-inline justify-content-end">
-                        <div class="input-group">
-                            {{-- <input type="text" name="search" class="form-control" placeholder="Cari penghasilan..." value="{{ request('search') }}"> --}}
-                            {{-- <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div> --}}
+                    <form action="{{ route('admin.penghasilan.index') }}" method="GET" class="form-inline">
+                        <!-- Filter Driver -->
+                        <div class="mr-3">
+                            <label for="driver_filter" class="mr-2">Filter Driver:</label>
+                            <select name="driver_id" id="driver_filter" class="form-control form-control-sm" onchange="this.form.submit()">
+                                <option value="">-- Semua Driver --</option>
+                                @foreach($drivers as $driver)
+                                    <option value="{{ $driver->id }}" {{ request('driver_id') == $driver->id ? 'selected' : '' }}>
+                                        {{ $driver->user->name ?? 'N/A' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <!-- Filter Status -->
+                        <div class="mr-3">
+                            <label for="status_filter" class="mr-2">Filter Status:</label>
+                            <select name="status_filter" id="status_filter" class="form-control form-control-sm" onchange="this.form.submit()">
+                                <option value="">-- Semua Status --</option>
+                                <option value="pending" {{ request('status_filter') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="dibayar" {{ request('status_filter') == 'dibayar' ? 'selected' : '' }}>Dibayar</option>
+                            </select>
                         </div>
                     </form>
                 </div>
 
                 <!-- Export Buttons -->
                 <div class="mb-3">
+                    @if(request('driver_id'))
+                        <!-- Tombol Bayar Semua Pending -->
+                        @php
+                            $pendingCount = 0;
+                            $driverName = '';
+                            if ($items instanceof \Illuminate\Pagination\Paginator) {
+                                foreach($items as $item) {
+                                    if($item->status == 'pending') $pendingCount++;
+                                    if(request('driver_id') == $item->driver_id) {
+                                        $driverName = $item->driver->user->name ?? 'Unknown';
+                                    }
+                                }
+                            } else {
+                                foreach($items as $item) {
+                                    if($item->status == 'pending') $pendingCount++;
+                                    if(request('driver_id') == $item->driver_id) {
+                                        $driverName = $item->driver->user->name ?? 'Unknown';
+                                    }
+                                }
+                            }
+                        @endphp
+                        
+                        @if($pendingCount > 0)
+                            <form action="{{ route('admin.penghasilan.bulk-payment') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <input type="hidden" name="driver_id" value="{{ request('driver_id') }}">
+                                <button type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Bayar {{ $pendingCount }} penghasilan pending untuk {{ $driverName }}?')">
+                                    <i class="fas fa-money-bill-wave mr-1"></i> Bayar {{ $pendingCount }} Pending
+                                </button>
+                            </form>
+                        @endif
+                    @endif
+                    
                     <div class="btn-group mr-2" role="group">
-                        <a href="{{ route('admin.penghasilan.export-excel', ['search' => request('search')]) }}" class="btn btn-success btn-sm" title="Download SEMUA data dalam Excel">
+                        <a href="{{ route('admin.penghasilan.export-excel', array_merge(request()->query(), [])) }}" class="btn btn-success btn-sm" title="Download SEMUA data dalam Excel">
                             <i class="fas fa-file-excel"></i> Download Excel Semua
                         </a>
                     </div>
                     <div class="btn-group" role="group">
-                        <a href="{{ route('admin.penghasilan.export-pdf-all', ['search' => request('search')]) }}" class="btn btn-danger btn-sm" title="Download SEMUA data dalam PDF">
+                        <a href="{{ route('admin.penghasilan.export-pdf-all', array_merge(request()->query(), [])) }}" class="btn btn-danger btn-sm" title="Download SEMUA data dalam PDF">
                             <i class="fas fa-file-pdf"></i> Download PDF Semua
                         </a>
                         @if(request('per_page') != 'all')
-                            <a href="{{ route('admin.penghasilan.export-pdf-current', ['search' => request('search'), 'per_page' => request('per_page', 15)]) }}" class="btn btn-outline-danger btn-sm" title="Download hanya halaman saat ini dalam PDF">
+                            <a href="{{ route('admin.penghasilan.export-pdf-current', array_merge(request()->query(), [])) }}" class="btn btn-outline-danger btn-sm" title="Download hanya halaman saat ini dalam PDF">
                                 <i class="fas fa-file-pdf"></i> Download PDF Halaman Ini
                             </a>
                         @endif
@@ -75,7 +122,7 @@
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
-                                <td>{{ $items->firstItem() + $loop->index }}</td>
+                                <td>{{ ($items instanceof \Illuminate\Pagination\Paginator) ? ($items->firstItem() + $loop->index) : ($loop->iteration) }}</td>
                                 <td>{{ $item->driver->user->name ?? 'N/A' }}</td>
                                 <td>{{ $item->jadwal->anak->nama ?? 'N/A' }}</td>
                                 <td>{{ $item->jadwal ? \Carbon\Carbon::parse($item->jadwal->tanggal)->format('d M Y') : 'N/A' }}</td>
@@ -127,7 +174,7 @@
                     </tbody>
                 </table>
 
-                <div class="mb-2 d-flex align-items-center justify-content-between">
+                {{-- <div class="mb-2 d-flex align-items-center justify-content-between">
                     <div>
                         <form method="GET" id="perPageForm" class="form-inline">
                             @if(request('search'))
@@ -146,6 +193,37 @@
                             <small class="text-muted">data</small>
                         </form>
                     </div>
+                </div> --}}
+
+                <div class="mb-2 d-flex align-items-center justify-content-between">
+                    <div>
+                        <form method="GET" id="perPageForm" class="form-inline">
+                            @foreach(request()->query() as $key => $value)
+                                @if($key != 'per_page' && $key != 'page')
+                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                @endif
+                            @endforeach
+                            <label for="per_page" class="mr-2">Tampilkan</label>
+                            <select name="per_page" id="per_page" class="form-control form-control-sm mr-2"
+                                onchange="document.getElementById('perPageForm').submit()">
+                                <option value="10" {{ request('per_page') == '10' ? 'selected' : '' }}>10</option>
+                                <option value="15" {{ request('per_page') == '15' || !request('per_page') ? 'selected' : '' }}>15</option>
+                                <option value="25" {{ request('per_page') == '25' ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page') == '50' ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ request('per_page') == '100' ? 'selected' : '' }}>100</option>
+                                <option value="all" {{ request('per_page') == 'all' ? 'selected' : '' }}>Semua</option>
+                            </select>
+                            <small class="text-muted">data</small>
+                        </form>
+                    </div>
+                    
+                    @if(request('driver_id') || request('status_filter'))
+                        <div>
+                            <a href="{{ route('admin.penghasilan.index') }}" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-times mr-1"></i> Bersihkan Filter
+                            </a>
+                        </div>
+                    @endif
                 </div>
 
                 @if(request('per_page') != 'all')

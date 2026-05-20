@@ -97,6 +97,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::get('penghasilan/export/pdf-all', [AdminPenghasilanDriverController::class, 'exportPdfAll'])->name('penghasilan.export-pdf-all');
     Route::get('penghasilan/export/pdf-current', [AdminPenghasilanDriverController::class, 'exportPdfCurrent'])->name('penghasilan.export-pdf-current');
     
+    // Penghasilan bulk payment route
+    Route::post('penghasilan/bulk-payment', [AdminPenghasilanDriverController::class, 'bulkPayment'])->name('penghasilan.bulk-payment');
+    
     Route::resource('penghasilan', AdminPenghasilanDriverController::class);
     
     // Export routes HARUS sebelum resource route agar tidak conflict
