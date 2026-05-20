@@ -127,7 +127,7 @@
                     </tbody>
                 </table>
 
-                {{-- <div class="mb-2 d-flex align-items-center justify-content-between">
+                <div class="mb-2 d-flex align-items-center justify-content-between">
                     <div>
                         <form method="GET" id="perPageForm" class="form-inline">
                             @if(request('search'))
@@ -146,7 +146,7 @@
                             <small class="text-muted">data</small>
                         </form>
                     </div>
-                </div> --}}
+                </div>
 
                 @if(request('per_page') != 'all')
                     @if($items instanceof \Illuminate\Pagination\Paginator && $items->hasPages())
