@@ -18,6 +18,16 @@ class PenghasilanDriverController extends Controller
     {
         $query = Penghasilan_driver::with(['driver', 'jadwal']);
         
+        // Filter berdasarkan driver
+        if ($request->has('driver_id') && !empty($request->driver_id)) {
+            $query->where('driver_id', $request->driver_id);
+        }
+        
+        // Filter berdasarkan status
+        if ($request->has('status_filter') && !empty($request->status_filter)) {
+            $query->where('status', $request->status_filter);
+        }
+        
         // Pencarian
         if ($request->has('search')) {
             $search = $request->search;
@@ -39,8 +49,11 @@ class PenghasilanDriverController extends Controller
         } else {
             $items = $query->latest()->paginate((int)$perPage)->withQueryString();
         }
+        
+        // Get list drivers untuk dropdown filter
+        $drivers = Driver::with('user')->orderBy('id')->get();
 
-        return view('admin.penghasilan.index', compact('items'));
+        return view('admin.penghasilan.index', compact('items', 'drivers'));
     }
 
     public function create()
