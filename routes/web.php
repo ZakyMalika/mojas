@@ -113,6 +113,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->as('admin.')->group(
     Route::get('jadwal/export/excel', [AdminJadwalAntarJemputController::class, 'exportExcel'])->name('jadwal.export-excel');
     Route::get('jadwal/export/pdf-all', [AdminJadwalAntarJemputController::class, 'exportPdfAll'])->name('jadwal.export-pdf-all');
     Route::get('jadwal/export/pdf-current', [AdminJadwalAntarJemputController::class, 'exportPdfCurrent'])->name('jadwal.export-pdf-current');
+    Route::post('jadwal/bulk-destroy', [AdminJadwalAntarJemputController::class, 'bulkDestroy'])->name('jadwal.bulkDestroy');
     
     Route::resource('jadwal', AdminJadwalAntarJemputController::class);
 
@@ -164,8 +165,10 @@ Route::middleware(['auth', 'role:orang_tua'])->prefix('parent')->as('parent.')->
 // DRIVER (pengemudi)
 Route::middleware(['auth', 'role:pengemudi'])->prefix('driver')->as('driver.')->group(function () {
     Route::resource('jadwal', DriverJadwalAntarJemputController::class);
+    Route::post('jadwal/bulk-destroy', [DriverJadwalAntarJemputController::class, 'bulkDestroy'])->name('jadwal.bulkDestroy');
     Route::resource('log-jadwal', DriverLogJadwalController::class);
     Route::resource('penghasilan', DriverPenghasilanController::class);
+    Route::post('penghasilan/bulk-destroy', [DriverPenghasilanController::class, 'bulkDestroy'])->name('penghasilan.bulkDestroy');
 });
 
 Route::get('/driver-profile', function () {
