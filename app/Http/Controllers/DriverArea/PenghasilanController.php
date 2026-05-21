@@ -27,9 +27,21 @@ class PenghasilanController extends Controller
     public function create()
     {
         $driver = Auth::user()->driver;
-        // Kita tidak butuh jadwals langsung disini karena akan diload via AJAX berdasarkan Anak
-        $anaks = Anak::all();
-        // Namun kita kirim jadwals kosong atau null, view akan handle ajax
+        abort_if(! $driver, 403);
+        
+        // Get anaks yang memiliki jadwal untuk driver ini
+        $anaks = Anak::whereHas('jadwal_antar_jemput', function ($query) use ($driver) {
+            $query->where('drivers_id', $driver->id);
+        })
+        ->distinct()
+        ->orderBy('nama')
+        ->get();
+        
+        // Jika tidak ada jadwal yang terassign, tampilkan semua anak sebagai fallback
+        if ($anaks->isEmpty()) {
+            $anaks = Anak::orderBy('nama')->get();
+        }
+        
         return view('driver.penghasilan.create', compact('anaks')); 
     }
 
@@ -82,7 +94,19 @@ class PenghasilanController extends Controller
         abort_if($penghasilan->driver_id !== $driver->id, 403);
         
         $penghasilan->load(['driver', 'jadwal.anak']);
-        $anaks = Anak::all();
+        
+        // Get anaks yang memiliki jadwal untuk driver ini
+        $anaks = Anak::whereHas('jadwal_antar_jemput', function ($query) use ($driver) {
+            $query->where('drivers_id', $driver->id);
+        })
+        ->distinct()
+        ->orderBy('nama')
+        ->get();
+        
+        // Jika tidak ada jadwal yang terassign, tampilkan semua anak sebagai fallback
+        if ($anaks->isEmpty()) {
+            $anaks = Anak::orderBy('nama')->get();
+        }
 
         return view('driver.penghasilan.edit', ['item' => $penghasilan, 'anaks' => $anaks]);
     }

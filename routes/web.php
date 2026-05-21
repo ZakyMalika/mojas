@@ -169,6 +169,9 @@ Route::middleware(['auth', 'role:pengemudi'])->prefix('driver')->as('driver.')->
     Route::resource('log-jadwal', DriverLogJadwalController::class);
     Route::resource('penghasilan', DriverPenghasilanController::class);
     Route::post('penghasilan/bulk-destroy', [DriverPenghasilanController::class, 'bulkDestroy'])->name('penghasilan.bulkDestroy');
+    
+    // AJAX route untuk mendapatkan jadwal berdasarkan anak
+    Route::get('penghasilan/jadwal-by-anak/{anak}', [DriverPenghasilanController::class, 'getJadwalByAnak'])->name('penghasilan.jadwal-by-anak');
 });
 
 Route::get('/driver-profile', function () {
