@@ -226,23 +226,14 @@
                     @endif
                 </div>
 
-                @if(request('per_page') != 'all')
-                    @if($items instanceof \Illuminate\Pagination\Paginator && $items->hasPages())
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <div class="text-muted">
-                                Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
-                            </div>
-                            <div>
-                                {{ $items->links('pagination::bootstrap-4') }}
-                            </div>
-                        </div>
-                    @endif
-                @else
-                    <div class="text-muted mt-3" style="padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
-                        <i class="fas fa-check-circle" style="color: #27ae60;"></i> 
-                        <strong>Menampilkan {{ is_iterable($items) ? count($items) : $items->count() }} data (SEMUA DATA)</strong>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="text-muted">
+                        Menampilkan {{ $items->firstItem() ?? 0 }} sampai {{ $items->lastItem() ?? 0 }} dari {{ $items->total() }} data
                     </div>
-                @endif
+                    <div>
+                        {{ $items->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
