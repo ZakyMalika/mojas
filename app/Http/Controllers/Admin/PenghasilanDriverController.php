@@ -269,4 +269,32 @@ class PenghasilanDriverController extends Controller
             return $pdf->download("Penghasilan_Halaman_$timestamp.pdf");
         }
     }
-}
+
+
+    public function bulkPayment(Request $request)
+    {
+        $driverId = $request->get('driver_id');
+        
+        if (!$driverId) {
+            return redirect()->route('admin.penghasilan.index')
+                ->with('error', 'Pilih driver terlebih dahulu.');
+        }
+        
+        // Update semua penghasilan pending untuk driver tersebut menjadi dibayar
+        $updated = Penghasilan_driver::where('driver_id', $driverId)
+            ->where('status', 'pending')
+            ->update([
+                'status' => 'dibayar',
+                'tanggal_dibayar' => now()->format('Y-m-d')
+            ]);
+        
+        if ($updated > 0) {
+            return redirect()->route('admin.penghasilan.index', ['driver_id' => $driverId])
+                ->with('success', "Berhasil membayar $updated penghasilan untuk driver tersebut.");
+        } else {
+            return redirect()->route('admin.penghasilan.index')
+                ->with('info', 'Tidak ada penghasilan pending untuk driver tersebut.');
+        }
+    }
+    }
+
